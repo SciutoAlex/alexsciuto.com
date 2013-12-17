@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+      $(function(){
+        //Sol Lewitt, 1974
+        
+        var width = 750,
+            height = 600;
+        
+        //the canvas
+        
+        var canvas = d3.select('#container').append('svg')
+            .attr('width', width)
+            .attr('height', height);
+        
+        canvas.append('rect')
+          .attr('width', width)
+          .attr('height', height)
+          .style('stroke', '#000')
+          .style('fill', '#fff');
+        
+        
+        //lineone, point one
+        
+        
+        
+        
+        
+        
+        
+        function linepoints(pointa, pointb) {
+          var slope = (pointa[1]-pointb[1])/(pointa[0]-pointb[0]);
+          var b = pointa[1]-slope*pointa[0];
+          if ((pointa[0]-pointb[0]) == 0) { slope = 10000000000000; }
+          
+          return new line(slope, b, pointa, pointb);
+          
+          
+        }
+        
+        function line(slope, b, pointa, pointb) {
+          this.slope = slope;
+          this.b = b;
+          this.pointa = pointa;
+          this.pointb = pointb;
+          if ((pointa[1]-pointb[1]) == 0) { this.horizontal = true; }
+          return this;
+        }
+        
+        line.prototype.draw = function() {
+          
+          // y =mx+b
+          // 0 =mx+b
+          // b = -mx
+          // b/(-m) = x
+          
+          var minx = this.b/(this.slope*-1);
+          
+          // y =mx+b
+          // height =mx+b
+          // height - b = mx
+          // (height-b)/(m) = x
+          
+          var maxx = (height-this.b)/(this.slope);
+          if (this.horizontal) {
+            var line = canvas.append('line')
+                .attr('x1', this.pointa[0])
+                .attr('y1', this.pointa[1])
+                .attr('x2', this.pointb[0])
+                .attr('y2', this.pointb[1]); 
+            
+          } else {
+            var line = canvas.append('line')
+                .attr('x1', this.pointa[0])
+                .attr('y1', this.pointa[1])
+                .attr('x2', this.pointb[0])
+                .attr('y2', this.pointb[1]); 
+          }
+          
+          return this;
+          
+        };
+        
+        line.prototype.x = function(y) {
+          //y = mx + b
+          //x = (y-b)/m
+          
+          return [((y-this.b) /this.slope), y];
+        };
+        
+        line.prototype.y = function(x) {
+          //y = mx + b
+          //x = (y-b)/m
+          
+          return [x, this.slope*x + this.b];
+        };
+        
+        line.prototype.setPerpendicular = function() {
+          this.slope = -1/this.slope;
+          return this;
+        };
+        
+        function findIntersection(linea, lineb) {
+          var x = (lineb.b - linea.b)/(linea.slope - lineb.slope);
+          var y = linea.slope*x + linea.b;
+          
+          return [x, y];
+          
+          
+        }
+        
+        function drawlinepointangle(a, slope, left) {
+          
+          var b = [a[0] + 1, a[1] + slope];
+          
+          var slope = (a[1]-b[1])/(a[0]-b[0]);
+          
+          if ((a[0]-b[0]) == 0) { slope = 10000000000000; }
+          // y = mx + b
+          //  b = y-mx
+          var b = a[1]-slope*a[0];
+          
+          if (left) {
+            return new line(slope, b, a, [0,b]);
+          } else {
+            return new line(slope, b, a, [width,width*slope+b]);
+          }
+        }
+        
+        
+        function findEquidistance(a, b, c) {
+          var lineone = linepoints(a, b).draw();
+          var linetwo = linepoints(a, c).draw();
+          var linethree = linepoints(b, c).draw();
+          
+          var intersectinglineone = drawlinepointangle(midpoint(a,b), lineone.setPerpendicular().slope, false).draw();
+          var intersectinglinetwo = drawlinepointangle(midpoint(a,c), linetwo.setPerpendicular().slope, true).draw();
+          
+          
+          
+          point(findIntersection(intersectinglineone, intersectinglinetwo));
+          
+          return findIntersection(intersectinglineone, intersectinglinetwo);
+        }
+        
+        function midpoint(a, b) {
+          var slope = (a[1]-b[1])/(a[0]-b[0]);
+          if ((a[0]-b[0]) == 0) { 
+            canvas.append('circle')
+              .attr('cx', a[0])
+              .attr('cy', (a[1]+b[1])/2)
+              .attr('r', 3);
+            
+            return [a[0], (a[1]+b[1])/2];   
+            
+          }
+          
+          
+          var x = (a[0]+b[0])/2;
+          
+          // y = mx + b
+          var b = a[1]-slope*a[0];
+          var y = slope*x + b;
+          
+          canvas.append('circle')
+            .attr('cx', x)
+            .attr('cy', y)
+            .attr('r', 3);
+          
+          return [x, y];    
+        }
+        
+        function point(a) {
+          canvas.append('circle')
+            .attr('cx', a[0])
+            .attr('cy', a[1])
+            .attr('r', 3);
+          
+          return [a[0], a[1]];
+        }
+        
+        //lineone, point one
+        linepoints([0,0], [width/2, height/2]).draw();
+        midpoint([0,0], [width/2, height/2]);
+        
+        linepoints(midpoint([0,0], [width/2, height/2]), [0,height/2]).draw();
+        midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]);
+        
+        linepoints( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]).draw();
+        midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]);
+        
+        //lineone, point two
+        midpoint(midpoint([0,0],[width, 0]),[width,0]);
+        
+        //lineone
+        var lineone = linepoints(midpoint(midpoint([0,0],[width, 0]),[width,0]),midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0])).draw();
+        
+        //linetwo point one
+        linepoints(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint([0,0],[width/2, 0])).draw();         
+        midpoint(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint([0,0],[width/2, 0]));
+        
+        //linetwo point two
+        linepoints([width/2, height/2], [0,height]).draw();
+        midpoint([width/2, height/2], [0,height]);
+        
+        linepoints( midpoint([width/2, height/2], [0,height]), [width/2, height]).draw();
+        midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height]);
+        
+        //linetwo
+        var linetwo = linepoints( midpoint(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint([0,0],[width/2, 0])), midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height])).draw();
+        
+        //linethree point one
+        midpoint(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height]));
+        linepoints(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height])).draw();
+        
+        midpoint([0,0],[0,height]);
+        midpoint([0,height],midpoint([0,0],[0,height]));
+        
+        midpoint(midpoint([0,height],midpoint([0,0],[0,height])),  midpoint(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height])));
+        linepoints(midpoint([0,height],midpoint([0,0],[0,height])),  midpoint(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height]))).draw();
+        
+        //linethree point two
+        linepoints([0,height], midpoint([width,0],[width,height/2])).draw();
+        
+        linepoints([width/2, height/2], midpoint([width, height/2],[width,height])).draw();
+        
+        point(findIntersection(linepoints([0,height], midpoint([width,0],[width,height/2])), linepoints([width/2, height/2], midpoint([width, height/2],[width,height]))));
+        //linethree
+        var linethree = linepoints(midpoint(midpoint([0,height],midpoint([0,0],[0,height])),  midpoint(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height]))), findIntersection(linepoints([0,height], midpoint([width,0],[width,height/2])), linepoints([width/2, height/2], midpoint([width, height/2],[width,height])))).draw();
+        
+        //linefour point one
+        point(findIntersection(linepoints([0,height], midpoint([width,0],[width,height/2])), linepoints([width/2, height/2], midpoint([width, height/2],[width,height]))));
+        
+        midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height]);
+        
+        midpoint([width/2, height/2], [width/2, height]);
+        linepoints([width/2, height/2], [width/2, height]).draw();
+        midpoint([0, height],[width, height]);
+        midpoint(midpoint([0, height],[width, height]), [width, height]);
+        midpoint(midpoint(midpoint([0, height],[width, height]), [width, height]),  midpoint([width/2, height/2], [width/2, height]));
+        linepoints(midpoint(midpoint([0, height],[width, height]), [width, height]),  midpoint([width/2, height/2], [width/2, height])).draw();
+        
+        
+        point(findEquidistance(findIntersection(linepoints([0,height], midpoint([width,0],[width,height/2])), linepoints([width/2, height/2], midpoint([width, height/2],[width,height]))), midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height]), midpoint(midpoint(midpoint([0, height],[width, height]), [width, height]),  midpoint([width/2, height/2], [width/2, height]))));
+        
+        //linefour point two
+        
+        //midpoint(start of second line, intersect(firstline, line(midpoint right side, midpoint(midpoint(top), upperleft corner);
+        
+        linepoints(midpoint(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint([0,0],[width/2, 0])), findIntersection( linepoints(midpoint(midpoint([0,0],[width, 0]),[width,0]),midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0])).draw(),  linepoints(midpoint([0,0], midpoint([0,0],[width,0])), midpoint([width,0],[width, height])))).draw();
+        
+        midpoint(midpoint(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint([0,0],[width/2, 0])), findIntersection( linepoints(midpoint(midpoint([0,0],[width, 0]),[width,0]),midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0])).draw(),  linepoints(midpoint([0,0], midpoint([0,0],[width,0])), midpoint([width,0],[width, height])).draw()) );
+        
+        //linefour
+        
+        var linefour = linepoints(midpoint(midpoint(midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0]), midpoint([0,0],[width/2, 0])), findIntersection( linepoints(midpoint(midpoint([0,0],[width, 0]),[width,0]),midpoint( midpoint(midpoint([0,0], [width/2, height/2]), [0,height/2]), [0,0])).draw(),  linepoints(midpoint([0,0], midpoint([0,0],[width,0])), midpoint([width,0],[width, height])).draw()) ), point(findEquidistance(findIntersection(linepoints([0,height], midpoint([width,0],[width,height/2])), linepoints([width/2, height/2], midpoint([width, height/2],[width,height]))), midpoint( midpoint([width/2, height/2], [0,height]), [width/2, height]), midpoint(midpoint(midpoint([0, height],[width, height]), [width, height]),  midpoint([width/2, height/2], [width/2, height]))))).draw();
+        
+        
+         //construct the polygon!
+        
+        
+        
+        var pointa = findIntersection(linethree, linetwo);
+        
+        var pointb = findIntersection(lineone, linetwo);
+        
+        var pointc = findIntersection(linefour, lineone);
+        
+        var pointd = findIntersection(linefour, linethree);
+        
+        canvas.append('polygon')
+          .attr('points', ""+pointa[0]+","+pointa[1]+", "+pointb[0]+","+pointb[1]+", "+pointc[0]+","+pointc[1]+", "+pointd[0]+","+pointd[1]+"");
+        
+   
+       
+        
+        
+        
+      });
+    </script>
+    <style>
+      body {
+        margin:0;
+        padding:0;
+        
+      }
+      #container {
+        width750px;
+        margin:00px auto;
+        height:600px;
+      }
+      
+      line {
+        stroke:red;
+        stroke-width:1px;
+      }
+      
+      circle {
+        fill:red;
+        fill-opacity:0;
+      }
+      
+      polygon {
+        fill:none;
+        stroke:red;
+        stroke-width:8px;
+      }
+      
+      svg {
+        overflow:hidden;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+</html>

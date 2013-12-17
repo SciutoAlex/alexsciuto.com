@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/spectrum.js"></script>
+    <script src="js/mustache.js"></script>
+    <script src="js/ListApp.js"></script>
+    <script src="js/Entry.js"></script>
+    <script src="js/List.js"></script>
+    <script src="js/CategoryList.js"></script>
+    <script src="js/dummy-data.js"></script>
+    
+    <meta property="og:title" content="Time Keepr" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.alexsciuto.com/projects/timekeepr" />
+    <meta property="og:image" content="http:www.alexsciuto.com/projects/timekeepr/v4/images/add-icon-large.jpg" />
+    
+    
+    <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/spectrum.css">
+    <script>
+      
+      $(function(){
+        
+        ListApp.init();
+        
+      });
+      
+    </script>
+    <style>
+      
+      
+      
+      
+      
+      }
+      
+      #main-area {
+        
+        position:fixed;
+        left:0px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space:nowrap;
+        
+        
+      }
+      #category-area {
+        padding-top:50px;
+        float:left;
+        color:white;
+        padding:10px;
+        width:300px;
+        background:url('images/bgdark-pattern.jpg');
+        margin-left:-320px;
+      }
+      
+      
+      #category-area h2 {
+        
+        font-weight:400;
+        font-size:24px;
+        
+      }
+      
+      #list-area {
+        padding-top:0px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space:nowrap;
+        
+      }
+      
+      #category-list {
+        width:100%;
+      }
+      
+      #category-list tr td{
+        border-bottom:1px solid #aaa;
+        padding:5px 0px 5px 0px;
+      }
+      
+      
+      .category p {
+        text-align:left;
+        margin:5px 0px 5px 4px;
+      }
+      
+      .colorpickertd {
+        width:20px;
+      }
+      
+      #toolbar {
+
+        left:0px;
+        width:100%;
+        height:50px;
+        background-color:#eb002c; 
+      }
+      
+      
+      
+      #toolbar p {
+        position:relative;
+        float:left;
+        color:white;
+        font-weight:700;
+        font-size:30px;
+        margin:5px 0px 0px 0px;
+      }
+      
+      #add-list {
+        position:relative;
+        float:left;
+        margin:8px 10px 0px 10px;
+        padding:0px;
+        background:url('images/add-icon.png') 5px 5px no-repeat #ff3c61;
+        border-radius:4px;
+        height:32px;
+        width:38px;
+        border:0px solid white;
+        cursor:pointer;
+      }
+      
+      #category-show-button {
+        float:left;
+        position:relative;
+        margin:8px 0px 0px 10px;
+        padding:0px;
+        background:url('images/cat-icon.png') 5px 5px no-repeat #ff3c61;
+        border-radius:4px;
+        height:32px;
+        width:38px;
+        border:0px solid white;
+        cursor:pointer;
+      }
+      
+      #category-show-button:hover {
+        background-color:#fd5a79; 
+      }
+      
+      #add-list:hover {
+        background-color:#fd5a79; 
+      }
+      
+      
+      
+      .colorpicker {
+        height:15px;
+        width:15px;
+        border-radius:2px;
+        background-color:red;
+        border:1px solid white;
+      }
+      
+      #icon {
+        position:absolute;
+        right:-20px;
+        top:-20px;
+        width:60px;
+        padding:10px;
+        background-color:#eb002c;
+        border-radius:10px;
+        cursor:pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=192981440739660";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+    <div id="container">
+      
+      <div id="category-area">
+        <button id="category-hide-button">Hide Categories</button>
+        <h2>Manage Categories</h2>
+        
+        <table cellpadding=0 cellspacing=0 border=0 id="category-list">  </table>
+        <form id="add-category">
+          <input type='text' id="categorycolor" class="colorpicker" value="#007700"/></input>
+          <input type='text' id="categoryname"></input>
+          <button id="addcategory">Add Category</button>
+        </form>
+      </div>
+      <div id="main-area">
+        <div id="toolbar">
+          
+          <div id="category-show-button"></div>
+          <div id="add-list"></div>
+          <p>TimeKeepr</p>
+        </div>
+        <div id="info">
+          <img id="icon" src="images/add-icon-large.jpg">
+          <h2>TimeKeepr</h2>
+          <p>Welcome to Time Keepr, where you can simply track what you're doing and how long it takes. Time Keepr uses your browser's memory to store information. Your data and information never travel over the internet. Whatever you type is saved to your browser and not accessible anywhere else. </p>
+          <div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+        </div>
+        <div id="list-area">     </div>
+      </div>
+      
+      
+      <script type="text/html" id="entryTemplate">
+        <div class="entry">
+          <button class="ex">X</button>
+          <div class="time">{{time}} HOURS</div>
+          <div class="text">{{text}}</div>
+          <div class="category">{{cat}}</div>
+        </div>   
+      </script>
+      
+      <script type="text/html" id="listTemplate">
+        <div class="list-container lcontainer">
+          <a class="removelist" href="#">Remove List</a>
+          <div class="title"></div>
+          <div class="list"></div>
+          <div class="total-hours"></div>
+          <form class="addentry">
+            
+            <select class="categories-dropdown">
+              
+            </select>
+            
+            <br/>
+            <input type="text" id="entry-text" placeholder="What did you do?" autocomplete="off"/><br/>
+            <input type="text" id="entry-time" placeholder="" autocomplete="off"/><p>hours</p><br/>
+            <button>add</button>
+          </form>
+        </div>  
+      </script>
+      
+      <script type="text/html" id="categoryTemplate">
+        <tr class="category">
+          <td class="colorpickertd"><input type='text' class="colorpicker" value="{{color}}"/></td>
+          <td align="left"><p>{{cat}}</p>   </td>         
+          <td><div class="ex">X</div></td>
+          
+        </tr>
+      </script
+      
+      </div>
+      
+    </body>
+    </html>

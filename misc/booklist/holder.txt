@@ -1,0 +1,57 @@
+ 
+ <script>
+      
+      
+      var app = {};
+      
+      app.init = function() {
+        
+        var mustacheTemplateText = document.getElementById("rowTemplate").innerHTML;
+        
+        
+            var cats = [
+              "",
+              "design philosophy"
+            ]
+              var data = [
+                {
+                  "head" : "The Design of Everyday Things",
+                  "head2" : "Donald Norman",
+                  "url" : "http://www.amazon.com/Design-Everyday-Things-Donald-Norman/dp/0465067107",
+                  "bought" : false,
+                  "category" : 1
+                }
+              ];
+        
+        var mustacheTemplate = Mustache.render(mustacheTemplateText, data);
+        
+        console.log(mustacheTemplate);
+        
+      };
+      
+      
+      
+      
+      
+      
+      window.onload = app.init;
+      
+      
+    </script>
+    
+<script id="rowTemplate" src="text/html">
+      <div class="row">
+        <div class="check-{{bought}}">
+          
+        </div>
+        
+        <div class="info">
+          <div class="title">
+            <a href="{{url}}">{{head}}</a>
+          </div>
+          <div class="subtitle">
+            {{head2}}
+          </div>
+        </div>
+      </div>
+    </script>

@@ -1,0 +1,147 @@
+[{
+  "Region": "East Africa",
+  "Birth": 38,
+  "Death": 12,
+  "Population": 324.0,
+  "Continent": "Africa"
+},
+{
+  "Region": "Mid Africa",
+  "Birth": 43,
+  "Death": 16,
+  "Population": 126.7,
+  "Continent": "Africa"
+},
+{
+  "Region": "North Africa",
+  "Birth": 24,
+  "Death": 6,
+  "Population": 209.5,
+  "Continent": "Africa"
+},
+{
+  "Region": "South Africa",
+  "Birth": 23,
+  "Death": 15,
+  "Population": 57.8,
+  "Continent": "Africa"
+},
+{
+  "Region": "West Africa",
+  "Birth": 40,
+  "Death": 14,
+  "Population": 304.3,
+  "Continent": "Africa"
+},
+{
+  "Region": "Carribean",
+  "Birth": 19,
+  "Death": 7,
+  "Population": 41.6,
+  "Continent": "South America"
+},
+{
+  "Region": "Central America",
+  "Birth": 22,
+  "Death": 5,
+  "Population": 155.9,
+  "Continent": "South America"
+},
+{
+  "Region": "South America",
+  "Birth": 18,
+  "Death": 6,
+  "Population": 392.6,
+  "Continent": "South America"
+},
+{
+  "Region": "North America",
+  "Birth": 14,
+  "Death": 8,
+  "Population": 344.5,
+  "Continent": "North America"
+},
+{
+  "Region": "East Asia",
+  "Birth": 12,
+  "Death": 7,
+  "Population": 1574.0,
+  "Continent": "Asia"
+},
+{
+  "Region": "South Central Asia",
+  "Birth": 24,
+  "Death": 8,
+  "Population": 1764.9,
+  "Continent": "Asia"
+},
+{
+  "Region": "South Eastern Asia",
+  "Birth": 19,
+  "Death": 7,
+  "Population": 593.4,
+  "Continent": "Asia"
+},
+{
+  "Region": "West Asia",
+  "Birth": 24,
+  "Death": 5,
+  "Population": 232.0,
+  "Continent": "Asia"
+},
+{
+  "Region": "Eastern Europe",
+  "Birth": 11,
+  "Death": 14,
+  "Population": 294.8,
+  "Continent": "Europe"
+},
+{
+  "Region": "Northern Europe",
+  "Birth": 12,
+  "Death": 10,
+  "Population": 99.2,
+  "Continent": "Europe"
+},
+{
+  "Region": "Southern Europe",
+  "Birth": 10,
+  "Death": 10,
+  "Population": 155.2,
+  "Continent": "Europe"
+},
+{
+  "Region": "Western Europe",
+  "Birth": 10,
+  "Death": 9,
+  "Population": 189.1,
+  "Continent": "Europe"
+},
+{
+  "Region": "Australia and New Zealand",
+  "Birth": 14,
+  "Death": 7,
+  "Population": 26.6,
+  "Continent": "Australia"
+},
+{
+  "Region": "Melanesia",
+  "Birth": 30,
+  "Death": 8,
+  "Population": 8.7,
+  "Continent": "Australia"
+},
+{
+  "Region": "Micronesia",
+  "Birth": 21,
+  "Death": 5,
+  "Population": 0.5,
+  "Continent": "Australia"
+},
+{
+  "Region": "Polynesia",
+  "Birth": 22,
+  "Death": 5,
+  "Population": 0.7,
+  "Continent": "Australia"
+}]

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="d3.js"></script>
+    <script>
+      $(function(){
+        
+        var width = 500,
+            height = 500;
+        
+        var svg = d3.select('body')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .style('border', '1px solid')
+            .append('g');
+        
+        
+        
+        
+        
+        
+        
+        
+        var Circle = function() {
+          var circleObject = this;
+          var randomtheta = Math.random()*2*Math.PI;
+          
+          this.r = Math.random()*50+25;
+          this.cx = Math.random()*width;
+          this.cy = Math.random()*height;
+          this.selectorx = circleObject.cx + Math.cos(randomtheta)*circleObject.r;
+          this.selectory = circleObject.cy + Math.sin(randomtheta)*circleObject.r;
+          
+          this.group = svg.append('g');
+          
+          this.outercircle = this.group.append('circle')
+            .attr('r', circleObject.r)
+            .attr('cx', circleObject.cx)
+            .attr('cy', circleObject.cy)
+            .style('fill', '#fff')
+            .style('stroke', '#000');
+          
+          var dragloc = d3.behavior.drag()
+              .on('drag', $.proxy(circleObject.dragloc, this));
+          
+          this.centercircle = this.group.append('circle')
+            .attr('r', 5)
+            .attr('cx', circleObject.cx)
+            .attr('cy', circleObject.cy)
+            .style('fill', '#000')
+            .style('stroke', '#000')
+            .call(dragloc); 
+          
+          
+          var dragsize = d3.behavior.drag()
+              .on('drag', $.proxy(circleObject.dragsize, this));
+          
+          
+          this.selectorcircle = this.group.append('circle')
+            .attr('r', 5)
+            .attr('cx', circleObject.selectorx)
+            .attr('cy', circleObject.selectory)
+            .style('fill', '#000')
+            .style('stroke', '#000')
+            .call(dragsize); 
+          
+        };
+        
+        Circle.prototype = {
+          constructor : Circle,
+          dragsize : function() {
+            this.selectorcircle
+              .attr('cx', d3.event.x)
+              .attr('cy', d3.event.y);
+            
+            this.selectorx = d3.event.x;
+            this.selectory = d3.event.y;
+            this.r = dist(this.selectorx, this.selectory, this.cx, this.cy);
+            
+            
+            this.outercircle
+              .attr('r', this.r);
+            drawTangents();
+          },
+          
+          dragloc : function() {
+            var dx = this.selectorx - this.cx;
+            var dy = this.selectory - this.cy;            
+            this.cx = d3.event.x;
+            this.cy = d3.event.y;
+            this.selectorx = d3.event.x + dx;
+            this.selectory = d3.event.y + dy;
+            this.selectorcircle
+              .attr('cx', this.selectorx)
+              .attr('cy', this.selectory);
+            
+            this.centercircle 
+              .attr('cx', d3.event.x)
+              .attr('cy', d3.event.y);
+            
+            this.outercircle
+              .attr('cx', d3.event.x)
+              .attr('cy', d3.event.y);
+            
+            drawTangents();
+            
+          }
+        };
+        
+        var circles = []
+            for (var i = 0; i < 2; i++){
+              circles.push(new Circle());
+            }
+        
+        function drawTangents() {
+          if (circles[0].r > circles[1].r) {
+            var cbig = circles[0];
+            var csmall = circles[1];
+          } else {
+            var cbig = circles[1];
+            var csmall = circles[0];
+          }
+          
+          var side = cbig.r - csmall.r;
+          var hyp = dist(cbig.cx, cbig.cy, csmall.cx, csmall.cy);
+          
+          var theta = Math.PI/2 - Math.acos(side/hyp) - Math.atan((cbig.cy - csmall.cy)/(cbig.cx - csmall.cx)) ;
+          console.log(theta);
+          
+        
+          line
+            .attr('x1', csmall.cx)
+            .attr('y1', csmall.cy)
+            .attr('x2', cbig.cx+cbig.r*Math.sin(theta))
+            .attr('y2', cbig.cy+cbig.r*Math.cos(theta))
+            .style('stroke', 'black')
+            .style('stroke-width', 2);
+          
+          
+          
+        };
+        
+        var line = svg.append('line');
+        
+        function dist(x1, y1, x2, y2) {
+          return Math.pow(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2), .5);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      });
+    </script>
+    <style>
+    </style>
+  </head>
+  <body>
+    
+  </body>
+</html>

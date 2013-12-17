@@ -1,0 +1,504 @@
+/*   
+Theme Name: Blue Minimal
+Theme URI: www.alexsciuto.com
+Description: A Minimal Theme
+Author: Alex Sciuto
+Author URI: sciutoalex
+Template: 
+Version: .12
+.
+General comments/License Statement if any.
+.
+*/
+/*Structure*/
+body {
+     margin:0px;
+padding:0px;
+     width: 100%;
+}
+
+.maincolumn {
+     clear: both;
+     margin-left: auto;
+     margin-right: auto;
+     position: relative;
+     width: 900px;
+}
+
+.single-column {
+margin:0px auto;
+clear:both; 
+width:900px;
+}
+
+hr#color-gradient {
+     background: url("http://alexsciuto.com/blog/wp-content/themes/blue-minimal/img/vertical-gradient.jpg") repeat scroll center top transparent;
+     height: 10px;
+}
+
+.length {
+     border-bottom: 1px solid #DADADA;
+     border-top: 1px solid #F0F0F0;
+     clear: both;
+     margin-bottom: 30px;
+     margin-top: 0px;
+}
+
+.left-column {
+     clear: both;
+     display: inline;
+     float: left;
+     margin: 0px;
+     text-align: right;
+     width: 14%;
+}
+
+.right-column {
+     float: right;
+     text-align: left;
+     vertical-align: baseline;
+     width: 760px;
+}
+/*head*/
+
+#header {
+     height:70px;
+     position: relative;
+     width:891px;
+}
+
+#logo {
+     bottom: -3px;
+     left: 130px;
+     position: absolute;
+}
+
+#logo a img {
+     border: 0px solid black;
+     text-decoration: none;
+}
+
+#links {
+     bottom: 0px;
+     float: right;
+     font-size: 40px;
+     line-height: 40px;
+     position: absolute;
+     right: 0px;
+}
+
+#header ul {
+     margin: 0px;
+}
+
+#header li {
+     display: inline;
+     font-size: 15px;
+     line-height: 19px;
+     list-style-type: none;
+     padding-left: 20px;
+     letter-spacing:0px;
+     word-spacing:1px;
+}
+
+#header li a {
+     color: black;
+     text-decoration: none;
+}
+
+/*Post*/
+.post img {
+     margin: 5px 0px;
+}
+.post {
+margin-top:10px;
+     clear: both;
+     position: relative;
+}
+.post .title {
+     margin: 0px 0% 0px;
+     font-size: 24px;
+}
+
+.post .title a, a:visited {
+     color: black;
+     text-decoration: none;
+}
+.post .title a:hover {
+     color: #3597D4;
+     text-decoration: underline;
+}
+.post .row {
+     clear: both;
+     display: block;
+     height: 60px;
+     width: 100%;
+}
+.post .left-column {
+  margin-top:7px;
+}
+.post .right-column {
+         margin-bottom: 50px;
+     margin-top: 3px;
+}
+.post-tags li {
+     font-size: 12px;
+     letter-spacing: 1px;
+     line-height: 1.5em;
+     list-style-type: none;
+     text-transform:capitalize;
+}
+.post-tags li a, a:visited {
+     color: #3597D4;
+     text-decoration: none;
+}
+.post-tags li a:hover {
+     text-decoration: underline;
+}
+.post p {
+     float: left;
+     font-family: "PTSansRegular";
+     font-size: 13px;
+     margin-bottom: 10px;
+     margin-top: 0px;
+     text-align: justify;
+     width: 73%;
+}
+.post .alignright {
+     float: right;
+}
+.post .alignleft {
+     float: left;
+}
+.post a img {
+     border: 0px none;
+}
+
+
+#nextlast {
+     float: left;
+     font-size: 14px;
+     height: 27px;
+     padding-top: 0px;
+     position: relative;
+     text-align: left;
+}
+#nextlast a, a:visited {
+     text-decoration: none;
+}
+#nextlast a:hover {
+     text-decoration: underline;
+}
+.facebook-button {
+width:70px;
+float:right;
+
+}
+
+blockquote {
+     float: left;
+     font-family: "PTSansRegular";
+     font-size: 11px;
+     margin-bottom: 10px;
+     margin-top: 0px;
+     margin-right:25px;
+     margin-left:30px;
+     text-align: justify;
+     width: 64%;
+}
+
+/*Blog Head*/
+#main-gradient {
+   height: 66px;
+}
+#tags {
+     font-size: 14px;
+     margin-top: 5px;
+}
+#tags .left-column {
+     clear: both;
+     display: inline;
+     float: left;
+     text-align: right;
+     width: 14%;
+}
+#tags .right-column {
+     display: inline;
+     float: right;
+     font-size: 12px;
+     line-height: 20px;
+     text-align: left;
+     text-transform: lowercase;
+     vertical-align: baseline;
+     width: 84%;
+}
+#tags .right-column a, a:visited {
+     color: #3597D4;
+     text-decoration: none;
+}
+#tags .right-column li {
+     display: inline;
+     list-style-type: none;
+}
+
+/*Pages*/
+
+
+#slideshow-bottom {
+     border-bottom: 1px dotted gray;
+     height: 6px;
+     margin-top: 2px;
+     padding-bottom: 33px;
+}
+
+#pagetitle {
+     float: left;
+     font-size: 25px;
+     margin-left: 0px;
+}
+
+#slideshow-control {
+     color: black;
+     display: inline;
+     float: right;
+     font-size: 16px;
+     margin-top: 9px;
+}
+
+#slideshow-control a {
+     color: black;
+     text-decoration: none;
+}
+
+#slideshow-control a:active {
+     color: #3597D4;
+}
+
+#slideshow-control a.activeSlide {
+     color: #3597D4;
+}
+
+#nav {
+     letter-spacing: 8px;
+     margin-right: 3px;
+}
+
+#prevphoto {
+     border-left: 1px solid black;
+     padding-left: 11px;
+}
+
+.page #output, p, #statictext {
+     font-family:"PTSansRegular";
+     font-size: 12px;
+     margin-bottom: 5px;
+     margin-left: 0px;
+     margin-top: 5px;
+}
+
+.page .maincolumn, rightcolumn, .length {
+     margin: 0px;
+}
+
+.page .maincolumn {
+     width: 1100px;
+     clear: both;
+     margin-left: auto;
+     margin-right: auto;
+     position: relative;
+ 
+}
+
+.page #header {
+     height:70px;
+     position: relative;
+     width:990px;
+}
+
+.page #logo {
+     bottom: -3px;
+     left: 230px;
+     position: absolute;
+     }
+
+#pagelisttitle {
+     color: #3597D4;
+     font-size: 29px;
+     margin-top: -7px;
+}
+
+.page .post-tags ul {
+     margin: 0px;
+}
+
+.page .post-tags li {
+     line-height: 20px;
+}
+
+.page .post-tags li a, a:visited {
+     color: black;
+}
+
+.page .post-tags li a:hover {
+     color: #3597D4;
+     text-decoration: none;
+}
+
+.page .right-column {
+     left: -110px;
+     position: relative;
+     width: 750px;
+}
+
+.page .left-column {
+     border-right: 1px dotted gray;
+     height: 500px;
+     left: -30px;
+     margin-right: 5px;
+     padding-right: 8px;
+     position: relative;
+     width: 250px;
+}
+.page .slideshow {
+     margin-bottom: 10px;
+}
+
+
+.textslide {
+height:500px;
+width:750px;
+overflow:hidden;
+}
+
+.textslide img {
+padding-bottom:4px;
+margin-bottom:2px;
+border-bottom: 1px solid gray;
+}
+
+
+.slide-left {
+     border-right: 1px solid gray;
+     float: left;
+     padding-right: 9px;
+margin-bottom:10px;
+     width: 365px;
+height:500px;
+}
+
+.slide-right {
+     float: right;
+     margin-left: 9px;
+     width: 365px;
+margin-bottom:10px;
+     width: 365px;
+height:500px;
+}
+
+.page h4 {
+font-family:"PTSansBold";
+line-height: 20px;
+     margin: 0px;
+}
+
+.page p {
+     font-size: 12px;
+     margin-bottom: 7px;
+     text-align: justify;
+}
+
+/*Bottom*/
+#bottom {
+     clear: both;
+     color: #3597D4;
+     margin: 0px;
+}
+
+#bottom a, a:visited {
+     color: #3597D4;
+     margin-top: 10px;
+}
+
+.bottom-text {
+     font-size: 12px;
+     margin-bottom: 10px;
+     text-align: justify;
+font-family:PTSansItalic;
+}
+
+/*Handy Classes*/
+.float-right {
+     float: right;
+}
+.float-left {
+     float: left;
+}
+.align-bottom {
+    
+}
+
+.aligncenter {
+margin:0px auto;
+}
+
+p.wp-caption-text {
+margin-left:auto;
+font-size:10px;
+font-weight:bold;
+}
+
+@font-face {
+  font-family: "BebasRegular";
+  font-style: normal;
+  font-weight: normal;
+  src: url("font/BEBAS___-webfont.eot?iefix") format("eot"), url("font/BEBAS___-webfont.woff") format("woff"), url("font/BEBAS___-webfont.ttf") format("truetype"), url("font/BEBAS___-webfont.svg#webfontOJIfwzl6") format("svg");
+}
+
+@font-face {
+  font-family: "PTSansBoldItalic";
+  font-style: normal;
+  font-weight: normal;
+  src: url("font/PTS76F-webfont.eot?iefix") format("eot"), url("font/PTS76F-webfont.woff") format("woff"), url("font/PTS76F-webfont.ttf") format("truetype"), url("font/PTS76F-webfont.svg#webfont2oPncueb") format("svg");
+}
+
+@font-face {
+  font-family: "PTSansBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("font/PTS75F-webfont.eot?iefix") format("eot"), url("font/PTS75F-webfont.woff") format("woff"), url("font/PTS75F-webfont.ttf") format("truetype"), url("font/PTS75F-webfont.svg#webfontaW07W6NV") format("svg");
+}
+
+@font-face {
+  font-family: "PTSansItalic";
+  font-style: normal;
+  font-weight: normal;
+  src: url("font/PTS56F-webfont.eot?iefix") format("eot"), url("font/PTS56F-webfont.woff") format("woff"), url("font/PTS56F-webfont.ttf") format("truetype"), url("font/PTS56F-webfont.svg#webfontV5YcF68V") format("svg");
+}
+
+@font-face {
+  font-family: "PTSansRegular";
+  font-style: normal;
+  font-weight: normal;
+  src: url("font/PTS55F-webfont.eot?iefix") format("eot"), url("font/PTS55F-webfont.woff") format("woff"), url("font/PTS55F-webfont.ttf") format("truetype"), url("font/PTS55F-webfont.svg#webfontakBUUg6U") format("svg");
+}
+
+.font-BebasRegular {
+     font-family: "BebasRegular", arial, helvetica;
+     word-spacing:.15em;
+     letter-spacing:-.04em;
+}
+.font-body {
+     font-family: "PTSansRegular", arial, helvetica;
+}
+.font-bold, strong {
+     font-family: "PTSansBold", arial, helvetica;
+}
+.font-italic, em {
+     font-family: "PTSansItalic", arial, helvetica;
+}
+
+.font-strongitalic {
+     font-family: "PTSansBoldItalic", arial, helvetica;
+}
+
+

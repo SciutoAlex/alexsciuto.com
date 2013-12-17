@@ -1,0 +1,176 @@
+p, h1, h2, h3 {
+  margin:0px;
+  padding:0px;
+}
+
+a, a:visited {
+  color:black;
+}
+a:hover {
+  color:#CC2828;
+}
+
+body {
+  color:#333;
+  font-size:14px;
+}  
+
+#container {
+  width:1020px;
+  margin:0px auto;
+  margin-bottom:50px;
+}
+
+
+
+#top-info {
+  margin-top:100px;
+  font-family: 'Antic Slab', serif;
+}
+
+.caption {
+  font-family:Tahoma, Helvetica, Arial;
+  font-weight:bold;
+  font-size:12px;
+}
+
+#top-info .fright {
+  margin-top:16px;
+}
+
+#top-info p {
+  font-weight:bold;
+  font-size:2em;
+}
+
+#top-info button {
+  text-decoration:none;
+  margin:0px;
+  padding:0px;
+  background-color:white;
+  border:1px solid white;
+  cursor:pointer;
+  font-size:18;
+  text-decoration:underline;
+}
+
+#top-info .small {
+  font-weight:normal;
+  font-size:14px;
+}
+
+#bottomboxes a, #bottomboxes a:hover, #bottomboxes a:visited {
+  border:0px solid white;
+  color:#333;
+}
+
+.box {
+  width:195px;
+  margin-right:11px;
+  position:relative;
+}
+
+.title {
+  font-family: 'Antic Slab', serif;
+  padding:10px 0px 6px 0px;
+}
+
+.body {  
+  font-family:Tahoma, Helvetica, Arial;
+  
+  font-size:11px;
+}
+
+#bottomboxes {
+  margin-top:20px;
+}
+
+.box .off {
+  position:absolute;
+  top:0px;
+  left:0px;
+}  
+
+.fleft {
+  float:left;
+}
+
+.fright {
+  float:right;
+}
+
+.border {
+  border:1px solid black;
+}
+
+.clear {
+  width:1px;
+  clear:both;
+}
+
+#about {
+  position:absolute;
+  font-family: 'Antic Slab', serif;
+  border:1px solid black;
+  background-color:white;
+  width:600px;
+  padding:30px;
+  
+}
+
+#about .col-l {
+  width:70%;
+  padding-right:15px;
+  margin-right:15px;
+  float:left;
+}
+
+#about h1 {
+  padding-bottom:20px;
+}
+
+#about .col-l ul li {
+  list-style-type:none;
+  list-style-position:outside;
+  margin-left:-30px;
+  font-size:12px;
+  padding-bottom:5px;
+  margin-bottom:5px;
+  
+}
+
+#about .col-r {
+  width:24%;
+  float:right;
+}
+
+#about .col-r ul li {
+  list-style-type:none;
+  list-style-position:inside;
+  margin-left:-40px;
+  font-size:12px;
+  padding-bottom:5px;
+  margin-bottom:5px;
+  border-bottom:1px #eee solid;
+}
+
+#about .col-r ul li a {
+  text-decoration:none;    
+}
+
+#about p {
+  margin-bottom:13px;
+}
+
+#shadow {
+  position:fixed;
+  top:0px;
+  left:0px;
+  background: url('/img/bgshadow.png');
+}
+
+.last {
+  border:0px solid white;
+  padding:0px;
+  margin:0px;
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="d3.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(function(){
+        
+        var chartWidth = 250,
+            chartHeight = 200,
+            padding = 5,
+            maxEarnings = 0,
+            maxEmploy = 0,
+            minEarnings = 0,
+            minEmploy = 0;
+        
+        
+        
+        
+        
+        $.getJSON("data.json", function(jsondata) {
+          //Calculate Job Change
+          for (var i = 1; i < jsondata.length; i++){
+            jsondata[i].employmentdiff = [];
+            for (var j = 1; j < jsondata[i].employment.length; j++){
+              jsondata[i].employmentdiff.push(jsondata[i].employment[j]-jsondata[i].employment[j-1])
+                }           
+          }
+          console.log(jsondata[1]);
+          
+          
+          
+          //Find Max/Min Earnings and Employment
+          for (var i = 1; i < jsondata.length; i++){
+            var thisdata = jsondata[i];
+            if (maxEarnings < d3.max(thisdata.earnings)) {
+              maxEarnings = d3.max(thisdata.earnings);
+            }
+            if (minEarnings > d3.min(thisdata.earnings)) {
+              minEarnings = d3.min(thisdata.earnings);
+            }
+            if (maxEmploy < d3.max(thisdata.employmentdiff)) {
+              maxEmploy = d3.max(thisdata.employmentdiff);
+            }
+            if (minEmploy > d3.min(thisdata.employmentdiff)) {
+              minEmploy = d3.min(thisdata.employmentdiff);
+            }
+            
+            
+          }
+          console.log(maxEarnings);
+          
+          for (var i = 1; i < jsondata.length; i++){
+            var thisdata = jsondata[i];
+            
+            var yjobs = d3.scale.linear()
+                .domain([0, maxEmploy])
+                .range([0,chartHeight]);
+            
+            var yEarnings = d3.scale.linear()
+                .domain([minEarnings, maxEarnings])
+                .range([0, chartHeight]);
+            
+            var colorjob = d3.scale.linear()
+                .domain([minEmploy, 0, maxEmploy])
+                .range(["red", "#ddd", "green"]);
+            
+            
+            
+            var chart = d3.select('body')
+                .append('svg')
+                .attr('class', 'chart')
+                .attr('width', chartWidth+padding*2)
+                .attr('height', chartHeight+padding*2)
+                .append('g')
+                .attr('transform','translate(10,10)');
+            
+            
+            chart.selectAll('.circlesEarnings').data(thisdata.earnings)
+              .enter()
+              .append('rect')
+              .attr('class','circlesEarnings')
+              .attr('y', chartHeight-yEarnings(0))
+              .attr('width',4)
+              .attr('height', function(d) { return yEarnings(d) - yEarnings(0); })
+              .attr('x', function(d,i) { return i*5+10; })
+              .attr('height', 0)
+              .style('fill', function(d,i) { return colorjob(thisdata.employmentdiff[Math.floor(i/4)]);})
+              .transition()
+              .duration(function(d, i) {return 250+i*30; })
+              .attr('height', function(d) { 
+                if (d < 0) {
+                  return yEarnings(0) - yEarnings(d); 
+                } else {
+                return yEarnings(d) - yEarnings(0); 
+                }
+                  })
+              .attr('y', function(d) { 
+                if (d < 0) {
+                  return  chartHeight-yEarnings(0);
+                } else {
+                return chartHeight-yEarnings(d);
+                }
+                });
+              
+            
+            
+            
+            chart.append('line')
+              .attr("x1", 0)
+              .attr("x2", chartWidth)
+              .attr("y1", Math.floor(chartHeight - yEarnings(0))+.5)
+              .attr("y2", Math.floor(chartHeight - yEarnings(0))+.5)
+              .style("stroke", 3);
+            
+            chart.append('text')
+              .text(thisdata.industry)
+              .attr('x',10)
+              .attr('y',10);
+            
+            
+            
+            
+            
+            
+            
+          }   
+        });
+      });
+    </script>
+    <style>
+      .circlesEarnings {
+        fill:green;
+      }
+      
+      line {
+        stroke:black;
+      }
+    </style>
+  </head>
+  <body>
+    
+  </body>
+</html>

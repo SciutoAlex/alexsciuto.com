@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Waves of Ideology</title>
+	<meta property="og:title" content="Waves of Ideology"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="http://alexsciuto.com/historicalsenate/"/>
+    <meta property="og:image" content="http://alexsciuto.com/historicalsenate/facebook.jpg"/>
+    <meta property="og:description" content="A Graphical History of 200+ of Ideological Changes in the United States Senate"/>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>
+	<script type="text/javascript" src="data.js"></script>
+	<style type="text/css">
+		body {
+		font-size:10px;
+		font-family:Tahoma, arial, san-serif;
+		}
+		#container {
+			width:870px	;
+			height:2000px;
+			margin:0px auto;
+			position:relative;
+		}
+		#center {
+			width:870px;
+			float:right;
+			border:0px solid black;
+			position:relative;
+		}
+		#graph {
+			height:2000px;
+			width:700px;
+			border:0px solid black;
+			float:right;
+			margin-top:-15px;
+		}
+		#dates {
+			height:2000px;
+			width:30px;
+			float:left;
+			margin-top:17px;
+			position:relative;
+		}
+		#info{
+			 position : fixed;
+			 border : 1px solid gray;
+			 background-color : #fff;
+			 padding : 6px;
+			 z-index: 1000;
+			 width: 230px;
+			 visibility:hidden;
+			 border-top:6px solid;
+		}​
+		
+		#introduction {
+			border: 1px solid black;
+			margin: 14px 0px 20px 0px;
+			width:100%;
+			
+		}
+		
+		#introduction h1 {
+			font-size:3.4em;
+			line-height:.9em;
+			margin:8px 0 0 0;
+
+		}
+		
+		#introduction h2 {
+			margin:0px;
+		}
+		
+		#titlebig {
+		float:left;
+		width:200px;
+		}
+		
+		.texttop {
+		float:left;
+		width:325px;
+		text-align:justify;
+		}
+		
+		#notes {
+			float:right;
+			width:140px;
+			color:gray;
+			position:relative;
+		}
+		
+		#notes strong {
+			color:black;
+			margin:0px;
+			padding:0px;
+		}
+		
+		.nota {
+		font-size:1.3em;
+		font-style:oblique;
+		padding:2px;
+		border:1px solid red;
+		text-align:center;
+		}
+		
+		.note, .individual {
+			position:absolute;
+		}
+		
+		
+		
+		
+		
+		
+	</style>
+
+</head>
+<body>
+<div id="container">
+	<div id = "info"></div>
+	<div id ="center">
+		
+		<div id="introduction">
+			<div id = "titlebig">
+				<h1>WAVES OF IDEOLOGY</h1>
+				<h2>A look at the US Senate</h2>
+			</div>
+			<div style="margin-right:20px;" class = "texttop">
+				<p>Turn a TV or flip to your choice politics blog, and you'll learn that Congress is flip-flopping. One year liberals sweep in, the next year liberals sweep out as conservatives come in like the tide.</p><p>This must be a new phenomenon you might be thinking, one arising along with the 24-hour news cycle and all that is bad with modernity.</p>
+			</div>
+			<div class = "texttop">
+				<p>Well below we map out the ebbs and flows of ideologies in the Senate. Using data from Keith T. Poole's <a href="http://voteview.com/">VoteView.com</a>, we have mapped out the ideological scoreing of ever senator who has served in the past 112 Congresses. What decades have waves of change, and when do majorities solidify their positions for years? It's all below.</p>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<img style="margin-left:35px;" src="arrows.jpg">
+		<div id = "notes">
+			<div class="nota" style="top:10px;" ><strong style="color:red;">Hover over each senator or event to see related paths</strong></div>
+			<div data="2012" class="note" style="top:60px;"><strong>2010</strong><br/>The current Senate.</div>
+			<div data="14506" class="individual" style="top:89px;" ><strong>Richard Lugar</strong><br/>Moderate Republican who recently lost primary challenge.</div>
+			<div data="40502" class="individual" style="top:133px;" ><strong>Barack Obama</strong><br/>44th President</div>
+			<div data="14101" class="individual" style="top:220px;" ><strong>Joe Biden</strong><br/>47th Vice President</div>
+			<div data="1994" class="note" style="top:165px;"><strong>1994</strong> Newt Gingrich and the Contract With America bring in a new crop of conservative senators.</div>
+			<div data="1980" class="note" style="top:290px;"><strong>1980</strong> Dissatisfaction with President Jimmy Carter and Republican presidential nominee Ronald Reagan's coattails help a batch of moderate to conservative senators ride into office.</div>
+			<div data="1366" class="individual" style="top:252px;"><strong>Robert Byrd</strong><br/>Longest Serving Senator</div>
+			<div data="4979" class="individual" style="top:540px;"><strong>Lyndon Johnson</strong><br/>36th President</div>
+			<div data="6137" class="individual" style="top:620px;"><strong>Joe McCarthy</strong><br/>Infamous anti-communist demagogue</div>
+			<div data="1968" class="note" style="top:395px;"><strong>1968</strong> War fatigue and Lyndon Johnson's unpopularity help bring in a crop of conservative senators.</div>
+			<div data="1902" class="note" style="top:995px;"><strong>1902</strong> Typical Senate Election.</div>
+			<div data="1958" class="note" style="top:465px;"><strong>1958</strong> The recession of 1958, six years into Republican President Eisenhower's, leads to a 16-seat swing to the Democrats.</div>
+			<div data="1934" class="note" style="top:695px;"><strong>1930s</strong> After the Crash of 1929 and the enormous popularity of Fscorelin Roosevelt, liberal senators are repeatedly elected. By 1936, few conservative senators are still in the Senate.</div>
+			<div data="1896" class="note" style="top:1030px;"><strong>1896</strong> The then-conservative Democratic party splinters over supporting the gold standard. Its presidential candidate, William Jennings Bryan loses to William McKinley, and its senators lose seats to fringe political parties.</div>
+			<div data="1860" class="note" style="top:1350px;"><strong>1860</strong> At the beginning of the Civil War southern states' senators leave en masse.</div>
+			<div data="2393" class="individual" style="top:1500px;"><strong>Jefferson Davis</strong><br/>First and only president of the Confederate States of America</div>
+			<div data="9903" class="individual" style="top:1675px;"><strong>Daniel Webster</strong><br/>Early leader of the Senate</div>
+			<div data="4843" class="individual" style="top:1630px;"><strong>Andrew Jackson</strong><br/>Seventh President</div>
+		</div>
+		<div id = "graph"></div>
+		<div id = "dates"></div>
+	</div>
+</div>
+
+
+<script type = "text/javascript">
+	(function($){
+		$(document).ready(function() {
+		
+				//Data Preparation. Remember to replace with flattened data to reduce processing time.
+				var amedian = {};
+				$.each(median, function() {
+					amedian[this.year] = this.media;
+					});
+				var organizeddata = {};
+				$.each(rawdata, function() {
+					var label = JSON.stringify(this.code);
+					if(typeof(organizeddata[label]) === 'undefined') {
+						organizeddata[label] = {};
+						organizeddata[label]['score'] = {};
+						organizeddata[label]['rank'] = {};
+						organizeddata[label]['id'] = this.code;
+						organizeddata[label]['servicelength'] = 0;
+						organizeddata[label]['firstname'] = this.justice;
+						organizeddata[label]['lastname'] = "";
+						organizeddata[label]['initscore'] = this.post_mn;
+						organizeddata[label]['finalscore'] = this.post_mn;
+						organizeddata[label]['firstsenate'] = this.term;
+						organizeddata[label]['finalsenate'] = this.term;						
+					}
+					organizeddata[label]['rank'][this.term] = this.rank;
+					organizeddata[label]['score'][this.term] = this.post_mn;
+					organizeddata[label]['servicelength'] = organizeddata[label]['servicelength']+1;
+					organizeddata[label]['finalscore'] = this.post_mn;
+					organizeddata[label]['finalsenate'] = this.term;
+					organizeddata[label]['finalrank'] = this.rank;
+
+					
+				});
+			
+				
+				var president = {2012: "d", 2011: "d",  2010: "d", 2009: "d", 2008: "d", 2007:'r', 2006:'r', 2005:'r', 2004:'r', 2003:'r', 2002:'r', 2001:'r', 2000:'d', 1999:'d', 1998:'d', 1997:'d', 1996:'d', 1995:'d', 1994:'d', 1993:'d', 1992:'d', 1991:'r', 1990:'r', 1989:'r', 1988:'r', 1987:'r', 1986:'r', 1985:'r', 1984:'r', 1983:'r', 1982:'r', 1981:'r', 1980:'r', 1979:'d', 1978:'d', 1977:'d', 1976:'d', 1975:'r', 1974:'r', 1973:'r', 1972:'r', 1971:'r', 1970:'r', 1969:'d', 1967:'d', 1966:'d', 1965:'d', 1964:'d', 1963:'d', 1962:'d', 1961:'d', 1960:'d', 1959:'r', 1958:'r', 1957:'r', 1956:'r', 1955:'r', 1954:'r', 1953:'r', 1952:'r', 1951:'d', 1950:'d', 1949:'d', 1948:'d', 1947:'d', 1946:'d', 1945:'d', 1944:'d', 1943:'d', 1942:'d', 1941:'d', 1940:'d', 1939:'d', 1938:'d', 1937:'d', 1936:'d', 1935:'d', 1934:'d', 1933:'d', 1932:'d'};
+				
+				
+							
+			
+				
+				
+				//Display.
+				var offopacity = 1;
+				var info = $("#info");
+				var r = 2;
+				var width = 700;
+				var height = 2000;
+				var paper = Raphael("graph", width, height);
+				$.each(organizeddata, function() {
+					var supreme = this;
+					this['shape'] = {};
+					this['shape']['path'] = "";
+					this['width'] = 3;
+					var counter = 1;
+					var bin;
+					var lastyear;
+					var coloron = Math.random()*30+225;
+					var coloroff = Math.random()*30;
+					if (president[this['firstsenate']-1] === "d") {
+						bin = "RGB("+coloroff+","+coloroff+","+coloron+")";
+					} else {
+						bin = "RGB("+coloron+","+coloroff+","+coloroff+")";
+					}
+					$.each(this['score'], function(key, value) {
+						if (counter == 1) {
+							supreme['shape']['path'] += "M";
+						} else {
+							supreme['shape']['path'] += "L";
+						}
+						var xx = value*30+400;
+						var yy = (2010-key)*20+10;
+						
+						supreme['shape']['path'] += xx + "," + yy;
+						counter++;
+						lastyear = parseInt(key);
+						
+					});
+					
+					
+					this['raphaelpath'] = paper.path(this['shape']['path']).attr({"opacity":offopacity,"stroke-width":"4","stroke":bin,"stroke-linecap":"round","stroke-linejoin":"round"})	
+						.mouseover(function() {
+							this.toFront();
+			
+							this.attr({"opacity":"1","stroke-width":"4", "stroke":"#000"});
+							tipText = "<strong>" + supreme['firstname'] + "</strong>";
+					   		info.css('visibility','visible');
+					   		over = true;
+						})
+						.mouseout(function() {
+							this.attr({"opacity":offopacity,"stroke-width":"4","stroke":bin});
+							info.css('visibility','hidden');
+					   		over = false;
+						});
+					/*	
+					supreme['shape']['circle'].mouseover(function() {
+							this.toFront();					
+							this.attr({"opacity":"1","fill":'#000', "r":"4"});
+							tipText = "";
+					   		topcolor = "";
+					   		info.css('visibility','visible');
+					   		over = true;
+						})
+						.mouseout(function() {
+							this.attr({"opacity":offopacity,"fill":"#000", "r":"2"});
+							info.css('visibility','hidden');
+					   		over = false;
+						});*/
+				});
+				
+				
+				
+				
+				
+				
+				//Tool Tip
+				var over;
+								
+				$(document).mousemove(function(e){
+					if (over){
+					  var pos = $('#graph').offset();
+					  if (e.clientX-pos.left < 450) {
+					  	info.css("left", e.clientX+10).css("top", e.clientY-20)
+					  } else {
+					  info.css("left", e.clientX-250).css("top", e.clientY-20)
+					  }
+					  info.empty().append(tipText);
+					}
+				});
+				
+				function color(value) {
+					if (value > .8) {
+						return "#6c1219";
+					} else if ((value <=.8) && (value > .6)) {
+						return "#ff6060";
+					} else if ((value <=.6) && (value > .4)) {
+						return "#e7b418";
+					} else if ((value <=.4) && (value > .2)) {
+						return "#6b60ff";
+					} else {
+						return "#18126c";
+					}
+				}
+				
+				function circle(x,y) {
+					var x = parseFloat(x);
+					var y = parseFloat(y);
+					x = x-1;
+					y = y-1;
+					var circlepath = "M " + x.toString() + " " + y.toString() + " a 1 1 0 1 0 0 1 z";
+					return circlepath;
+				}
+					
+				function toTitleCase(str)
+					{
+						return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+					}
+					
+				$('.note').each(function() {
+					var $this = $(this);
+					$this
+					.css('cursor','default')
+					.hover(function() {
+						var year = $this.attr("data");
+						var congress = (year-1786)/2;
+						$.each(organizeddata, function() {
+							if ((this['firstsenate'] == congress) || (this['finalsenate'] == congress-1)) {
+								this['shape']['circle'].attr({"opacity":"1","r":"4"});
+								this['raphaelpath'].attr({"opacity":"1","stroke-width":"3"});
+							}
+						});
+					}, function() {
+						$.each(organizeddata, function() {
+							this['shape']['circle'].attr({"opacity":offopacity, "r":"2"});
+							this['raphaelpath'].attr({"opacity":offopacity,"stroke-width":"1"});
+						});
+					});
+				});
+				
+				$('.individual')
+				.css('cursor','default')
+				.css({})
+				.each(function() {
+					var id = $(this).attr("data");
+					var o = organizeddata[id];
+					$(this)
+					.hover(function() {
+						o['raphaelpath'].toFront();
+						o['raphaelpath'].attr({"opacity":"1","stroke-width":"3"});
+						o['shape']['circle'].attr({"r":"4"});
+						tipText = "<strong>" + o['firstname'] + " " + o['lastname'] + "</strong><br/>" + o['state'] + "<br/> Served in " + o['servicelength'] + (o['servicelength'] == 1 ? " Congress." : " Congresses.") + "<br/><br/>Ideological score during final term Congress: " + o['finalscore'] + "<br/>" + " Ideological score during first term in Congress: " + o['initscore'];
+						topcolor = color(o['bin']);
+						info.css('visibility','visible');
+						over = true;
+					}, function() {
+						o['raphaelpath'].attr({"opacity":offopacity,"stroke-width":"1"});
+						o['shape']['circle'].attr({"r":"2"});
+						info.css('visibility','hidden');
+						over = false;
+					});
+				});
+					
+				for (var i = 0; i < 56; i++) {
+					var datey = 35.35*i;
+					var date =  2008 - 4 * i;
+					$('#dates').append('<div style="top:' + datey + 'px; position:absolute;" class="dates">' + date + '</div>');
+				}
+					
+				
+				
+						
+		});
+	
+		
+	
+	})(jQuery);
+
+	
+	
+</script>
+</body>
+</html>

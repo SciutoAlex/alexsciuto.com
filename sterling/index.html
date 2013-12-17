@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <script>
+      $(function(){
+        var em = [];
+        em.push("Sciut");
+        em.push("oAle");
+        em.push("x@gm");
+        em.push("ail.");
+        em.push("com");
+        
+        
+        $('.em').html("<a href='MAILTO:" + em.join("") + "'>" + em.join("") + "</a>");
+      
+      
+      });
+    </script>
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif;
+        
+      }
+      
+      #container {
+        max-width:500px;
+        margin:0px auto;
+      }
+      
+      label {
+        font-size:10px;
+        display:block;
+      }
+      
+      .photo {
+        padding-bottom: 10px;
+        width:100%;
+      }
+      
+      img {
+        width:100%;
+      }
+      
+      .label {
+        margin:0px;
+        padding;0px;
+      }
+      
+      h1 {
+        padding:0px;
+        margin:0px;
+      }
+      
+      @media only screen and (max-device-width: 700px) {
+      
+      #container {
+        width:100%;
+        margin:0px auto;
+        
+        img {
+          max-width:100%;
+      }
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="top">
+        <p class="label">August 1 - October 31 sublet</p>
+        <h1>Crown Heights 3-month sublet</h1>
+        <p class="label">792 Sterling Place &mdash; Sterling Place and Rogers Ave</p>
+        <p>Sublet one bedroom of a two bedroom apartment for three months. Close to the 2, 3, 4, 5 Franklin Ave stop. </p>
+        <p>$900 / month</p>
+        <p class="em"></p>
+      </div>
+      <div class="photo">
+        <img src="bedroom.jpg" alt="">
+        <label>bedroom</label>
+      </div>
+      <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=+&amp;q=792+sterling+place&amp;ie=UTF8&amp;hq=&amp;hnear=792+Sterling+Pl,+Brooklyn,+Kings,+New+York+11216&amp;t=m&amp;ll=40.672631,-73.952408&amp;spn=0.022784,0.042915&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
+      <div class="photo">
+        <img src="bedroom2.jpg" alt="">
+        <label>another view of bedroom</label>
+      </div>
+      <div class="photo">
+        <img src="livingroom.jpg" alt="">
+        <label>living room</label>
+      </div>
+      <div class="photo">
+        <img src="kitchen.jpg" alt="">
+        <label>kitchen</label>
+      </div>
+      <div class="photo">
+        <img src="bathroom.jpg" alt="">
+        <label>one of two bathrooms</label>
+      </div>
+      <p class="em"></p>
+      
+    </div>
+  </body>
+</html>

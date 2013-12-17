@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>F8 Lite Theme Instructions</title>
+	<style type="text/css" media="screen">
+		/* Reset CSS */
+		html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, ol, ul, li { margin: 0; padding: 0; border: 0;
+		font-size: 100%; background: transparent; }
+
+		body {
+			line-height: 1;
+			font: 13px/1.5 "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+			color: #000;
+			background-color: #111;
+			margin: 50px 0 0;
+			padding: 0;
+			cursor: default;
+		}
+
+		div.container {
+			width: 600px;
+			margin: 0 auto;
+		}
+
+		#page {
+			display: block;
+			margin: 50px auto 50px;
+		}
+
+		#header {
+			border: 1px solid #ccc;
+			border-width: 1px 2px 2px 1px;
+			margin: 0 auto;
+			width: 800px;
+			padding: 25px 0;
+			background:#eee;
+		}
+
+		h1 {
+			font: normal 34px "Times New Roman", "Helvetica Neue", Helvetica, Geneva, Arial, sans-serif;
+			margin: 0 0 20px;
+		}
+
+		h1 span,
+		a, a:visited, a:link, a:hover, a:active {
+			color: #0C61B8;
+		}
+
+		h3 {
+			font-size: 1em;
+		}
+
+		a:link, a:visited, a:hover, a:active, a:focus {
+			cursor: pointer;
+		}
+
+		p {
+			padding: 0 0 10px;
+			color: #333;
+		}
+
+		p strong {
+			color: #000;
+		}
+
+		ol {
+			padding: 5px 0 5px 20px;
+		}
+
+		ol li {
+			list-style-position: inside;
+			margin: 5px 0;
+		}
+
+		ol span {
+			color: #DA4545;
+		}
+
+		#footer {
+			background-color: #efefef;
+			width: 100%;
+			padding: 15px 0;
+		}
+
+		#footer,
+		#footer p,
+		#footer a {
+			color: #9F9090;
+		}
+
+		#footer p,
+		#footer ul {
+			font-size: 11px;
+			padding: 0;
+		}
+		#footer ul {
+			padding: 5px 0 5px 20px;
+			list-style-type: square;
+		}
+	</style>
+</head>
+
+<body>
+<div id="page">
+
+	<div id="header">
+		<div class="container">
+		<h1>F8 <span>Lite</span> Theme Instructions</h1>
+		
+		<h3>About this theme</h3>
+		<p>F8 lite is a free photography and multimedia portfolio theme for Wordpress.  The theme design was developed with photographers in mind who want a minimal layout, with their photos and multimedia featured front and center.  But, the theme has been used to create everything from e-commerce sites, book review sites, and everything in between.  In the future, we will be releasing "child themes" to provide design alternative and additional applications (apps) that will work with F8 Lite.  You'll definitely want to <a href="http://feeds.feedburner.com/GraphPaperPress">subscribe to GraphPaperPress.com</a> to get all the latest developments and enhancements for F8 Lite.</p>
+		
+		<h3>Installing this theme</h3>
+		<ol>
+			<li>Unzip the folder contained in the archive to your computer</li>
+			<li>Upload the folder and its contents to the themes directory of your blog, located in <strong>&quot;wp-content/themes&quot;</strong> where WordPress is installed.</li>
+			<li>Click on the Design tab from the WP admin panel, then select the theme to activate.</li>
+			<li>Click on View Site at the top of the page.</li>
+		</ol>
+
+		<h3>Initial Setup</h3>
+		<p>F8 Lite is a 950px wide, one column theme.  The archive and front page layout is built on a three column grid (310px wide with 10px gutters).  We need to set up your default image and thumbnail sizes to allow for easy posting and consistent design structure.
+
+Click Settings - Miscellaneous and set your thumbnail size to 310px wide by 150px tall. Set your medium size images to 950px wide and 700px tall.
+
+For post thumbnails, paste in the url to the 310px wide X 150 px tall thumbnail into the custom field, with key value "thumbnail".  For slideshow images, paste in the url to the 950px wide medium size image into the custom field, with key value "image".  
+
+By default, the homepage slideshow shows only those posts with a custom field "image." The slideshow shows the most recent 4 posts in category 1.  You could make this slideshow static, showing only those images specified by replacing the code on slideshow.php with something like the following:
+
+<!-- Begin slideshow -->
+<ul id="portfolio">
+<li><img src="<?php bloginfo('stylesheet_directory'); ?>/images/slideshow/image1.jpg" /></li>
+<li><img src="<?php bloginfo('stylesheet_directory'); ?>/images/slideshow/image2.jpg" /></li>
+<li><img src="<?php bloginfo('stylesheet_directory'); ?>/images/slideshow/image3.jpg" /></li>
+<li><img src="<?php bloginfo('stylesheet_directory'); ?>/images/slideshow/image4.jpg" /></li>
+</ul>
+
+Then, create a folder in your f8-lite theme directory called "slideshow" and place four images (image1.jpg, image2.jpg, image3.jpg, image4.jpg) inside the folder. If you need additional instructions on uploading photos, inserting photo galleries and using the Wordpress interface, please view this <a href="http://wordpress.org/development/2008/03/wordpress-25-rc2/">screencast</a>.</p>
+		
+		<h3>Widgets</h3>
+		<p>The bottom three column area is 100% widgetized, which you can control by clicking Design - Widgets, from within your Wordpress admin panel. You can add and delete widgets by clicking Design - Widgets, from within your Wordpress admin panel.</p>
+		
+		<h3>Multimedia Custom Fields</h3>
+		<p>You can also add multimedia, including video, Google Maps, and virtually any type of embeddable media by entering "multimedia" as the key value and paste your YouTube, Vimeo, or any other html embed code into the value field.  You can read more about <a href="http://codex.wordpress.org/Using_Custom_Fields">using custom fields here</a>.</p>
+		
+		<h3>Recommended Plugin</h3>
+		<p><a href="http://wordpress.org/extend/plugins/shadowbox-js/">Shadowbox JS</a>: Lightbox plugin for photos currently in use on the demo site.
+		</p>
+		
+		<h3>Support Forum</h3>
+		<p>We have a great forum with helpful Wordpressers at <a href="http://graphpaperpress.com/forum/?CategoryID=15">GraphPaperPress.com/forum.</a></p>
+		</div>
+	</div>
+	
+</div>
+
+<div id="footer">
+	<div class="container">
+	<h3>GPL License Details</h3>
+	<p>F8 Lite<br />
+    Copyright (C) 2008  Graph Paper Press<br />
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
+</p>
+	<p>If you have any questions or suggestions we would love to hear from you: <a href="mailto:graphpaperpress@gmail.com">graphpaperpress@gmail.com</a></p>
+	</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="jqueryui.css">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/d3.js"></script>
+    
+    <script src="/js/jqueryui.js"></script>
+    <script src="data.js"></script>
+    <link rel="stylesheet" href="/styles/reset.css"></link>
+    <script>
+      $(function(){
+        
+        var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        
+        var $doc = $(document),
+            $container = $('#container'),
+            $info = $('#info'),
+            $window = $(window)
+            
+            width = $window.width(),
+              height = $window.height();
+        
+        var pow = 2,
+            amp = -.33;
+        
+        var tip = $('#tip'),
+            $svg = $('svg');
+ 
+        
+        for (var i = 0; i <= data.length-1; i++) {
+          for (var j = 0; j <=10; j++) {
+            
+            data[i].pages.splice(0,0,parseInt(data[i].pages[0]*.7*(Math.random()+.4),10));
+          }
+        }
+        console.log(data);
+        
+        
+        //create chart
+        var chart = d3.select('svg')
+            .attr('class','chart')
+            .attr('width', width)
+            .attr('height', height);
+        
+        var currentMonth = data[1].pages.length-1;
+        var startDate = new Date(2011,7,1,0,0,0);
+        
+        //scale
+        var scale = d3.scale.pow().exponent(.5)
+            .domain([0,2500])
+            .range([0,120]);
+        
+        //create force layout and function for updating on d3's tick
+        var force = d3.layout.force();
+        
+        force
+          .gravity(.3)
+          .size([width, height])
+          .nodes(data)
+          .links([])
+          .charge( function(d) { return Math.pow(scale(d.pages[currentMonth]),pow)*amp;})
+          .start();
+        
+        force.on("tick", function(d) {
+          label.attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; });
+          
+          
+          circle.attr("transform", function(d) { return "translate(" + parseInt(d.x,10) + "," + parseInt(d.y,10) + ")"; })
+            
+            circles
+              .on('mouseover', function(d) {
+                $svg.append(this);
+                var thisradius =  parseInt(d3.select(this).select('.circle').attr('r'),10);
+                tip.css({'left':parseInt(d.x+$svg.position().left-.5*tip.width(),10),'top':parseInt(d.y+$svg.position().top-tip.height()-thisradius-20,10)});
+                tip.fadeIn();
+                tip.empty().html(tiptext(d));
+                d3.select(this).classed("selected", true);
+              })
+              .on('mouseout', function(d) {
+                tip.hide();
+                d3.select(this).classed("selected", false);
+              });
+          
+          
+        });
+        
+        //create visuals
+        var circles = chart.selectAll('.circle')  .data(force.nodes()).enter().append('g').attr('class','circles');
+        
+        var circle = circles
+            .append('circle')
+            .attr('class','circle')
+            .attr('r', 0);
+        
+        
+        
+        var label = circles
+            .append('text');
+        
+        
+        
+        
+        
+        //function called each time the slider changes
+        refreshchart(currentMonth);
+        function refreshchart(dateForCircles) {
+          
+          tip.hide();
+          circle
+            
+            .transition()
+            .duration(500)
+            .attr('x', 0)
+            .attr('y',0)
+            .attr('r', function(d) { return scale(d.pages[dateForCircles]);});
+          
+          label .attr('class','label')
+            .attr('x', function(d) {return d.x})
+            .attr('y', function(d) {return d.y})
+            .attr('dy', 4)
+            .attr('text-anchor','middle').text(function(d) {return d.agency;} )
+            .text(function(d) {
+              if($(this).width() >= scale(d.pages[currentMonth])*2) {
+                
+              } else {
+                if(d.shortName) {
+                  return d.shortName;
+                } else {
+                  return d.agency;
+                }           
+              }
+              
+            })  
+            
+            
+            
+            force.charge( function(d) { return Math.pow(scale(d.pages[dateForCircles]),pow)*amp;});
+          force.start();
+          
+          total = 0;
+          var arr = [];
+          for (var i = 0; i <= data.length-1; i++) {
+            arr.push(data[i].pages[dateForCircles]);
+          }
+          
+          $.each(arr,function() {
+            total += this;
+          });
+          
+          var currentDate = new Date(startDate);
+          currentDate.setMonth(startDate.getMonth()+currentMonth);
+          $('#date').empty().append("<br/>"+months[currentDate.getMonth()] + " " + currentDate.getFullYear());
+          
+          $('#total').empty().append("Total Pages: " + total);
+          
+          
+        }
+        
+        
+        
+        
+        $( "#slider" ).slider({
+          min: 0,
+          max: currentMonth,
+          value: currentMonth,
+          step: 1,
+          slide: function( event, ui ) {
+            currentMonth = ui.value;
+            console.log(currentMonth);
+            refreshchart(currentMonth);
+            
+            
+          }
+        });
+        
+        
+        
+        $window.resize(function() {
+          width = $window.width(),
+            height = $window.height();
+          chart
+            .attr('width', width)
+            .attr('height', height);
+          force
+            .size([width, height])
+            .start();
+          
+          $container.css({
+            "height":height-50,
+            "width":width
+          });
+          
+          $info.css({
+            "width":width
+          });
+          
+        });
+        $window.trigger("resize");
+        var total = 0;
+        function tiptext(circledata){
+          var str = "";
+          str += "<h3>" + circledata.agency + "</h3>";
+      str += $('#date').html() + "'s pages: " + circledata.pages[currentMonth];
+      return str;
+      }
+      
+      });
+      
+    </script>
+    <style>
+      
+      body {
+        height:1000px;
+        width:1000px;
+       background: #ffffff; /* Old browsers */
+background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #305581 100%); /* FF3.6+ */
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#305581)); /* Chrome,Safari4+ */
+background: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#305581 100%); /* Chrome10+,Safari5.1+ */
+background: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#305581 100%); /* Opera 12+ */
+background: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#305581 100%); /* IE10+ */
+background: radial-gradient(ellipse at center,  #ffffff 0%,#305581 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#305581',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+ 
+      }
+      #container{
+        position:relative;
+        margin-top:50px;
+      }
+      
+      h3 {
+        font-weight:bold;
+        font-size:1.6em;
+      }
+      
+      h1 {
+        font-size:3em;
+        font-weight:bold;
+        letter-spacing:-2px;
+        text-align:center;
+      }
+      
+      h1 span {
+        color:#305581;
+      }
+      
+      body {
+        font-family:arial;
+        font-size:10px;
+      }
+      
+      
+      
+      svg {
+        position:absolute;
+        top:0px;
+        left:0px;
+      }
+      
+      .chart .circle{
+        fill:#e7ebf0;
+        stroke:#305581;
+        stroke-width:2;
+        shadow: black 1px 1px 1px;
+      }
+      
+      .circles {
+        position:absolute;
+      }
+      
+      .chart .label{
+        fill:black;
+        text-anchor: left;
+        pointer-events: none;
+        text-shadow: white 1px 1px 1px;
+      }
+      
+      
+      .selected .circle {
+        
+        stroke-width:3px;
+        stroke:black;
+      }
+      
+      .selected {
+        z-index:100;
+      }
+      
+      
+      
+      #slider {
+        width:300px;
+        margin:0px auto;
+        font-size:24px;
+      }
+      
+      #tip {
+        width:200px;
+        position:absolute;
+        border:1px solid black;
+        display:none;
+        padding:10px;
+        background-color:white;
+        border-radius:10px;
+        box-shadow:#aaa 0px 0px 20px;
+      }
+      
+      #date {
+        text-align:center;
+        font-size:16px;
+        text-shadow:white 2px 2px 1px;
+      }
+      
+      #total {
+        text-align:center;
+      }
+      
+      #info {
+        position:absolute;
+        bottom:10px;
+        
+        
+      }
+      
+      
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1><span>Davis Polk</span> Dodd-Frank Page Tracker</h1>
+      <svg></svg>
+      <div id="info">
+        <div id="slider"></div>
+        <div id="date"></div>
+        <div id="total"></div>
+      </div>
+      <div id="tip"></div>
+    </div>
+    
+  </body>
+</html>

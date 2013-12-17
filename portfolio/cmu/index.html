@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Karla:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="mustache.js"></script>
+    <script>
+      $(function(){
+        var $win = $(window),
+            winheight = $win.height(),
+            winwidth = $win.width(),
+            $container = $('#container'),
+            $info = $('#info'),
+            $content = $('#content'),
+            $description = $('#description'),
+            $changeable = $('.change'),
+            $slide = $('.slide'),
+            InfoTemplate = Mustache.compile($('#infoTemplate').html()),
+            currproject = 0;
+        
+        var projects = [
+          [1, "Davis Polk Infographic", "Information Design", 3, "", ""],
+          [2, "StubHub Data Design", "Information Design", 1, "", ""],
+          [3, "Senate Ideological History", "Interactive Information Design", 3, "http://www.alexsciuto.com/historicalsenate/", "Senate History"],
+          [4, "State Size Chart", "Interactive Information Design", 2, "http://alexsciuto.com/projects/states-circles/v2", "State Sizes Chart"],
+          [5, "Time Keepr", "Interaction Development", 2, "http://www.alexsciuto.com/projects/timekeepr/", "Time Keepr"],
+          [6, "Weather Forecast", "Interaction Development", 2, "http://www.alexsciuto.com/weather", "Weather Forecast"],
+          [7, "Hotel Price Index", "Website Design", 2, "http://www.hotel-price-index.com", "Hotel Price Index"],
+          [8, "Caring for Michigan Microsite", "Website Design", 1, "http://www.caringformi.org", "Weather Forecast"],
+          [9, "Everything Else", "", 1, "http://www.alexsciuto.com/fullportfolio.php", "Alex Sciuto's portfolio"]
+        ],
+            numberofprojects = projects.length;       
+        
+        
+        var slides = [
+          [0, "<img src='images/dp1.png' />", "This freelance project was commissioned by the Manhattan law firm, Davis Polk, to commemorate the second anniversary of the passage of the Dodd-Frank financial overhaul. To the right, you can see the some of the documents Davis-Polk provided me. These documents included spreadsheets of government publications and timelines tracking the bill's implementation.", 1], 
+          [0, "<img src='images/dp2.png' />", "After working through the initial batch of data Davis-Polk provided me, I created a basic wireframe of the story I thought was most interesting. To the right is the final wireframe of the infographic.", 2], 
+          [0, "<img src='images/davispolk-design-july12.png' />", "The final infographic. I was proud that this infographic was covered by the <a href='http://ftalphaville.ft.com/2012/07/18/1088201/happy-2nd-birthday-dodd-frank/?Authorised=false'>Financial Times<\/a>", 3],
+          [1, "<img src='images/stubhub1.jpg' />", "As part of my work at Finn Partners, I designed this infographic in conjunction with the data analysis team at StubHub.com. The StubHub team needed help conveying an interesting pattern in ticket sales data to a wide audience. I took StubHub's data and constructed this infographic to introduce viewers to the correlation between sports purchases and political affiliation, and then show viewers why the stats were interesting.", 1],
+          [2, "<img src='images/senate1.png' />", "Political Science Professor Keith Poole devised a method of ranking the ideology of each United Senator throughout history. I heard about the data and thought it cried out to be made into a chart. To the right you can see the initial form of the data.", 1],
+          [2, "<img src='images/senate2.png' />", "Here is a screenshot of the final chart. I scraped the data from the internet, converted it to JSON format, and processed and displayed it using Javascript. Each line represents a single senators careers in the Senate. Each line's color represents the senator's relative ideology when he or she was first elected to the Senate.", 2],
+          [2, "<img src='images/senate3.png' />", "Mousing over the chart, the user can see additional data about each senator. I also allowed users to look at particular years that were especially ideologically significant to see how the Senate changed composition", 3],
+          [3, "<img src='images/state1.png' />", "I created this interaction to learn more about D3.js, a Javascript data visualization library. After collecting the data, I created a physics simulation that pulled all the circles into a larger circle.", 1],
+          [3, "<img src='images/state2.png' />", "Clicking on an individual circle shows the user a historical chart of that state's growth.", 2],         
+          [4, "<img src='images/timekeep1.png' />", "At my work, I have to keep track of what projects I am working on throughout the day for billing purposes. Unfortunately the web interface for this stinks. As an experiment, I developed my own time tracking application. I use it every day to keep track of what I am doing throughout the week.", 1],
+          [4, "<img src='images/timekeep2.png' />", "The user can dynamically add and remove categories to allow them to more easily keep track of different types of activities.", 2],
+          [5, "<img src='images/weather1.png' />", "Most weather forecasting sites stink and they're chock full of ads. The government though provides weather forecasts for free. You've just got to access it! I created this little app so I could check the weather on my computer without seeing ads.", 1],
+          [5, "<img src='images/weather2.png' />", "I created all the graphics and textures.", 2],
+          [6, "<img src='images/hotels1.png' />", "As part of my work with Finn Partners, I lead the design of a website to contain a biannual report of Hotels.com's hotel data. I created the information architecture for the site, and I created the visual design.", 1],
+          [6, "<img src='images/hotels2.png' />", "Though the project was not explicitly about data visualization, I still created an infographic and interactive map to accompany the latest version of the Hotel Price Index", 2],
+          [7, "<img src='images/caring1.png' />", "For my client, Blue Cross Blue Shield of Michigan, I created a small microsite to house a television advertisement that ran in Detroit. The site was small, but I liked the final result's visual design.", 1],
+          [8, "<img src='images/random.png' />", "Thanks for viewing. Here are a few more pieces that I just didn't have enough room to include. Please see my website for my full portfolio of work!", 1],
+        ],
+          currslide = -1,
+          numberofslides = slides.length; 
+          
+          
+          function newslide() {
+          var currentslide = slides[currslide];
+        var currentproject = projects[currentslide[0]];
+        $content.fadeOut(function() {
+          $(this).html(currentslide[1]).fadeIn();
+        });
+        if(currentproject[0] !== currproject) {
+          $info.fadeOut(function() {
+            $(this).html(InfoTemplate({
+              "currentprojectnumber": currentproject[0],
+              "projectype" : currentproject[2],
+              "totalprojects": numberofprojects,
+              "projectitle": currentproject[1],
+              "imagenumber": currentslide[3],
+              "totalimages":currentproject[3],
+              "description": currentslide[2],
+              "url" : currentproject[4],
+              "urlTitle" : currentproject[5]
+            })).fadeIn();
+            currproject = currentproject[0];
+          });
+        } else {
+          $info.html(InfoTemplate({
+            "currentprojectnumber": currentproject[0],
+            "projectype" : currentproject[2],
+            "totalprojects": numberofprojects,
+            "projectitle": currentproject[1],
+            "imagenumber": currentslide[3],
+            "totalimages":currentproject[3],
+            "description": currentslide[2],
+            "url" : currentproject[4],
+            "urlTitle" : currentproject[5]
+          }));
+        }
+      }
+        
+        $('#next').click(function() {
+        if (currslide+1 < numberofslides) {
+          currslide++;
+          newslide();
+        }
+      });
+      
+      $('#prev').click(function() {
+        if (currslide > 0) {
+          currslide--;
+          newslide();
+        }
+      });
+      
+      $(document).keydown(function(e){
+        if (e.keyCode == 37) { 
+          $('#prev').trigger('click');
+        }
+      });
+      
+      $(document).keydown(function(e){
+        if (e.keyCode == 39) { 
+          $('#next').trigger('click');
+        }
+      });
+      
+      $.fn.preload = function() {
+        this.each(function(){
+          $('<img/>')[0].src = this;
+        });
+      }
+        
+        $([
+          'images/dp1.png',
+          'images/dp2.png',
+          'images/dp1.png'
+        ]).preload();
+      
+      
+      
+      
+      });
+    </script>
+    <style>
+      @font-face {
+        font-family: 'open_sansbold';
+        src: url('fonts/opensans-bold-webfont.eot');
+        src: url('fonts/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+          url('fonts/opensans-bold-webfont.woff') format('woff'),
+          url('fonts/opensans-bold-webfont.ttf') format('truetype'),
+          url('fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
+        font-weight: normal;
+        font-style: normal;
+        
+      }
+      
+      
+      
+      
+      @font-face {
+        font-family: 'open_sans_lightregular';
+        src: url('fonts/opensans-light-webfont.eot');
+        src: url('fonts/opensans-light-webfont.eot?#iefix') format('embedded-opentype'),
+          url('fonts/opensans-light-webfont.woff') format('woff'),
+          url('fonts/opensans-light-webfont.ttf') format('truetype'),
+          url('fonts/opensans-light-webfont.svg#open_sans_lightregular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+        
+      }
+      
+      
+      
+      
+      @font-face {
+        font-family: 'open_sansregular';
+        src: url('fonts/opensans-regular-webfont.eot');
+        src: url('fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+          url('fonts/opensans-regular-webfont.woff') format('woff'),
+          url('fonts/opensans-regular-webfont.ttf') format('truetype'),
+          url('fonts/opensans-regular-webfont.svg#open_sansregular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+        
+      }
+      
+      
+      
+      
+      @font-face {
+        font-family: 'open_sansitalic';
+        src: url('fonts/opensans-italic-webfont.eot');
+        src: url('fonts/opensans-italic-webfont.eot?#iefix') format('embedded-opentype'),
+          url('fonts/opensans-italic-webfont.woff') format('woff'),
+          url('fonts/opensans-italic-webfont.ttf') format('truetype'),
+          url('fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
+        font-weight: normal;
+        font-style: normal;
+        c
+      }
+      
+      body, html {
+        margin:0px;
+        padding:0px;
+        font-family:open_sansregular;
+        color:white;
+        font-size:12px;
+      }
+      
+      a {
+        color:white; 
+      }
+      
+      #navigation {
+        position:fixed;
+        left:0;
+        top:0;
+        width:320px;
+        height:100%;
+        background:#ff0030;
+        min-height:400px
+      }
+      
+      .bold {
+        font-family:open_sansbold;
+      }
+      
+      .light {
+        font-family:open_sans_lightregular;
+      }
+      
+      .ital {
+        font-family:open_sansitalic;
+      }
+      
+      
+      #title {
+        padding:10px;
+        font-size:60px; 
+      }
+      
+      #title div {
+        font-size:14px; 
+        margin-bottom:-15px;
+      }
+      
+      #info {
+        position:absolute;
+        bottom:60px;
+        padding:10px;
+        width:300px;
+      }
+      
+      #info #project {
+        font-size:40px;
+        line-height:40px;
+      }
+      
+      #info div {
+        font-size:14px; 
+      }
+      
+      #info #description {
+        margin-top:10px;
+        font-size:12px; 
+        line-height:20px;
+      }
+      
+      #info #url {
+        border-top: 2px solid white;
+        border-bottom: 2px solid white; 
+        margin: 5px 0 5px 0;
+        padding: 5px 0px 5px 0px;
+      }
+      
+      #info a {
+        color:white;
+        text-decoration:underline;
+      }
+      
+      
+      
+      #controls {
+        position:absolute;
+        bottom:0;
+        left:0;
+        width:320px; 
+      }
+      
+      
+      button {
+        border:none;
+        height:55px;
+        cursor:pointer;
+        padding:0;
+        margin:0;
+        cursor:pointer;
+        float:left;
+        background: url('controls2.png');
+      }
+      
+      #next {
+        width:160px;
+        background-position:right center;
+      } 
+      #prev {
+        width:160px;
+        background-position:left center;
+      } 
+      
+      #next:hover {
+        background-position:right bottom;
+      } 
+      #prev:hover {
+        background-position:left bottom;
+      } 
+      
+      #next:active {
+        background-position:right top;
+      } 
+      #prev:active {
+        background-position:left top;
+      } 
+      
+      
+      
+      
+      #content {
+        position:absolute;
+        top:0;
+        left:320px; 
+      }
+      
+      
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      
+      <div  id="content">
+        <img src="images/intro.png" alt="">
+      </div>
+      
+      
+      
+      <div id="navigation">
+        <div class="light" id="title">
+          <div class="bold">Portfolio of</div>
+          Alex Sciuto
+          <div class="light links">
+            <a href="alex-sciuto-grad-resume.pdf" target="_blank">Download Resume</a> | <a href="http://www.alexsciuto.com/fullportfolio.php" target="_blank">Full Portfolio Website</a>
+          </div>
+        </div>
+        
+        
+        <div class="light" id="info">
+          
+          
+          <div id="project">Welcome! Thanks for viewing!</div>
+          
+          
+        </div>
+        
+        <div id="controls">
+          <button id="prev"></button>
+          <button id="next"></button>
+        </div>
+        
+      </div>
+      
+    </div>
+    <script id="infoTemplate" type="text/html">
+      <div class="bold">Project {{currentprojectnumber}} of {{totalprojects}}</div>
+      
+      <div id="project">{{projectitle}}</div>
+      <div class="bold">{{projectype}}</div>
+      <div id="description">
+        <span class="ital"id="imagecount">Image {{imagenumber}} of {{totalimages}}.</span> {{{description}}}</div>
+      {{#url}}
+      <div id="url"><span class="bold">link</span> <a href="{{url}}" target="_blank">{{urlTitle}}</a></div>
+      {{/url}}
+    </script>
+    
+    <script type="text/javascript">
+      
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10951674-4']);
+      _gaq.push(['_trackPageview']);
+      
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+      
+    </script>
+  </body>
+</html>

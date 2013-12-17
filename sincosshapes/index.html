@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>
+    <script>
+      $(function(){
+        var p = Raphael(0,0,1200,1200);
+        
+        
+        
+        var radius = 200;
+        
+        var shape = p.path(stars(400,400,2,2));
+        
+        function stars(cx, cy, cos, sin) {
+          var pathlines = "M " + cx + " " + cy + " R";
+          for (var i = 0; i <= 60; i++) {
+            
+            var x = cx+Math.cos(i*cos)*radius;
+            var y = cy+Math.sin(i*sin)*radius;
+            pathlines += " " + x + " " + y + " " + cx + " " + cy + " ";
+          }
+          return pathlines;
+          
+        }
+        
+        $(document).mousemove(function(e){
+          shape.stop().animate({
+            path:stars(450, 450, Math.ceil(e.clientX/100),Math.ceil( e.clientY/100))
+          },300);
+        });
+        
+        
+        
+      });
+    </script>
+    <style>
+    </style>
+  </head>
+  <body>
+    
+  </body>
+</html>

@@ -1,0 +1,692 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <LastAuthor>&#45;&#45;&#45;- &#45;&#45;&#45;-</LastAuthor>
+  <Created>2012-10-01T00:57:13Z</Created>
+  <LastSaved>2012-10-01T00:59:53Z</LastSaved>
+  <Version>12.0</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>18700</WindowHeight>
+  <WindowWidth>31020</WindowWidth>
+  <WindowTopX>3720</WindowTopX>
+  <WindowTopY>200</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:Size="8.0"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s21">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Font ss:Size="8.0" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s23">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+   </Borders>
+   <Font ss:Size="8.0" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s34">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Font ss:Size="8.0" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s35">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+   <Font ss:Size="8.0" ss:Italic="1"/>
+   <NumberFormat ss:Format="#0.0"/>
+  </Style>
+  <Style ss:ID="s36">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+   <Font ss:Size="8.0" ss:Italic="1"/>
+   <NumberFormat ss:Format="#,##0"/>
+  </Style>
+  <Style ss:ID="s37">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+   <Font ss:Size="8.0"/>
+   <NumberFormat ss:Format="#,##0"/>
+  </Style>
+  <Style ss:ID="s38">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Font ss:Size="8.0"/>
+  </Style>
+  <Style ss:ID="s39">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Font ss:Size="8.0"/>
+  </Style>
+  <Style ss:ID="s42">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+   </Borders>
+   <Font ss:Size="8.0" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s43">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+   </Borders>
+   <Font ss:Size="8.0" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s44">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+   </Borders>
+   <Font ss:Size="8.0" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s45">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+   </Borders>
+   <Font ss:Size="8.0" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s46">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000090"/>
+   </Borders>
+   <Font ss:Size="8.0" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s47">
+   <Alignment ss:Vertical="Bottom"/>
+  </Style>
+  <Style ss:ID="s49">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+   <Font ss:Size="8.0" ss:Italic="1"/>
+   <NumberFormat ss:Format="#,##0"/>
+  </Style>
+  <Style ss:ID="s50">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+   <Font ss:Size="8.0" ss:Italic="1"/>
+   <NumberFormat ss:Format="#0.0"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Data">
+  <Names>
+   <NamedRange ss:Name="Print_Titles" ss:RefersTo="=Data!R1:R6"/>
+  </Names>
+  <Table ss:ExpandedColumnCount="18" ss:ExpandedRowCount="27" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="42.0" ss:DefaultRowHeight="11.25">
+   <Column ss:Width="200.0"/>
+   <Column ss:Width="50.0" ss:Span="11"/>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s47"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.0">
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.0">
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s21"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="90.0">
+    <Cell ss:StyleID="s42"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s43"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s44"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s44"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s44"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s44"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s44"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s45"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15.0">
+    <Cell ss:StyleID="s46"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s23"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s43"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s44"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s45"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s43"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s45"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:Index="2"><Data ss:Type="String">Birth</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">Death</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">Population</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">Region</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">East Africa</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">38.28199999999999</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">11.94</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">324.044321</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Africa</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">38.282</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">11.94</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">324.044321</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Mid Africa</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">42.715</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">16.252</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">126.689015</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Africa</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">42.715</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">16.252</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">126.689015</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">North Africa</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">24.49</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">6.096</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">209.459184</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Africa</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">24.49</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">6.096</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">209.459184</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">South Africa</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">22.63500000000001</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">14.933</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">57.780425</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Africa</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">22.63500000000001</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">14.933</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">57.780425</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">West Africa</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">40.09499999999999</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">13.69</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">304.261455</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Africa</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">40.095</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">13.69</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">304.261455</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Carribean</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">18.64699999999999</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">7.401</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">41.64607</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">South America</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">18.64699999999999</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">7.401</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">41.64607</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Central America</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">22.13</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">4.857999999999998</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">155.88099</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">South America</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">22.13</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">4.857999999999999</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">155.88099</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">South America</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">18.232</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">6.208</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">392.554963</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">South America</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">18.232</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">6.208</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">392.554963</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="22.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">North America</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">13.702</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">8.213000000000001</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">344.528824</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">North America</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">13.702</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">8.213000000000001</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">344.528824</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">East Asia</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">12.183</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">7.315999999999998</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">1573.969967</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Asia</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">12.183</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">7.315999999999999</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">1573.969967</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">South Central Asia</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">23.553</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">7.984</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">1764.872276</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Asia</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">23.553</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">7.984</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">1764.872276</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">South Eastern Asia</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">19.247</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">6.737</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">593.4152849999998</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Asia</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">19.247</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">6.737</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">593.4152849999999</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">West Asia</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">24.17</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">5.373</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">231.994769</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Asia</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">24.17</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">5.373</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">231.994769</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Eastern Europe</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">10.849</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">13.63</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">294.770886</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Europe</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">10.849</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">13.63</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">294.770886</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Northern Europe</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">12.154</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">9.708</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">99.20483199999998</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Europe</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">12.154</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">9.707999999999998</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">99.20483199999998</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Southern Europe</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">10.163</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">9.633000000000001</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">155.171088</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Europe</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">10.163</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">9.633000000000001</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">155.171088</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Western Europe</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">10.368</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">9.372000000000005</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">189.051795</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Europe</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">10.368</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">9.372000000000003</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">189.051795</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="22.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Australia and New Zealand</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">13.838</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">6.731</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">26.63652</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Australia</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">13.838</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">6.731</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">26.63652</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Melanesia</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">30.229</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">7.551</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">8.747557999999999</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Australia</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">30.229</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">7.551</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">8.747557999999999</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Micronesia</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">21.349</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">5.405</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">0.536188</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Australia</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">21.349</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">5.405</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">0.536188</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Polynesia</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">22.278</Data></Cell>
+    <Cell ss:StyleID="s49"><Data ss:Type="Number">5.477</Data></Cell>
+    <Cell ss:StyleID="s50"><Data ss:Type="Number">0.672607</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Australia</Data></Cell>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s35"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:StyleID="s37"/>
+    <Cell ss:StyleID="s36"/>
+    <Cell ss:Index="16" ss:StyleID="s36"><Data ss:Type="Number">22.278</Data></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="Number">5.477</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="Number">0.672607</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Layout x:Orientation="Landscape"/>
+    <Footer x:Data="Page &amp;P of &amp;N"/>
+   </PageSetup>
+   <Unsynced/>
+   <FitToPage/>
+   <Print>
+    <FitHeight>0</FitHeight>
+    <ValidPrinterInfo/>
+    <Scale>67</Scale>
+    <HorizontalResolution>-4</HorizontalResolution>
+    <VerticalResolution>-4</VerticalResolution>
+   </Print>
+   <PageLayoutZoom>0</PageLayoutZoom>
+   <Selected/>
+   <FreezePanes/>
+   <FrozenNoSplit/>
+   <SplitHorizontal>6</SplitHorizontal>
+   <TopRowBottomPane>6</TopRowBottomPane>
+   <ActivePane>2</ActivePane>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+    </Pane>
+    <Pane>
+     <Number>2</Number>
+     <ActiveRow>30</ActiveRow>
+     <ActiveCol>7</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Footnotes">
+  <Names>
+   <NamedRange ss:Name="Print_Titles" ss:RefersTo="=Footnotes!R1:R3"/>
+  </Names>
+  <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="6" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="42.0" ss:DefaultRowHeight="11.25">
+   <Column ss:Width="800.0"/>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0"/>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s34"><Data ss:Type="String">FOOTNOTES - NOTES</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:Index="4" ss:AutoFitHeight="0" ss:Height="33.0">
+    <Cell ss:StyleID="s39"><Data ss:Type="String">1 Population per square kilometre of surface area. Figures are estimates of population divided by surface area and are not to be considered as either reflecting density in the urban sense or as indicating the supporting power of a territory’s land and resources. - Habitants par kilomètre carré. Il s’agit simplement du quotient calculé en divisant la population par la superficie et n’est par considéré comme indiquant la densité au sens urbain du terme ni l’effectif de population que les terres et les ressources du territoire sont capables de nourrir.</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s39"><Data ss:Type="String">2 Hawaii, a state of the United States of America, is included in Northern America rather than in Oceania. - Hawaii, un Etat des Etats-Unis d’Amérique, est compris en Amérique septentrionale plutôt qu’en Océanie.</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="11.0">
+    <Cell ss:StyleID="s39"><Data ss:Type="String">3 The European part of Turkey is included in Western Asia rather than Europe. - La partie européenne de la Turquie est comprise en Asie Occidentale plutôt qu’en Europe.</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Layout x:Orientation="Landscape"/>
+    <Footer x:Data="Page &amp;P of &amp;N"/>
+   </PageSetup>
+   <Unsynced/>
+   <FitToPage/>
+   <Print>
+    <FitHeight>0</FitHeight>
+    <ValidPrinterInfo/>
+    <Scale>98</Scale>
+    <HorizontalResolution>-4</HorizontalResolution>
+    <VerticalResolution>-4</VerticalResolution>
+   </Print>
+   <PageLayoutZoom>0</PageLayoutZoom>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

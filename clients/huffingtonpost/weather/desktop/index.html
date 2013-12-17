@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../d3.js"></script>
+    <script type="text/javascript" src="//use.typekit.net/wzl2qlx.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <link rel="stylesheet" href="../reset.css">
+    <script>
+      $(function(){
+        
+        var data,
+            r = 500,
+            //margin = {"top":-20, "bottom":30, "left":150, "right":30},
+            speed = 1, 
+            app = new Visual(),
+            animationduration = 2000,
+            animationCompleted = 0;
+        
+        d3.json("../data.json", function(json) {
+          var parseDate = d3.time.format('%B %e, %Y');  
+          for(var i in json) {
+            var state = json[i].state;
+            json[i].date = parseDate.parse(json[i].dateFormatted);
+            className = state.toLowerCase().replace(/ /g, '-'); 
+            json[i].class = className;
+            if(json[i].class == "california") {
+              app.setState(json[i]);
+            }
+            
+          }
+          //console.log(json);
+          data = json;
+          app.init();
+        });
+        
+        
+        
+        function Visual() {
+          var list,
+              svg,
+              donut,
+              timeline;
+          
+          var selectedState,
+              highCircles,
+              avgCircles,
+              infoselect = d3.select('#info');
+          
+          
+          var blue = "#007BC7",
+              gray = "#eeeeee",
+              red = "#D3562C",
+              lightblue = "#5C9DA9",
+              lightgray = "#fdfdfd",
+              lightred = "#E4F62B",
+              timelinecircler = 2;
+          
+          var svg = d3.select('#container').append('svg')
+              .attr('width', r+20)
+              .attr('height', r+20)
+              .attr('id', 'graph')
+              .append('g')
+              .attr('transform', "translate(10, 10)");
+          
+          var timeline = d3.select('#timeline')
+              .attr('height', 20)
+              .append('g')
+              .attr('transform', 'translate(2,2)')      ,
+              timelinewidth = 300;
+          
+          
+          
+          var scaler = d3.scale.linear()
+              .range([0, r/2]);
+          
+          
+          
+          var axisrconstructor = d3.svg.axis()
+              .scale(scaler)
+              .ticks(12)
+              .tickSubdivide(2)
+              .tickSize(6,3,1)
+              .tickFormat(function(d) { return d + '°';});
+          
+          
+          
+          var donutconstructor = d3.svg.arc()
+              .innerRadius(1)
+              .outerRadius(3)
+              .startAngle(0)
+              .endAngle(2*Math.PI);
+          
+          var scalec = d3.scale.linear()
+              .domain([39, 87, 134])
+              .range([blue, gray, red]);
+          
+          var scaleg = d3.scale.linear()
+              .domain([39, 87, 134])
+              .range(['#ddd', '#555', '#ddd']);
+          
+          
+          var scaletimeline = d3.time.scale()
+              .range([20, $('#info table').width()-30]);
+          
+          var gradient = svg
+              .append("radialGradient")
+              .attr("id", "gradient")
+              .attr('cx', '50%')
+              .attr('cy', '50%')
+              .attr('r', '50%')
+              .attr('fx', '50%')
+              .attr('fy', '50%');
+          
+          gradient.append('stop')
+            .attr('offset', '0%')
+            .style('stop-color', lightblue);
+          gradient.append('stop')
+            .attr('offset', '100%')
+            .style('stop-color', lightred);
+          gradient.append('stop')
+            .attr('offset', '50%')
+            .style('stop-color', lightgray);
+          
+          
+          
+          
+          this.init = function() {
+            
+            scaletimeline
+              .domain(d3.extent(data.map(function(d) {return d.date;})));
+            
+            scaler.domain([
+              0,
+              //d3.min(data.map(function(d) { return d.avgTemp; })), 
+              d3.round(d3.max(data.map(function(d) { return d.highTemp; })),-1)
+            ]);
+            
+            list = d3.select('#list').selectAll('td')
+              .data(data)
+              .attr('class', function(d) {return d.class;})
+              .on('mouseover', function(d) {
+                d3.select(this).classed('selected', true);
+                selectedState = d;
+                app.redraw();
+                
+              })
+              .style('background-color' , function(d) {
+                return scalec(d.highTemp);
+              });
+            
+            
+            
+            
+            donut = svg.append('g')
+              .attr('transform','translate('+r/2+','+r/2+')');
+            
+            donut
+              .append('path')
+              .attr('class', 'donut')
+              .attr('d', donutconstructor)
+              .attr('fill', 'url(#gradient)')
+              ; 
+            
+            
+            
+            
+            highCircles = svg.append('g').attr('class', 'highcircles').selectAll('.highcircles')
+              .data(data)
+              .enter()
+              .append('circle')
+              .attr('class', function(d) {return 'highcircle ' + d["class"]; })
+              .attr('cx','0').attr('cy','0')
+              .attr('transform','translate('+r/2+','+r/2+')')
+              .style('stroke', function(d){ return scalec(d.highTemp); })
+              .style('stroke-width', 100)
+              .attr('r', 800)
+              
+              .transition()
+              .duration(function(d, i) { return speed; })
+              .delay(function(d, i) { return 100*i*speed; })
+              .ease('easeOutBack')
+              .attr('r', function(d) { return scaler(d.highTemp); })
+              .style('stroke', function(d){ return scaleg(d.highTemp); })
+              .style('stroke-width', 2)
+              .style('fill-opacity', 0)
+              
+              ;
+            
+            
+            avgCircles = svg.append('g').attr('class', 'avgcircles').selectAll('.avgcircles')
+              .data(data)
+              .enter()
+              .append('circle')
+              .attr('class', function(d) {return 'avgcircle ' + d["class"]; })
+              .attr('cx','0').attr('cy','0')
+              .attr('transform','translate('+r/2+','+r/2+')')
+              .style('stroke', function(d){ return scalec(d.avg); })
+              .style('stroke-width', 100)
+              .attr('r', 0)
+              .transition()
+              .duration(function(d, i) { return animationduration*speed; })
+              .delay(function(d, i) { return 100*i*speed; })
+              .attr('r', function(d) { return scaler(d.avgTemp); })
+              .style('stroke', function(d){ return scaleg(d.avgTemp); })
+              .style('stroke-width', 2)
+              .each('end', function(d) {
+                animationCompleted += 1;
+                app.animationOver();
+              }) ;
+            
+            svg.append('circle').attr('class', 'selectedhigh').attr('transform','translate('+r/2+','+r/2+')').attr('r', 0);
+            svg.append('circle').attr('class', 'selectedavg').attr('transform','translate('+r/2+','+r/2+')').attr('r', 0); 
+            
+            var axisr = svg.append('g')
+                .attr('transform','translate('+r/2+','+r/2+') rotate('+-60+')')
+                .attr('class', 'axisr')
+                .call(axisrconstructor);
+            
+            axisr.selectAll('text')
+              .attr('transform','translate(13,10)  rotate('+60+')');
+            
+            timeline.append('line')
+              .attr('x1', scaletimeline.range()[1])
+              .attr('y1', 5)
+              .attr('x2', scaletimeline.range()[0])
+              .attr('y2', 5)
+              .style('stroke-width', 1)
+              .style('stroke', '#888');
+            
+            timeline.append('text')
+              .text('1888')
+              .attr('class', 'label')
+              .attr('x', scaletimeline.range()[0] - 5)
+              .attr('y', 7)
+              .attr('text-anchor', 'end');
+            
+            timeline.append('text')
+              .text('2013')
+              .attr('class', 'label')
+              .attr('x', scaletimeline.range()[1] +5)
+              .attr('y', 9)
+              .attr('text-anchor', 'start');
+              
+              var timelineDates = timeline.selectAll('.states')
+                  .data(data)
+                  .enter()
+                  .append('g')
+                  .attr('class', function(d) { return d.class + " unselected"; });
+            
+            timelineDates
+              .append('circle')
+              .attr('r' , timelinecircler)
+              .attr('cx', function(d) { return scaletimeline(d.date); })
+              .attr('cy', 5);
+            
+            
+          }
+            
+            this.redraw = function(speed) {
+              if(!speed) {
+                speed = 500;
+              }
+              console.log(selectedState);
+              list.classed('selected', false);
+              list.select('.'+selectedState.class).classed('selected', true);
+              
+              donutconstructor
+                .innerRadius(scaler(selectedState.avgTemp))
+                .outerRadius(scaler(selectedState.highTemp));
+              
+              donut.select('.donut')
+                .transition()
+                .duration(speed)
+                .attr('d', donutconstructor);
+              
+              svg.select('.selectedhigh')
+                .transition()
+                .duration(speed)
+                .attr('r', scaler(selectedState.highTemp))
+                .style('stroke', scalec(selectedState.highTemp));
+              
+              svg.select('.selectedavg')
+                .transition()
+                .duration(speed)
+                .attr('r', scaler(selectedState.avgTemp))
+                .style('stroke', scalec(selectedState.avgTemp)); 
+              
+             
+               infoselect.select('#info .state').text(selectedState.state);
+              infoselect.select('#info .highTemp').text(selectedState.highTemp+'°');
+              infoselect.select('#info .avgTemp').text(selectedState.avgTemp+'°');
+              infoselect.select('#info .location').text(selectedState.station);
+              infoselect.select('#info .date').text(selectedState.dateFormatted);
+              
+              timeline.selectAll('g')
+                .classed('unselected', true); 
+              
+              timeline.selectAll('g').sort(function (a, b) { // select the parent and sort the path's
+                if (a.class != selectedState.class) return -1;               // a it's not the hovered element, send "a" to the back
+                else return 1;                             // a it's the hovered element, bring "a" to the front
+  });
+              
+              timeline.select('.'+selectedState.class)
+                .attr('class', function(d) {return d.class;});
+              
+              timeline.select('.'+selectedState.class+' circle')
+                .transition()
+                .attr('r', 4)
+                  .style('fill', red);
+               ;
+              
+              timeline.selectAll('.unselected circle')
+                .transition()
+                .attr('r', timelinecircler)
+                 .style('fill', 'black');
+              
+              
+            }
+              
+              this.animationOver = function() {
+                if (animationCompleted >= 51) {
+                 console.log('finished'); 
+                  $('#list').fadeIn();
+                  this.redraw(2000);
+                }
+              }
+                
+                this.setState = function(obj) {
+                  selectedState = obj;
+                }
+               
+              
+              
+              
+              };
+        
+      });
+    </script>
+    <style>
+      body {
+        font-family:"futura-pt-condensed";
+        font-size:15px;
+      }
+      #container {
+        width:960px;
+        height:650px;
+        padding:20px;
+        border:1px solid #aaa;
+        margin:20px auto;
+        position:relative;
+        background: url('../bg.png') 50% 50%;
+      }
+      
+      #list {
+        width:160px;
+        position:absolute;
+        top:10px;
+        left:10px;
+        display:none;
+      }
+      
+      #list p {
+        font-family: "futura-pt-condensed",sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        text-align:left;
+        cursor:pointer;
+        padding:4px;
+      }
+      
+      #graph {
+        position:absolute;
+        top:10px;
+        left:170px;
+      }
+      
+      .clear {
+        clear:both;
+      }
+      
+      #info {
+        float:right;
+        width:275px;
+        
+      }
+      #info table {
+        width:275px;
+      }
+      #info .state {
+        font-size:50px;
+        text-align:center;
+      }
+      
+      
+      #info td {
+        padding:0 0 10px 0;
+      }
+      
+      
+      #info .label {
+        text-align:right;
+        padding:5px 10px 0 0;
+        font-size:16px;
+        vertical-align:top;
+        border-right: 1px solid black;
+        border-top: 1px solid black;
+      }
+      
+      
+      #info .stat {
+        font-size:40px;
+        padding-left:10px;
+      }
+      
+      
+      #timeline .label {
+        font-size:10px;
+      }
+      
+      h1 {
+        font-size:50px;
+        font-weight:700;
+        line-height:40px;
+      }
+      
+      #info p {
+        font-family:arial;
+        font-size:12px; 
+        line-height:16px;
+        padding-bottom:10px;
+        border-bottom: 1px dotted black;
+        margin-bottom:10px;
+      }
+      /* SVG Style */
+      .highcircles, .avgcircles {
+        stroke: #aaa;
+        fill-opacity:0;
+        stroke-opacity:.2;
+        transition-duration: .5s;
+        
+      }
+      
+      .selectedhigh, .selectedavg {
+        fill-opacity:0;
+        stroke-width:6;
+      }
+      
+      .selected {
+        stroke-width:4;
+        stroke-opacity:1;
+        font-weight:bold;
+      }
+      
+      .donut {
+        fill-opacity:1;
+      }
+      
+      .axisr {
+        
+        
+      }
+      
+      .axisr text {
+        font-size:12px;
+        fill:#000;
+      }
+      
+      .axisr line {
+        stroke:#aaa;
+        stroke-width:1
+      }
+      
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="list">
+        <table>
+          <tr>
+            <td valign="middle" align="center">
+              <p class="alabama states-list">Alabama</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="alaska states-list">Alaska</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="arizona states-list">Arizona</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="arkansas states-list">Arkansas</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="california states-list">California</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="colorado states-list">Colorado</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="connecticut states-list">Connecticut</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="delaware states-list">Delaware</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="d.c. states-list">D.C.</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="florida states-list">Florida</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="georgia states-list">Georgia</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="hawaii states-list">Hawaii</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="idaho states-list">Idaho</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="illinois states-list">Illinois</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="indiana states-list">Indiana</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="iowa states-list">Iowa</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="kansas states-list">Kansas</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="kentucky states-list">Kentucky</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="louisiana states-list">Louisiana</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="maine states-list">Maine</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="maryland states-list">Maryland</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="massachusetts states-list">Massachusetts</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="michigan states-list">Michigan</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="minnesota states-list">Minnesota</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="mississippi states-list">Mississippi</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="missouri states-list">Missouri</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="montana states-list">Montana</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="nebraska states-list">Nebraska</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="nevada states-list">Nevada</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="new-hampshire states-list">New Hampshire</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="new-jersey states-list">New Jersey</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="new-mexico states-list">New Mexico</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="new-york states-list">New York</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="north-carolina states-list">North Carolina</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="north-dakota states-list">North Dakota</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="ohio states-list">Ohio</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="oklahoma states-list">Oklahoma</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="oregon states-list">Oregon</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="pennsylvania states-list">Pennsylvania</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="rhode-island states-list">Rhode Island</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="south-carolina states-list">South Carolina</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="south-dakota states-list">South Dakota</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="tennessee states-list">Tennessee</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="texas states-list">Texas</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="utah states-list">Utah</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="vermont states-list">Vermont</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="virginia states-list">Virginia</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="washington states-list">Washington</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="west-virginia states-list">West Virginia</p>
+            </td>
+            
+            <td valign="middle" align="center">
+              <p class="wisconsin states-list">Wisconsin</p>
+            </td>
+            
+          </tr>
+          <tr>
+            
+            <td valign="middle" align="center">
+              <p class="wyoming states-list">Arizona</p>
+              
+            </td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      
+      <div id="info">
+        <h1>The Hottest Day Ever Turns 100</h1>
+        <p>July 11, 2013, marks 100 years since the hottest day on record in the U.S., when temperatures reached 134 degrees in Death Valley. Calif. But another U.S. heat record was broken in 2012 — it was the warmest on record for the continental U.S., according to NOAA, with average temperatures reacing 55.3. A full degree warmer then the previous record set in 1998, 2012’s average temperature was also 3.2 degrees warmer then the 20th century U.S. average. Ahead, we illustrate average temperatures in the U.S. from 1913 to today by state. — <i>James Gerken and AJ Barbosa</i></p>
+        <table width="250" valign="top" >
+          <tr>
+            <td valign="top" colspan="4" class="state" style="padding:0px;">California</td>
+          </tr>
+          <tr>
+            <td valign="top" colspan="4"  style="padding:0px;"><svg id="timeline"></svg></td>
+          </tr>
+          <tr>
+            <td class="label">High<br/>Temp</td>
+            <td class="stat highTemp">134°</td>
+            <td style="padding-left:20px;" class="label">Average<br/>Temp</td>
+            <td class="stat avgTemp">58.9°</td>
+          </tr>
+          <tr>
+            <td class="label">date</td>
+            <td class="stat date" colspan="3">July 10, 1913</td>
+          </tr>
+          <tr>
+            <td class="label">location</td>
+            <td class="stat location" colspan="3">Greenland Ranch</td>
+          </tr>
+        </table>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </body>
+</html>

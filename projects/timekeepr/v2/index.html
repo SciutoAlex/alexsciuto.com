@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/mustache.js"></script>
+    
+    <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/main.css">
+    <script>
+      $(function(){
+        
+        //localStorage.clear();
+        var doc = $(document),
+            addEntry = $('.addentry'),
+            list = $('#list'),
+            listData = [],
+            entryText = $('#entry-text'),
+            entryColor = "",
+            entryTime = $('#entry-time'),
+            entryTemplate = Mustache.compile($('#entryTemplate').html()),
+            listTemplate = Mustache.compile($('#listTemplate').html());
+        
+        var listHeight = list.css('max-height');
+        
+        init();
+        /*
+        
+      }else {
+        
+        $(listTemplate({})).appendTo("#body-container");
+      }          
+      }
+        */
+        
+        function init() {
+          if (localStorage.timeEntries){
+            listData = JSON.parse(localStorage.timeEntries);
+            for (var i = 0; i < listData.length; i++){
+              var listContainer = $(listTemplate({"timestamp":listData[i].timestamp})).attr('data-timestamp', listData[i].timestamp).prependTo("#body-container");
+              for (var j = 0; j < listData[i].data.length; j++){
+                makeNote(listData[i].data[j], listContainer.find('#list'));
+                
+              }
+            }
+          }
+          
+        }
+        
+        
+        
+        function save() {
+          
+          localStorage.timeEntries = JSON.stringify(listData); 
+          console.log(listData);
+          
+        }
+        
+        doc.on('submit', '.addentry', function(e) {
+          e.preventDefault();
+          var $this = $(this);
+          // prevent page from refresing
+          
+          // takes whitespace of beginning and end of string
+          var txt = $.trim($this.find("#entry-text").val());
+          var color = $this.find(".selected").attr('data-color');
+          var time = $this.find("#entry-time").val();
+          
+          var newNote = {
+            v:txt, 
+            c:color, 
+            t:time,
+            d:new Date().getTime()
+          };
+          
+          if (txt.length > 0 && time >= .25) {
+            
+            makeNote(newNote, $this.parent().find("#list"));
+            entryTime.val("");
+            entryText.val("");
+            
+            for (var i = 0; i < listData.length; i++){
+              if (listData[i].timestamp === $this.find('#time-id').val()) {
+                listData[i].data.push(newNote);
+                
+              }
+            }
+            
+            save();
+          }
+          
+          
+          
+      
+          
+        });
+        
+        function makeNote(obj, appendobj) {
+          var note = $(entryTemplate({
+            text : obj.v,
+            time : obj.t 
+          })).css({
+            borderColor : obj.c,
+            backgroundColor: obj.c,
+            height : obj.t*100
+          }).attr('data-timestamp', obj.d)
+              .appendTo(appendobj);
+          
+        }
+        color();
+        function color() {
+          $('.color').css({
+            "background-color" : function() { return $(this).attr('data-color') },
+            
+          }).click(function() {
+            $(this).siblings().removeClass("selected");
+            $(this).addClass("selected");
+          });
+        }
+        
+        doc.on("keyup", "#entry-time", function() { 
+          this.value = this.value.replace(/[^0-9\.]/g,'');
+        });
+        
+        
+        doc.on("click", ".ex", function(){
+          
+          var list;
+          
+          for (var i = 0; i < listData.length; i++){
+            if (listData[i].timestamp === $(this).parent().parent().parent().attr("data-timestamp")) { 
+              for (var j = 0; j < listData[i].data.length; j++){
+                if (listData[i].data[j].d === $(this).parent().attr("data-timestamp")) {
+                  listData[i].data.splice(j, 1); 
+                  list = i;
+                }
+              }
+            }
+          }
+          $(this).parent().slideUp(function() {
+            
+            console.log($(this).parent('#list').children().length);
+            if($(this).parent('#list').children().length === 1) {
+              console.log("hello");
+              $(this).parent().parent().remove();
+              listData.splice(list, 1);
+              console.log(list);
+              $(this).remove();
+            } 
+          });
+          save();
+          
+        });
+        
+        doc.on("click", "#add-list", function() {
+          var newList = {
+            "name": "sdf",
+            "timestamp" : new Date().getTime(),
+            "data": []
+          };
+          listData.push(newList);
+          $(listTemplate({"timestamp":newList.timestamp})).attr('data-timestamp', newList.timestamp).prependTo("#body-container");
+          color();
+          
+          save();
+          
+        });
+        
+       
+        
+        
+        
+        
+        
+      });
+    </script>
+    <style>
+      #add-list {
+        width:200px;
+        height:323px; 
+        cursor:pointer;
+        transition: 1s;
+        -moz-transition: 1s; /* Firefox 4 */
+        -webkit-transition: 1s; /* Safari and Chrome */
+        -o-transition: 1s; /* Opera */  
+      }
+      
+      #add-list p {
+        width:200px;
+        text-align:center;
+        margin:115px 0 0 0;
+        padding:0px;
+        background-color:transparent;
+        border:0px;
+        color:#aaa;       
+      }
+      
+      #add-list:hover p {
+        color:#000;
+      }
+      
+      
+      #add-list:hover {
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ffffff 20%, #ededed 99%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,#ffffff), color-stop(99%,#ededed)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 20%,#ededed 99%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 20%,#ededed 99%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 20%,#ededed 99%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 20%,#ededed 99%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+        
+        
+        
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body-container">
+      
+      
+      <div id = "add-list" class = "list-container">
+        <p>Add New List</p>
+      </div>
+      
+    </div>
+    
+    
+    <script type="text/html" id="entryTemplate">
+      <div class="entry">
+        <button class="ex">X</button>
+        <div class="time">{{time}} HOURS</div>
+        <div class="text">{{text}}</div>
+      </div>   
+    </script>
+    
+    <script type="text/html" id="listTemplate">
+      <div class="list-container">
+        <div class="total-hours"></div>
+        <div id="list"></div>
+        <div class="total-hours"></div>
+        <form class="addentry">
+          <div id="colors">
+            <div class="color" data-color="#888888"></div>
+            <div class="color" data-color="#2B4242"></div>
+            <div class="color" data-color="#848D17"></div>
+            <div class="color" data-color="#C0942B"></div>
+            <div class="color selected" data-color="#C54B2C"></div>
+          </div>
+          <br/>
+          <input type="text" id="entry-text" value = "test" placeholder="What did you do?" autocomplete="off"/><br/>
+          <input type="text" id="entry-time" value = "3" placeholder="" autocomplete="off"/><p>hours</p>
+          <input type="text" id="time-id" style="display:none;" value = "{{timestamp}}">
+          <button>add</button>
+        </form>
+      </div>  
+    </script>
+    
+  </div>
+    
+  </body>
+</html>

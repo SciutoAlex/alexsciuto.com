@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="jqueryui.css">
+    <script src="jquery.js"></script>
+    <script src="d3.js"></script>
+    
+    <script src="jqueryui.js"></script>
+    <script src="data.js"></script>
+    <link rel="stylesheet" href="reset.css"></link>
+    <script>
+      $(function(){
+        
+        var years = [1790,1800,1810,1820,1830,1840,1850,1860,1870,1880,1890,1900,1910,1920,1930,1940,1950,1960,1970,1980,1990,2000,2010];        
+        
+        var doc = $(document),
+            width = 400,
+            height = 500;
+        
+        var pow = 2,
+            amp = -.33;
+        
+        var tip = $('#tip'),
+            $svg = $('svg');
+        
+        
+        var decade = years.length-1;
+        
+        
+        
+        //create charts
+
+      
+        
+        
+        var rankchart = d3.select('#rank')
+            .attr('class','rankchart')
+            .attr('width', width)
+            .attr('height', height);
+        
+        
+       
+        
+        var colorscale = d3.scale.category20()
+            .domain(['west', 'southwest', 'midwest', 'southeast', 'northeast']);
+        
+        
+        
+        
+        
+        redraw();
+            
+        function redraw() {
+          data.sort(function(a, b) { return b.population[decade] - a.population[decade]; });
+          var currentVals = [];
+          var newdata = [];
+          var counter = 0;
+          $.each(data, function() {
+            if (this.population[decade] > 0) {
+              newdata.push(this);
+              this.rank = counter;
+              currentVals.push(this.population[decade]);
+              counter++;
+            }
+          });
+          
+          var largestPop = d3.max(currentVals);
+          
+          var rankscale = d3.scale.linear()
+            .domain([0,largestPop])
+            .range([0, rankchart.attr('width')-100]);
+          
+          
+          rankchart.selectAll('.bars')
+            .data(newdata, function(d) { return d.state; })
+            .exit()
+            .attr('transform', function(d,i) { return "translate("+width*-1+",0)"; })
+            .remove();
+          
+          rankchart.selectAll('.bars')  
+            .data(newdata, function(d) { return d.state; })
+            .enter()
+            .append('rect')
+            .attr('class','bars')
+            .attr('width', function(d) { return rankscale(d.population[decade]); })
+          .attr('height', (height-100)/50)
+          .attr('transform', function(d,i) { return "translate(0," +i*height/50 + ")"; })
+          .attr('fill', function(d) { return colorscale(d.region); });
+          
+          rankchart.selectAll('.bars')
+            .data(newdata, function(d) { return d.state; })
+            .transition()
+            .duration(250)
+            .attr('width', function(d) { return rankscale(d.population[decade]); })
+            .attr('transform', function(d,i) { return "translate(100," +i*height/50 + ")"; })
+          
+          
+           
+           rankchart.selectAll('.label')
+            .data(newdata, function(d) { return d.state; })
+            .exit()
+            .attr('transform', function(d,i) { return "translate("+width*-1+",0)"; })
+            .remove();
+            
+          rankchart.selectAll('.label')
+            .data(newdata, function(d) { return d.state; })
+            .enter()
+            .append('text')
+            .attr('class','label')
+            .text(function(d) {return d.state;})
+            .attr('x',95)
+            .attr('y', function(d,i) { return (i+.6)*height/50; })
+            .attr('text-anchor','end');
+          
+          rankchart.selectAll('.label')
+            .data(newdata, function(d) { return d.state; })
+            .transition()
+            .duration(250)
+            .attr('y', function(d,i) { return (i+.6)*height/50; })
+            
+          
+          }
+        
+        
+        
+        
+        
+        
+        $( "#slider" ).slider({
+          min: 0,
+          max: years.length-1,
+          value: years.length-1,
+          step: 1,
+          slide: function( event, ui ) {
+            decade = ui.value;
+            
+            redraw();
+            
+            
+          }
+        });
+        
+        
+        
+        
+        
+        
+        $(window).resize(function() {
+          width = $(window).width(),
+            height = $(window).height();
+          
+          
+          
+        });
+        
+        
+        
+      
+      });
+      
+    </script>
+    <style>
+      h3 {
+        font-weight:bold;
+        font-size:1.6em;
+      }
+      
+      body {
+        font-family:arial;
+        font-size:10px;
+        margin:20px;
+      }
+      
+      #rank {
+        
+        padding:10px;
+      }
+      
+      #container{
+        position:relative;
+      }
+      
+      #slider {
+        width:300px;
+        margin:0px auto;
+        font-size:24px;
+        border:1px solid black;
+      }
+      
+      .ranksEntries {
+        fill:steelBlue;
+        stroke:black;
+      }   
+      
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <svg id="rank"></svg>
+      <div id="slider"></div>
+      <button id="current">Current</button>
+      <button id="old">old</button>
+      
+      <div id="tip"></div>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Waves of Ideology</title>
+	<meta property="og:title" content="Waves of Ideology"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="http://alexsciuto.com/historicalsenate/"/>
+    <meta property="og:image" content="http://alexsciuto.com/historicalsenate/facebook.jpg"/>
+    <meta property="og:description" content="A Graphical History of 200+ of Ideological Changes in the United States Senate"/>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>
+	<script type="text/javascript" src="data.js"></script>
+	<style type="text/css">
+		body {
+		font-size:10px;
+		font-family:Tahoma, arial, san-serif;
+		}
+		#container {
+			width:870px	;
+			height:2000px;
+			margin:0px auto;
+			position:relative;
+		}
+		#center {
+			width:870px;
+			float:right;
+			border:0px solid black;
+			position:relative;
+		}
+		#graph {
+			height:2000px;
+			width:700px;
+			border:0px solid black;
+			float:right;
+			margin-top:-15px;
+		}
+		#dates {
+			height:2000px;
+			width:30px;
+			float:left;
+			margin-top:17px;
+			position:relative;
+		}
+		#info{
+			 position : fixed;
+			 border : 1px solid gray;
+			 background-color : #fff;
+			 padding : 6px;
+			 z-index: 1000;
+			 width: 230px;
+			 visibility:hidden;
+			 border-top:6px solid;
+		}​
+		
+		#introduction {
+			border: 1px solid black;
+			margin: 14px 0px 20px 0px;
+			width:100%;
+			
+		}
+		
+		#introduction h1 {
+			font-size:3.4em;
+			line-height:.9em;
+			margin:8px 0 0 0;
+
+		}
+		
+		#introduction h2 {
+			margin:0px;
+		}
+		
+		#titlebig {
+		float:left;
+		width:200px;
+		}
+		
+		.texttop {
+		float:left;
+		width:325px;
+		text-align:justify;
+		}
+		
+		#notes {
+			float:right;
+			width:140px;
+			color:gray;
+			position:relative;
+		}
+		
+		#notes strong {
+			color:black;
+			margin:0px;
+			padding:0px;
+		}
+		
+		.nota {
+		font-size:1.3em;
+		font-style:oblique;
+		padding:2px;
+		border:1px solid red;
+		text-align:center;
+		}
+		
+		.note, .individual {
+			position:absolute;
+		}
+		
+		
+		
+		
+		
+		
+	</style>
+
+</head>
+<body>
+<div id="container">
+	<div id = "info"></div>
+	<div id ="center">
+		
+		<div id="introduction">
+			<div id = "titlebig">
+				<h1>WAVES OF IDEOLOGY</h1>
+				<h2>A look at the US Senate</h2>
+			</div>
+			<div style="margin-right:20px;" class = "texttop">
+				<p>Turn a TV or flip to your choice politics blog, and you'll learn that Congress is flip-flopping. One year liberals sweep in, the next year liberals sweep out as conservatives come in like the tide.</p><p>This must be a new phenomenon you might be thinking, one arising along with the 24-hour news cycle and all that is bad with modernity.</p>
+			</div>
+			<div class = "texttop">
+				<p>Well below we map out the ebbs and flows of ideologies in the Senate. Using data from Keith T. Poole's <a href="http://voteview.com/">VoteView.com</a>, we have mapped out the ideological ranking of ever senator who has served in the past 112 Congresses. What decades have waves of change, and when do majorities solidify their positions for years? It's all below.</p>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<img style="margin-left:35px;" src="arrows.jpg">
+		<div id = "notes">
+			<div class="nota" style="top:10px;" ><strong style="color:red;">Hover over each senator or event to see related paths</strong></div>
+			<div data="2012" class="note" style="top:60px;"><strong>2010</strong><br/>The current Senate.</div>
+			<div data="14506" class="individual" style="top:89px;" ><strong>Richard Lugar</strong><br/>Moderate Republican who recently lost primary challenge.</div>
+			<div data="40502" class="individual" style="top:133px;" ><strong>Barack Obama</strong><br/>44th President</div>
+			<div data="14101" class="individual" style="top:220px;" ><strong>Joe Biden</strong><br/>47th Vice President</div>
+			<div data="1994" class="note" style="top:165px;"><strong>1994</strong> Newt Gingrich and the Contract With America bring in a new crop of conservative senators.</div>
+			<div data="1980" class="note" style="top:290px;"><strong>1980</strong> Dissatisfaction with President Jimmy Carter and Republican presidential nominee Ronald Reagan's coattails help a batch of moderate to conservative senators ride into office.</div>
+			<div data="1366" class="individual" style="top:252px;"><strong>Robert Byrd</strong><br/>Longest Serving Senator</div>
+			<div data="4979" class="individual" style="top:540px;"><strong>Lyndon Johnson</strong><br/>36th President</div>
+			<div data="6137" class="individual" style="top:620px;"><strong>Joe McCarthy</strong><br/>Infamous anti-communist demagogue</div>
+			<div data="1968" class="note" style="top:395px;"><strong>1968</strong> War fatigue and Lyndon Johnson's unpopularity help bring in a crop of conservative senators.</div>
+			<div data="1902" class="note" style="top:995px;"><strong>1902</strong> Typical Senate Election.</div>
+			<div data="1958" class="note" style="top:465px;"><strong>1958</strong> The recession of 1958, six years into Republican President Eisenhower's, leads to a 16-seat swing to the Democrats.</div>
+			<div data="1934" class="note" style="top:695px;"><strong>1930s</strong> After the Crash of 1929 and the enormous popularity of Franklin Roosevelt, liberal senators are repeatedly elected. By 1936, few conservative senators are still in the Senate.</div>
+			<div data="1896" class="note" style="top:1030px;"><strong>1896</strong> The then-conservative Democratic party splinters over supporting the gold standard. Its presidential candidate, William Jennings Bryan loses to William McKinley, and its senators lose seats to fringe political parties.</div>
+			<div data="1860" class="note" style="top:1350px;"><strong>1860</strong> At the beginning of the Civil War southern states' senators leave en masse.</div>
+			<div data="2393" class="individual" style="top:1500px;"><strong>Jefferson Davis</strong><br/>First and only president of the Confederate States of America</div>
+			<div data="9903" class="individual" style="top:1675px;"><strong>Daniel Webster</strong><br/>Early leader of the Senate</div>
+			<div data="4843" class="individual" style="top:1630px;"><strong>Andrew Jackson</strong><br/>Seventh President</div>
+		</div>
+		<div id = "graph"></div>
+		<div id = "dates"></div>
+	</div>
+</div>
+
+
+<script type = "text/javascript">
+	(function($){
+		$(document).ready(function() {
+		
+				//Data Preparation. Remember to replace with flattened data to reduce processing time.
+				
+				var statedefs = {};
+				$.each(statenames, function(value, key) {
+					statedefs[this.ID] = this.NAME;
+				});
+				
+				var senatesize = {};
+				$.each(numofsenators, function(value, key) {
+					senatesize[this.senate] = this.senators;
+				});
+				
+				var organizeddata = {};
+				$.each(rawdata, function() {
+					var label = JSON.stringify(this.ID);
+					if(typeof(organizeddata[label]) === 'undefined') {
+						organizeddata[label] = {};
+						organizeddata[label]['rank'] = {};
+						organizeddata[label]['id'] = label;
+						organizeddata[label]['servicelength'] = 0;
+						organizeddata[label]['firstname'] = "";
+						organizeddata[label]['lastname'] = "";
+						organizeddata[label]['stateid'] = this.STATE;
+						organizeddata[label]['initrank'] = this.IDEORANK;
+						organizeddata[label]['finalrank'] = this.IDEORANK;
+						organizeddata[label]['state'] = statedefs[this.STATE];
+						organizeddata[label]['firstsenate'] = this.SENATE;
+						organizeddata[label]['finalsenate'] = this.SENATE;
+						organizeddata[label]['bin'] = this.IDEORANK/senatesize[this.SENATE];
+						
+					}
+					organizeddata[label]['rank'][this.SENATE] = this.IDEORANK;
+					organizeddata[label]['servicelength'] = organizeddata[label]['servicelength']+1;
+					organizeddata[label]['finalrank'] = this.IDEORANK;
+					organizeddata[label]['finalsenate'] = this.SENATE;
+					
+				});
+				
+				
+
+				$.each(senatenames, function() {
+					var id = this.ID;
+					id.toString();
+					if(typeof(organizeddata[id]) !== 'undefined') {
+						organizeddata[id]['firstname'] = this.FIRST;
+						organizeddata[id]['lastname'] = this.LAST;
+					}
+				});
+				
+			
+			
+				
+				
+				//Display.
+				var offopacity = .5;
+				var info = $("#info");
+				var r = 2;
+				var width = 700;
+				var height = 2000;
+				var paper = Raphael("graph", width, height);
+				$.each(organizeddata, function() {
+					var senator = this;
+					this['shape'] = {};
+					this['shape']['path'] = "";
+					this['width'] = 3;
+					var counter = 1;
+					var bin;
+					var lastyear;
+					$.each(this['rank'], function(key, value) {
+						if	(counter == 1) {
+							senator['shape']['circle'] = paper.circle(value/senatesize[key]*(width-30), height-(height-20)/112*key, 2).attr({"opacity":offopacity,"stroke":"#fff","fill":color(senator['bin']),"stroke-linecap":"round","stroke-linejoin":"round"});;
+						} 
+						if ((counter == 1) || (lastyear + 1 != parseInt(key))) {
+							senator['shape']['path'] += "M";
+						} else {
+							senator['shape']['path'] += "L";
+						}
+						var xx = value/senatesize[key]*(width-30);
+						var yy = height-(height-20)/112*key;
+						senator['shape']['path'] += xx + "," + yy;
+						counter++;
+						lastyear = parseInt(key);
+					});
+					//$('#error').append(senator['path']+ "<br/>");
+					
+					this['raphaelpath'] = paper.path(this['shape']['path']).attr({"opacity":offopacity,"stroke-width":"1","stroke":color(senator['bin']),"stroke-linecap":"round","stroke-linejoin":"round"})
+						.mouseover(function() {
+							this.toFront();
+							this.attr({"opacity":"1","stroke-width":"8"});
+							tipText = "<strong>" + senator['firstname'] + " " + senator['lastname'] + "</strong><br/>" + senator['state'] + "<br/> Served in " + senator['servicelength'] + (senator['servicelength'] == 1 ? " Congress." : " Congresses.") + "<br/><br/>Ideological rank during final term Congress: " + senator['finalrank'] + "<br/>" + " Ideological rank during first term in Congress: " + senator['initrank'];
+					   		topcolor = color(senator['bin']);
+					   		info.css('visibility','visible');
+					   		over = true;
+						})
+						.mouseout(function() {
+							this.attr({"opacity":offopacity,"stroke-width":"1"});
+							info.css('visibility','hidden');
+					   		over = false;
+						});
+						
+					senator['shape']['circle'].mouseover(function() {
+							this.toFront();					
+							this.attr({"opacity":"1","fill":color(senator['bin']), "r":"4"});
+							tipText = "<strong>" + senator['firstname'] + " " + senator['lastname'] + "</strong><br/>" + senator['state'] + "<br/> Served in " + senator['servicelength'] + (senator['servicelength'] == 1 ? " Congress." : " Congresses.") + "<br/><br/>Ideological rank during final term Congress: " + senator['finalrank'] + "<br/>" + " Ideological rank during first term in Congress: " + senator['initrank'];
+					   		topcolor = color(senator['bin']);
+					   		info.css('visibility','visible');
+					   		over = true;
+						})
+						.mouseout(function() {
+							this.attr({"opacity":offopacity,"fill":color(senator['bin']), "r":"2"});
+							info.css('visibility','hidden');
+					   		over = false;
+						});
+					//addtip(senator['raphaelpath'].node, senator, color(bin));
+					//addtip(senator['shape']['circle'].node, senator, color(bin));
+					
+				});
+				
+				/*
+				for (var i = 56; i > 0; i--) {
+					var date =  1784 + 4 * i;
+					$('#dates').append('<div class="dates">' + date + '</div>');
+				}
+				*/
+				
+				
+				
+				
+				
+				//Tool Tip
+				var over;
+								
+				$(document).mousemove(function(e){
+					if (over){
+					  var pos = $('#graph').offset();
+					  if (e.clientX-pos.left < 450) {
+					  	info.css("left", e.clientX+10).css("top", e.clientY-20).css("borderTopColor", topcolor);
+					  } else {
+					  info.css("left", e.clientX-250).css("top", e.clientY-20).css("borderTopColor", topcolor);
+					  }
+					  info.empty().append(tipText);
+					}
+				});
+				
+				function color(value) {
+					if (value > .8) {
+						return "#6c1219";
+					} else if ((value <=.8) && (value > .6)) {
+						return "#ff6060";
+					} else if ((value <=.6) && (value > .4)) {
+						return "#e7b418";
+					} else if ((value <=.4) && (value > .2)) {
+						return "#6b60ff";
+					} else {
+						return "#18126c";
+					}
+				}
+				
+				function circle(x,y) {
+					var x = parseFloat(x);
+					var y = parseFloat(y);
+					x = x-1;
+					y = y-1;
+					var circlepath = "M " + x.toString() + " " + y.toString() + " a 1 1 0 1 0 0 1 z";
+					return circlepath;
+				}
+					
+				function toTitleCase(str)
+					{
+						return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+					}
+					
+				$('.note').each(function() {
+					var $this = $(this);
+					$this
+					.css('cursor','default')
+					.hover(function() {
+						var year = $this.attr("data");
+						var congress = (year-1786)/2;
+						$.each(organizeddata, function() {
+							if ((this['firstsenate'] == congress) || (this['finalsenate'] == congress-1)) {
+								this['shape']['circle'].attr({"opacity":"1","r":"4"});
+								this['raphaelpath'].attr({"opacity":"1","stroke-width":"3"});
+							}
+						});
+					}, function() {
+						$.each(organizeddata, function() {
+							this['shape']['circle'].attr({"opacity":offopacity, "r":"2"});
+							this['raphaelpath'].attr({"opacity":offopacity,"stroke-width":"1"});
+						});
+					});
+				});
+				
+				$('.individual')
+				.css('cursor','default')
+				.css({})
+				.each(function() {
+					var id = $(this).attr("data");
+					var o = organizeddata[id];
+					$(this)
+					.hover(function() {
+						o['raphaelpath'].toFront();
+						o['raphaelpath'].attr({"opacity":"1","stroke-width":"10"});
+						o['shape']['circle'].attr({"r":"4"});
+						tipText = "<strong>" + o['firstname'] + " " + o['lastname'] + "</strong><br/>" + o['state'] + "<br/> Served in " + o['servicelength'] + (o['servicelength'] == 1 ? " Congress." : " Congresses.") + "<br/><br/>Ideological rank during final term Congress: " + o['finalrank'] + "<br/>" + " Ideological rank during first term in Congress: " + o['initrank'];
+						topcolor = color(o['bin']);
+						info.css('visibility','visible');
+						over = true;
+					}, function() {
+						o['raphaelpath'].attr({"opacity":offopacity,"stroke-width":"1"});
+						o['shape']['circle'].attr({"r":"2"});
+						info.css('visibility','hidden');
+						over = false;
+					});
+				});
+					
+				for (var i = 0; i < 56; i++) {
+					var datey = 35.35*i;
+					var date =  2008 - 4 * i;
+					$('#dates').append('<div style="top:' + datey + 'px; position:absolute;" class="dates">' + date + '</div>');
+				}
+					
+				
+				
+						
+		});
+	
+		
+	
+	})(jQuery);
+
+	
+	
+</script>
+</body>
+</html>

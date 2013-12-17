@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="jquery.js"></script>
+    <script src="d3.js"></script>
+    <script src="jqueryui.js"></script>
+    <script src="data.js"></script>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="ui-lightness/jqueryui.css">
+    <link rel="stylesheet" href="style.css">
+    <script>
+      
+      
+      
+      
+      $(function(){
+        
+        var years = [1790,1800,1810,1820,1830,1840,1850,1860,1870,1880,1890,1900,1910,1920,1930,1940,1950,1960,1970,1980,1990,2000,2010];        
+        
+        var doc = $(document),
+            bubblesWindow = $('#bubbles'),
+            ranksWindow = $('#rank');
+        
+        var bubblesWidth = bubblesWindow.width(),
+            bubblesHeight = bubblesWindow.height(),
+            ranksWidth = ranksWindow.width(),
+            ranksHeight = ranksWindow.height();
+        
+        
+        var pow = 2,
+            amp = -.33;
+        
+        var tip = $('#tip'),
+            $svg = $('svg');
+        
+        
+        var decade = years.length-1,
+            totalpop = 0,
+            largeststatepop = 0;
+        
+        //create charts
+        var bubblechart = d3.select('#bubbles')
+            .attr('class','bubblechart')
+            .attr('width', bubblesWidth)
+            .attr('height', bubblesHeight);
+        
+        var rankchart = d3.select('#rank')
+            .attr('class','rankchart')
+            .attr('width', ranksWidth)
+            .attr('height', ranksHeight);
+        
+        
+        
+        
+        var colorscale = d3.scale.category20()
+            .domain(['west', 'southwest', 'midwest', 'southeast', 'northeast']);
+        
+        
+        //scales
+        var bubblescale = d3.scale.pow().exponent(.5)
+            .domain([0,37253956])
+            .range([0,110]);
+        
+        var colorscale = d3.scale.category20()
+            .domain(['west', 'southwest', 'midwest', 'southeast', 'northeast']);
+        
+        var rankscale = d3.scale.linear()
+            .domain([0,37253956])
+            .range([0,110]);
+        
+        //create force layout and function for updating on d3's tick
+        var force = d3.layout.force();
+        
+        force
+          .gravity(.3)
+          .size([bubblesWidth+200, bubblesWidth-200])
+          .nodes(data)
+          .links([])
+          .charge( function(d) { return Math.pow(bubblescale(d.population[decade]),pow)*amp;})
+          .start();
+        
+        force.on("tick", function(d) {
+          label.attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; });
+          
+          
+          circle.attr("transform", function(d) { return "translate(" + parseInt(d.x,10) + "," + parseInt(d.y,10) + ")"; })
+            
+            
+            
+            
+            });
+        
+        //create visuals
+        var circles = bubblechart.selectAll('.circle')  
+            .data(force.nodes()).enter().append('g').attr('class','circles');
+        
+        var circle = circles
+            .append('circle')
+            .attr('class','circle')
+            .attr('r', 0)
+            .on('click', function(d) {
+              var graph = $('<div class="graph" data-state="' + d.state + '\"><\/div>').prependTo("#states").hide();
+              $.each(data, function() {
+                if (this.state === graph.attr('data-state')) {
+                  graph.data('linedataarray', this.population);
+                  graph.data('region', this.region);
+                }                
+              });
+              
+              graph.append('<button class="closegraph">X<\/button>').on('click', '.closegraph',function() {
+                if ($('#states').find('.graph').length === 1) {
+                  $(this).parent().slideUp(500, function() {graph.remove();});
+                } else {
+                  $(this).parent().remove();
+                }
+                refreshLineCharts(); 
+              });;
+              
+              refreshLineCharts();
+            });
+        
+        var label = circles
+            .append('text');
+        
+        
+        
+        
+        
+        //function called each time the slider changes for bubbles
+        refreshbubblechart(decade);
+        function refreshbubblechart(dateForCircles) {
+          circle      
+            .transition()
+            .duration(500)
+            .attr('x', 0)
+            .attr('y',0)
+            .style('fill', function(d) {return colorscale(d.region);})
+            .attr('r', function(d) { return bubblescale(d.population[decade]);});
+          
+          label 
+            .attr('class','label')
+            .attr('x', function(d) {return d.x})
+            .attr('y', function(d) {return d.y})
+            .attr('dy', 4)
+            .attr('text-anchor','middle').text(function(d) {return d.agency;} )
+            .text(function(d) {
+              if($(this).width() <= bubblescale(d.population[decade])*2) {
+                return d.state;
+              }
+            });
+          
+          force
+            .charge( function(d) { return Math.pow(bubblescale(d.population[decade]),pow)*amp;})
+            .start();
+          
+          total = 0;
+          var arr = [];
+          for (var i = 0; i <= data.length-1; i++) {
+            arr.push(data[i].population[decade]);
+          }
+          
+          $.each(arr,function() {
+            total += this;
+          });
+          
+          $('#total').empty().append("Total Pages: " + total);
+        }
+        
+        
+        redrawRanks();
+        function redrawRanks() {
+          data.sort(function(a, b) { return b.population[decade] - a.population[decade]; });
+          var currentVals = [];
+          var newdata = [];
+          var counter = 0;
+          $.each(data, function() {
+            if (this.population[decade] > 0) {
+              newdata.push(this);
+              this.rank = counter;
+              currentVals.push(this.population[decade]);
+              counter++;
+            }
+          });
+          
+          largestPop = d3.max(currentVals);
+          totalpop = d3.sum(currentVals);
+          
+          var rankscale = d3.scale.linear()
+              .domain([0, largestPop])
+              .range([0, rankchart.attr('width')-90]);
+          
+          
+          rankchart.selectAll('.bars')
+            .data(newdata, function(d) { return d.state; })
+            .exit()
+            .remove();
+          
+          
+          
+          rankchart.selectAll('.bars')  
+            .data(newdata, function(d) { return d.state; })
+            .enter()
+            .append('rect')
+            .attr('class','bars')
+            .attr('width', function(d) { return rankscale(d.population[decade]); })
+            .attr('height', (ranksHeight-100)/50)
+            .attr('x',100)
+            .attr('fill', function(d) { return colorscale(d.region); });
+          
+          rankchart.selectAll('.bars')
+            .data(newdata, function(d) { return d.state; })
+            .transition()
+            .duration(250)
+            .attr('width', function(d) { return rankscale(d.population[decade]); })
+            .attr('transform', function(d,i) { return "translate(00," +i*ranksHeight/50 + ")"; });
+          
+          
+          
+          
+          
+          rankchart.selectAll('.label')
+            .data(newdata, function(d) { return d.state; })
+            .exit()
+            .attr('transform', function(d,i) { return "translate("+ranksWidth*-1+",0)"; })
+            .remove();
+          
+          rankchart.selectAll('.label')
+            .data(newdata, function(d) { return d.state; })
+            .enter()
+            .append('text')
+            .attr('class','label')
+            .text(function(d) {return d.state;})
+            .attr('x',95)
+            .attr('y', function(d,i) { return (i+.6)*ranksHeight/50; })
+            .attr('text-anchor','end');
+          
+          rankchart.selectAll('.label')
+            .data(newdata, function(d) { return d.state; })
+            .transition()
+            .duration(250)
+            .attr('y', function(d,i) { return (i+.6)*ranksHeight/50; })
+            
+            
+            }
+        
+        
+        //LineGraph Code
+        function refreshLineCharts() {
+          //Find maximum state size
+          largeststatepop = 0;
+          $.each($('.graph'), function() {
+            if (d3.max($(this).data('linedataarray')) > largeststatepop) {
+              largeststatepop = d3.max($(this).data('linedataarray'));
+            }
+          });
+          
+          
+          var width = 120,
+              height = 150;
+          
+          var scaley = d3.scale.linear()
+              .domain([largeststatepop,0])
+              .range([2, height-2]);
+          
+  
+          
+          var scalex = d3.scale.linear()
+              .domain([0, years.length-1])
+              .range([2, width-2]);
+          
+          var line = d3.svg.line()
+              .x(function(d, i) { return scalex(i); })
+              .y(function(d) { return scaley(d); });
+          
+          $.each($('.graph'), function() {
+            
+            var statebox = $(this);
+            
+            
+            if (statebox.css('display') === 'none') {
+              
+              
+              if (d3.max($(this).data('linedataarray')) > largeststatepop) {
+                largeststatepop = d3.max($(this).data('linedataarray'));
+                scaley.domain([largeststatepop,0]);
+                console.log('clicked');
+              }
+              
+              
+              d3.select(this)
+                .append('svg')
+                .attr('width',width+55)
+                .attr('height',height);
+              
+            }
+            
+            
+            
+            var arr = $(this).find('svg');
+            
+            console.log(arr[0]);
+            
+            d3.select(arr[0]).selectAll('.points')
+              .data($(this).data('linedataarray'))
+              .enter()
+              .append('circle')
+              .attr('class','points')
+              .attr('r',2)
+              .attr('cx', function(d, i) { return scalex(i); })
+              .attr('cy', function(d) { return scaley(d); })
+              .style("fill", colorscale($(this).data('region')));
+            
+            
+            d3.select(arr[0]).selectAll('.points')
+              .transition()
+              .duration(500)
+              .attr('cx', function(d, i) { return scalex(i); })
+              .attr('cy', function(d) { return scaley(d); })
+              
+              if ($(arr[0]).find('path').length === 0) {
+                d3.select(arr[0])
+                  .append("svg:path")
+                  .attr("class", "line")
+                  .attr("fill", "none")
+                  .style("stroke", colorscale($(this).data('region')))
+                  .attr("stroke-width", 2)
+                  .attr("d", line($(this).data('linedataarray')));
+              } else {
+                d3.select(arr[0]).select('path')
+                  .transition()
+                  .duration(500)
+                  .attr("d", line($(this).data('linedataarray')));
+              }
+            
+            d3.select(arr[0]).selectAll('.gridlines')
+              .data(scaley.ticks(5))
+              .enter()
+              .append('line')
+              .attr('class','gridlines')
+              .attr('x1', 0)
+              .attr('x2', width)
+              .attr('y1', scaley)
+              .attr('y2', scaley)
+              .style('stroke','#ccc')
+              .attr('stroke-width',.5);
+            
+            d3.select(arr[0]).selectAll('.gridlines')
+              .transition()
+              .duration(500)
+              .attr('y1', scaley)
+              .attr('y2', scaley);
+              
+            d3.select(arr[0]).selectAll('.gridlines').data(scaley.ticks(5)).exit().remove();
+              
+              
+              
+               d3.select(arr[0]).selectAll('.gridlabel')
+               .data(scaley.ticks(5))
+              .enter()
+              .append('text')
+              .attr('class','gridlabel')
+              .attr('x', width)
+              .attr('y', scaley)
+              .attr('fill','#ccc')
+              .text(d3.format(".1s"));
+            
+            d3.select(arr[0]).selectAll('.gridlabel')
+              .transition()
+              .duration(500)
+              .attr('y1', scaley)
+              .attr('y2', scaley);
+              
+            d3.select(arr[0]).selectAll('.gridlabel').data(scaley.ticks(5)).exit().remove();
+            
+              
+              
+              
+              
+              
+              
+              $(this).css({"height": "200px"}).slideDown();
+            
+          });
+        }
+        
+        
+        
+        
+        
+        $( "#slider" ).slider({
+          min: 0,
+          max: years.length-1,
+          value: years.length-1,
+          step: 1,
+          slide: function( event, ui ) {
+            decade = ui.value;
+            
+            refreshbubblechart();
+            redrawRanks();
+            refreshOther();
+            
+            
+          }
+        });
+        
+        
+        $(window).resize(function() {
+          width = $(window).width(),
+            height = $(window).height();
+          
+          
+        });
+        refreshOther();
+        function refreshOther() {
+          $('#population span').empty().html(numberWithCommas(totalpop));
+          
+          $('#date span').empty().html(years[decade]);
+          
+        }
+        
+        
+        
+        
+        
+        
+        
+      });
+      
+      function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
+      }
+      
+      
+    </script>
+    <style>
+    </style>
+  </head>
+  <body>
+    <div id='container'>
+      <div id="topinfo">
+        <div id="slidercontainer">
+          <div id="slider"></div>
+        </div>
+        <div id="date">
+          <label>Census Year</label><br/>
+          <span></span>
+        </div>
+        <div id="population">
+          <label>US Population</label><br/>
+          <span></span>
+        </div>
+      </div>
+      <div id="states">
+        <div style="clear:both;"></div>
+      </div>
+      <div id="bottom-container">
+        <svg id="bubbles"></svg>
+        <div id="sidebar">
+          <svg id="rank"></svg>
+        </div>
+        
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+    
+  </body>
+</html>

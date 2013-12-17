@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../d3.js"></script>
+    <link rel="stylesheet" href="../reset.css">
+    <script>
+      $(function(){
+        
+        var data,
+            app = new Visual(),
+            width = 900,
+            height = 700;
+        
+        d3.json("../data.json", function(json) {
+          for(var i in json) {
+            var state = json[i].state;
+            className = state.toLowerCase().replace(/ /g, '-'); 
+            json[i].class = className;
+          }
+          //console.log(json);
+          data = json;
+          app.init();
+        });
+        
+        
+        
+        function Visual() {
+          var selectedState,
+              highCircles,
+              avgCircles;
+          
+          var blue = "#007BC7",
+              gray = "#eeeeee",
+              red = "#FF5422",
+              lightblue = "#8BB7CC",
+              lightgray = "#fdfdfd",
+              lightred = "#FFC7CD"
+              
+              var svg = d3.select('#container').append('svg')
+                  .attr('width', width)
+                  .attr('height', height);
+          
+          
+          var scaler = d3.scale.linear()
+              .range([0, 350]);
+              
+          
+          
+          var axisrconstructor = d3.svg.axis()
+              .scale(scaler)
+              .ticks(12)
+              .tickSubdivide(2)
+              .tickSize(6,3,1)
+              .tickFormat(function(d) { return d + '°';});
+          
+          
+          var scalec = d3.scale.linear()
+              .domain([39, 87, 134])
+              .range([blue, gray, red]);
+          
+          var scaleg = d3.scale.linear()
+              .domain([39, 87, 134])
+              .range(['#ddd', '#555', '#ddd']);
+          
+          var gradient = svg
+              .append("radialGradient")
+              .attr("id", "gradient")
+              .attr('cx', '50%')
+              .attr('cy', '50%')
+              .attr('r', '50%')
+              .attr('fx', '50%')
+              .attr('fy', '50%');
+          
+          gradient.append('stop')
+            .attr('offset', '0%')
+            .style('stop-color', lightblue);
+          gradient.append('stop')
+            .attr('offset', '100%')
+            .style('stop-color', lightred);
+          gradient.append('stop')
+            .attr('offset', '50%')
+            .style('stop-color', lightgray);
+          
+          this.init = function() {
+            
+            scaler.domain([
+              0,
+              //d3.min(data.map(function(d) { return d.avgTemp; })), 
+                d3.round(d3.max(data.map(function(d) { return d.highTemp; })),-1)
+              ]);
+            
+            var list = d3.select('#list').selectAll('.states-list')
+                .data(data)
+                .enter()
+                .append('p')
+                .text(function(d) {return d.state})
+                .on('mouseover',  function(d) {
+                  list.classed('selected', false);
+                  
+                  
+                  d3.select(this).classed('selected', true);
+                  
+                  
+                  
+                  donutconstructor
+                    .innerRadius(scaler(d.avgTemp))
+                    .outerRadius(scaler(d.highTemp));
+                  
+                  donut.select('.donut')
+                    .transition(500)
+                    .attr('d', donutconstructor);
+                  
+                  svg.select('.selectedhigh')
+                    .transition(500)
+                    .attr('r', scaler(d.highTemp))
+                    .style('stroke', scalec(d.highTemp));
+                  
+                  svg.select('.selectedavg')
+                    .transition(500)
+                    .attr('r', scaler(d.avgTemp))
+                    .style('stroke', scalec(d.avgTemp)); 
+                  
+                });
+            
+            var axisr = svg.append('g')
+                .attr('transform','translate('+width/2+','+height/2+') rotate('+-60+')')
+                .attr('class', 'axisr')
+                .call(axisrconstructor);
+            
+            axisr.selectAll('text')
+              .attr('transform','translate(13,10)  rotate('+60+')');
+            
+            var donutconstructor = d3.svg.arc()
+                .innerRadius(0)
+                .outerRadius(0)
+                .startAngle(0)
+                .endAngle(2*Math.PI);
+            
+            
+            var donut = svg.append('g')
+                .attr('transform','translate('+width/2+','+height/2+')');
+            
+            donut
+              .append('path')
+              .attr('class', 'donut')
+              .attr('d', donutconstructor)
+              .attr('fill', 'url(#gradient)'); 
+            
+            
+            
+            highCircles = svg.append('g').attr('class', 'highcircles').selectAll('.highcircles')
+              .data(data)
+              .enter()
+              .append('circle')
+              .attr('class', function(d) {return 'highcircle ' + d["class"]; })
+              .attr('cx','0').attr('cy','0')
+              .attr('transform','translate('+width/2+','+height/2+')')
+              .style('stroke', function(d){ return scalec(d.highTemp); })
+              .style('stroke-width', 100)
+              .attr('r', 800)
+              .transition()
+              .duration(function(d, i) { return 3000; })
+              .delay(function(d, i) { return 100*i; })
+              .ease('easeOutBack')
+              .attr('r', function(d) { return scaler(d.highTemp); })
+              .style('stroke', function(d){ return scaleg(d.highTemp); })
+              .style('stroke-width', 2);
+            
+            
+            avgCircles = svg.append('g').attr('class', 'avgcircles').selectAll('.avgcircles')
+              .data(data)
+              .enter()
+              .append('circle')
+              .attr('class', function(d) {return 'avgcircle ' + d["class"]; })
+              .attr('cx','0').attr('cy','0')
+              .attr('transform','translate('+width/2+','+height/2+')')
+              .style('stroke', function(d){ return scalec(d.avg); })
+              .style('stroke-width', 100)
+              .attr('r', 0)
+              .transition()
+              .duration(function(d, i) { return 3000; })
+              .delay(function(d, i) { return 100*i; })
+              .attr('r', function(d) { return scaler(d.avgTemp); })
+              .style('stroke', function(d){ return scaleg(d.avgTemp); })
+              .style('stroke-width', 2);
+            
+            svg.append('circle').attr('class', 'selectedhigh').attr('transform','translate('+width/2+','+height/2+')');
+            svg.append('circle').attr('class', 'selectedavg').attr('transform','translate('+width/2+','+height/2+')'); 
+            
+          }
+            
+            
+            
+            
+            };
+        
+      });
+    </script>
+    <style>
+      body {
+        font-family:arial;
+        font-size:12px;
+      }
+      #container {
+        width:960px;
+        padding:20px;
+        border:1px solid #aaa;
+        margin:20px auto;
+        position:relative;
+      }
+      
+      #list {
+        width:60px;
+        position:absolute;
+        top:10px;
+        left:10px
+      }
+      
+      #list p {
+        margin-bottom:2px;
+        pointer:cursor;
+      }
+      
+      #graph {
+        float:right;
+      }
+      
+      .clear {
+        clear:both;
+      }
+      
+      /* SVG Style */
+      .highcircles, .avgcircles {
+        stroke: #aaa;
+        fill-opacity:0;
+        stroke-opacity:.1;
+        transition-duration: .5s;
+        
+      }
+      
+      .selectedhigh, .selectedavg {
+        fill-opacity: 0;
+        stroke-width:3;
+      }
+      
+      .selected {
+        stroke-width:4;
+        stroke-opacity:1;
+        font-weight:bold;
+      }
+      
+      .donut {
+        fill-opacity:.2;
+      }
+      
+      .axisr {
+        
+        font-size:10px;
+      }
+      
+      .axisr text {
+        fill:#aaa;
+      }
+      
+      .axisr line {
+        stroke:#aaa;
+        stroke-width:1
+      }
+      
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="list"></div>
+      <div class="clear"></div>
+    </div>
+  </body>
+</html>

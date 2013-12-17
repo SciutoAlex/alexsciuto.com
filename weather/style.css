@@ -1,0 +1,211 @@
+body {
+     background: url("img/weather-bg.jpg") repeat  center top transparent;
+     color: #532615;
+     font-family: Helvetica, arial, san-serif;
+     font-size: 12px;
+     padding:0px;
+     margin:0px;
+
+}
+
+#wrapper {
+     margin: 50px auto;
+     width: 900px;
+}
+
+p {
+     margin: 0px;
+     padding: 0px;
+}
+
+#topdate {
+     color: #532615;
+     font-size: 4em;
+     line-height: 1em;
+     font-weight: bold;
+        margin: 0 0 -5px 0;
+}
+
+#todayweather {
+     margin: 0px auto 45px;
+     text-align: center;
+     width:700px;
+
+}
+
+#todayinfo {
+     background: url("img/transparent-bg.png") repeat scroll center top transparent;
+     border-radius: 25px 25px 25px 25px;
+     box-shadow: 0px 3px 3px #E4DECF, 0px -1px 2px #AF9A65;
+     min-width: 370px;
+     padding: 25px 22px 15px 25px;
+}
+
+
+.temp {
+     font-size: 2em;
+     font-weight: bold;
+}
+
+.hourlytempcontainer {
+     clear: both;
+     height: 80px;
+     padding: 15px 0pt 0pt;
+}
+
+.hourly {
+     float: left;
+     margin: 0px;
+     padding: 0px 0px 0px 3px;
+     width: 41px;
+}
+
+.hourlytemp {
+     font-size: 1.5em;
+     font-weight: bold;
+     margin: 0px;
+     padding: 0px;
+}
+
+.hourlyday {
+     color: #B72A25;
+     font-size: 0.8em;
+     margin: 0px;
+     padding: 0px;
+     text-shadow: 0px 1px 1px #E7E3D7;
+     width: 100px;
+}
+
+.newday {
+     border-left: 1px dotted #B72A25;
+}
+
+.hourlytime {
+     margin: 0px;
+     padding: 0px;
+}
+
+.col-l, .col-r {
+     float: left;
+     margin: 0px;
+     padding: 0px;
+}
+
+.col-l {
+     margin: 0pt 0px 0px 0px;
+}
+
+.col-l img {
+     margin: 0pt 0px 0px 0px;
+}
+
+.col-r {
+     text-align: left;
+}
+
+.col-r h3 {
+     font-size: 4em;
+}
+
+.currenttemp {
+     color: #B72A25;
+     font-size: 14em;
+     font-weight: bold;
+     letter-spacing: -8px;
+   margin-bottom:10px;
+  margin-top:20px;
+     padding: 0px;
+     text-shadow: 0px 2px 3px #AF9A65, 0px -3px 1px #E4DFD2;
+    line-height: .7em;
+}
+
+
+
+.hotter {
+     color: #db3e1a;
+}
+
+.colder {
+     color: #2D36F2;
+}
+
+.align-left {
+     float: left;
+}
+
+.align-right {
+     float: right;
+}
+
+.clear {
+     clear: both;
+     width:100%;
+}
+
+.divider {
+  background: url('img/dividers.png');
+  height:15px;
+  width:100%;
+}
+
+/* Top Bar */
+#topbar {
+  width:100%;
+  height:32px;
+  background:url('img/topbar.jpg');
+  margin:0px;
+  padding:0px;
+}
+
+/* Bottom Boxes */
+
+.bottom {
+margin:10px 0 0 0;
+}
+
+.bottombox {
+     float: left;
+     text-align: center;
+     width: 180px;
+}
+
+.bottom .day {
+     font-weight: bold;
+     margin:0px 0px 4px 0px;
+}
+
+
+
+
+/* Front Page */
+
+.enter {
+width:500px;
+margin:50px auto;
+  text-align:center;
+}
+
+.enter .in {
+padding:25px 15px 13px 15px;
+  line-height:42px;
+  height:33px;
+  font-size:50px;
+  font-family:Garamond, Times;
+  font-weight:bold;
+  text-align:center;
+}
+
+#caption {
+  font-weight:bold;
+  text-align:left;
+  font-size:14px;
+  line-height:22px;
+}
+
+#caption p {
+  padding-bottom:10px;
+}
+
+#note {
+  padding-top:10px;
+}

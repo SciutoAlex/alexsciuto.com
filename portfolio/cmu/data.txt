@@ -1,0 +1,30 @@
+var data = {
+          "1" : {
+            "title" : "Davis Polk Infographic",
+            "cat" : "Information Design",
+            "slides" : {
+              "1" : {
+                "description": "some info goes here",
+                "imageurl" : "images/davispolk-design-july12.png"
+              },
+              "2" : {
+                "description": "some new info goes here",
+                "imageurl" : "images/davispolk-design-july12.png"
+              } 
+            }
+          },
+          "2" : {
+            "title" : "Senate History",
+            "cat" : "Information Design",
+            "slides" : {
+              "1" : {
+                "description": "some info goes here",
+                "imageurl" : "images/senate.jpeg"
+              },
+              "2" : {
+                "description": "some new info goes here",
+                "imageurl" : "images/senate.jpeg"
+              } 
+            }
+          }  
+        }

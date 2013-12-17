@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Karla:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(function(){
+        var $win = $(window),
+            winheight = $win.height(),
+            winwidth = $win.width(),
+            $container = $('#container'),
+            $projectname = $('#project'),
+            $projectcat = $('#category'),
+            $content = $('#content'),
+            $description = $('#description'),
+            $changeable = $('.change'),
+            $slide = $('.slide');
+            changeablelength = $changeable.length;
+        currslide = 0;
+        
+        $("#content img").hide();
+        
+        var projects = [
+          ["Davis Polk Infographic", "Information Design", 1, 3],
+          ["Senateinfo", "Information Design", 2, 4]
+        ],
+            numberofprojects = projects.length;       
+        
+        
+        var slides = [
+          [0, "<img src='images/davispolk-design-july12.png' />", "some info goes here"], 
+          [0, "<img src='images/davispolk-design-july12.png' />", "some new info goes here"],
+          [1, "<img src='images/senate.jpeg' />", "some new new info goes here"],
+          [1, "<img src='images/senate.jpeg' />", "some even more info goes here"]
+        ];
+        
+        newslide();
+        function newslide() {
+          var currentslide = slides[currslide];
+          var currentproject = projects[currentslide[0]];
+          var counter = 0;
+          var projecttext = "Project "+currentproject[2]+" of "+numberofprojects+"<div>"+currentproject[0]+"<\/div>"+currentproject[1];
+          $projectname.html(projecttext);
+          $projectcat.html(); 
+          $description.html(currentslide[2]); 
+          $slide.find('td').html(currentslide[1]);
+              
+        }
+        
+        $('#next').click(function() {
+          currslide++;
+          console.log(currslide);
+          newslide();
+        });
+        
+        $('#prev').click(function() {
+          currslide--;
+          console.log(currslide);
+          newslide();
+        });
+        
+        $('table').css({
+          "height" : winheight - 80
+            });
+        
+       
+        
+     
+        
+        
+      
+      });
+    </script>
+    <style>
+      body, html {
+        font-family: 'Karla', sans-serif;  
+        margin:0px;
+        padding:0px;
+      }
+      
+      #content {
+
+      }
+      
+    
+      
+      #navigation {
+        width:100%;
+        padding:10px;
+        height:80px;
+        border-bottom:1px solid black;
+      }
+      
+      #content {
+      background: #d6d6d6; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2Q2ZDZkNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjclIiBzdG9wLWNvbG9yPSIjZWRlZGVkIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M5YzljOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+background: -moz-linear-gradient(top,  #d6d6d6 1%, #ededed 7%, #c9c9c9 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#d6d6d6), color-stop(7%,#ededed), color-stop(100%,#c9c9c9)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #d6d6d6 1%,#ededed 7%,#c9c9c9 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #d6d6d6 1%,#ededed 7%,#c9c9c9 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #d6d6d6 1%,#ededed 7%,#c9c9c9 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #d6d6d6 1%,#ededed 7%,#c9c9c9 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6d6d6', endColorstr='#c9c9c9',GradientType=0 ); /* IE6-8 */
+
+
+      }
+      #project {
+    
+        float:left;
+      }
+      #project div {
+        font-weight:bold;
+            font-size:30px; 
+      }
+      
+      #category {
+        float:right;
+      }
+      
+      #box {
+         position:absolute;
+        bottom:20px;
+        right:20px;
+        width:250px;
+        height:300px;
+        border:1px solid black; 
+        background:white;
+      }
+      
+      #controls {
+        padding:15px;
+        background: #ffffff; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMmYyZjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top, #ffffff 0%, #f2f2f2 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #ffffff 0%,#f2f2f2 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #ffffff 0%,#f2f2f2 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #ffffff 0%,#f2f2f2 100%); /* IE10+ */
+background: linear-gradient(to bottom, #ffffff 0%,#f2f2f2 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f2f2f2',GradientType=0 ); /* IE6-8 */
+        
+      }
+      
+      #description {
+        font-size:12px;
+        padding:10px;
+      }
+      
+      button {
+        background: url('controls.png') transparent;
+        border:none;
+        height:40px;
+        width:25px; 
+        cursor:pointer;
+        
+      }
+      
+      #next {
+        background: url('controls.jpg') right top;
+        float:right;
+      }
+      
+      #prev {
+        background: url('controls.jpg') left top;
+        float:left;
+      }
+      
+      #next:hover {
+        background: url('controls.jpg') right -80px;
+      }
+      
+      #prev:hover {
+        background: url('controls.jpg') left -80px;
+      }
+      
+  
+      
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="navigation">
+        <div class="change" id="project">
+        </div>
+        <div class="change"  id="category">
+        </div>
+      </div>
+      <div class="change"  id="content">
+        <div class="slide">
+          <table width="100%" height="100%"><tr><td align="center" valign="middle">
+          </td></tr></table></div>
+        <div id="box">
+        <div id="controls">
+           <button id="prev"></button>
+          <button id="next"></button>
+          <div style="clear:both;"></div>
+          
+         
+          
+        </div>
+        <div class="change" id="description">
+        </div>
+        <div id="information">
+        </div>
+      </div>
+      </div>
+      
+    </div>
+  </body>
+</html>

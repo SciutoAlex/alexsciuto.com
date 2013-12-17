@@ -1,0 +1,44 @@
+#gallery{   
+  min-width:900px;
+  padding:00px 100px;
+  height:515px;
+  margin:0px auto;
+  position:relative;
+}
+
+#gallery-wrapper {
+  height:515px;
+  overflow:hidden;
+}
+
+#gallery-slider {
+  width:9999px;
+  position:relative;
+}
+
+#gallery-slider img {
+  padding-right:20px;
+} 
+
+.right, .left {
+  position:absolute;
+  height:100%;
+  width:100px;
+  top:0;
+  cursor:pointer;
+}
+
+.right {
+  right:0;
+  background: url('../img/button-off.jpg') 50% 50% no-repeat white;
+}
+.left {
+  left:0;
+  background: url('../img/button-off-left.jpg') 50% 50% no-repeat white;
+}
+.right:hover {
+  background: url('../img/button-on.jpg') 50% 50% no-repeat white;
+}
+.left:hover{
+  background: url('../img/button-on-left.jpg') 50% 50% no-repeat white;
+}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../d3.js"></script>
+    <link rel="stylesheet" href="../reset.css">
+    <script>
+      $(function(){
+        
+        var data,
+            app = new Visual(),
+            width = 900,
+            height = 700;
+        
+        d3.json("../data.json", function(json) {
+          for(var i in json) {
+            var state = json[i]['State'];
+            className = state.toLowerCase().replace(/ /g, '-'); 
+            json[i].class = className;
+          }
+          console.log(json);
+          data = json;
+          app.init();
+        });
+        
+        
+        
+        function Visual() {
+          var selectedState,
+              highCircles,
+              avgCircles;
+          
+          var svg = d3.select('#container').append('svg')
+              .attr('width', width)
+              .attr('height', height);
+          
+          
+          var scaler = d3.scale.linear()
+              .domain([39, 134])
+              .range([50, 300]);
+          
+          var scalec = d3.scale.linear()
+              .domain([39, 87, 134])
+              .range(['#007BC7', '#eee', '#FF5422']);
+          
+          var scaleg = d3.scale.linear()
+              .domain([39, 87, 134])
+              .range(['#ddd', '#555', '#ddd']);
+          
+          this.init = function() {
+            
+            var list = d3.select('#list').selectAll('.states-list')
+                .data(data)
+                .enter()
+                .append('p')
+                .text(function(d) {return d['State']})
+                .on('mouseover', function(d) {
+                  list.classed('selected', false);
+                  highCircles.classed('selected', false).style('stroke', function(d){ return scaleg(d['high temp']); });;
+                  avgCircles.classed('selected', false).style('stroke', function(d){ return scaleg(d['avt temp']); });;
+                  
+                  d3.select(this).classed('selected', true);
+                  
+                  
+                  d3.select('.highcircles').selectAll('.'+ d['class'])
+                    .classed('selected', true) 
+                    .style('stroke', function(d){ return scalec(d['high temp']); });
+                  
+                  d3.select('.avgcircles').selectAll('.'+ d['class'])
+                    .classed('selected', true) 
+                    .style('stroke', function(d){ return scalec(d['avt temp']); });
+                  
+                  donutconstructor
+                    .innerRadius(scaler(d['avt temp']))
+                    .outerRadius(scaler(d['high temp']));
+                  
+                  donut.select('.donut')
+                    .transition(500)
+                    .attr('d', donutconstructor);
+                  
+                  donut.select('.selectedhigh')
+                    .transition(500)
+                    .attr('r', scaler(d['high temp']))
+                  .style('stroke', scalec(d['high temp']));
+                  
+                  donut.select('.selectedavg')
+                    .transition(500)
+                    .attr('r', scaler(d['avt temp']))
+                    .style('stroke', scalec(d['avt temp'])); 
+                  
+                });
+            
+            
+            var donutconstructor = d3.svg.arc()
+                .innerRadius(0)
+                .outerRadius(0)
+                .startAngle(0)
+                .endAngle(2*Math.PI);
+            
+            
+            var donut = svg.append('g')
+                .attr('transform','translate('+width/2+','+height/2+')');
+            
+            donut
+              .append('path')
+              .attr('class', 'donut')
+              .attr('d', donutconstructor); 
+            
+            donut.append('circle').attr('class', 'selectedhigh');
+            donut.append('circle').attr('class', 'selectedavg'); 
+            
+            highCircles = svg.append('g').attr('class', 'highcircles').selectAll('.highcircles')
+              .data(data)
+              .enter()
+              .append('circle')
+              .attr('class', function(d) {return 'highcircle ' + d["class"]; })
+              .attr('cx','0').attr('cy','0')
+              .attr('transform','translate('+width/2+','+height/2+')')
+              .attr('r', function(d) { return scaler(d['high temp']); })
+              .style('stroke', function(d){ return scaleg(d['high temp']); });
+            
+            avgCircles = svg.append('g').attr('class', 'avgcircles').selectAll('.avgcircles')
+              .data(data)
+              .enter()
+              .append('circle')
+              .attr('class', function(d) {return 'avgcircle ' + d["class"]; })
+              .attr('cx','0').attr('cy','0')
+              .attr('transform','translate('+width/2+','+height/2+')')
+              .attr('r', function(d) { return scaler(d['avt temp']); })
+              .style('stroke', function(d){ return scaleg(d['avt temp']); });
+            
+            
+            
+          }
+            
+            
+            };
+        
+      });
+    </script>
+    <style>
+      body {
+        font-family:arial;
+        font-size:12px;
+      }
+      #container {
+        width:960px;
+        padding:20px;
+        border:1px solid #aaa;
+        margin:20px auto;
+        position:relative;
+      }
+      
+      #list {
+        width:60px;
+        position:absolute;
+        top:10px;
+        left:10px
+      }
+      
+      #list p {
+        margin-bottom:2px;
+        pointer:cursor;
+      }
+      
+      #graph {
+        float:right;
+      }
+      
+      .clear {
+        clear:both;
+      }
+      
+      /* SVG Style */
+      .highcircles, .avgcircles {
+        stroke: #aaa;
+        stroke-width:2;
+        fill-opacity:0;
+        stroke-opacity:.5;
+        transition-duration: .5s;
+        
+      }
+      
+      .selectedhigh, .selectedavg {
+        fill-opacity: 0
+      }
+      
+      .selected {
+        stroke-width:8;
+        stroke-opacity:1;
+        font-weight:bold;
+      }
+      
+      .donut {
+        fill-opacity:.2;
+      }
+      
+      
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="list"></div>
+      <div class="clear"></div>
+    </div>
+  </body>
+</html>

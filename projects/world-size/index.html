@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="d3.js"></script>
+    <script>
+      $(function(){
+        
+        var margin = 10;
+        var time = 1;
+        var circlesize = 1000000;
+        
+        var $window = $(window),
+            width = $window.width(),
+            height = $window.height();
+        
+        var nodes = [],
+            jsonData = [];
+        
+        var colorScale = d3.scale.category10(),
+            continents = {"Africa":1, "South America":2, "North America":3, "Australia":4, "Europe":5, "Asia":6};
+        
+        
+        var map = d3.select('body').append('svg')
+            .attr("width", width-2*margin)
+            .attr("height", height-2*margin)
+            .append('g')
+            .attr("transform","translate("+margin+", "+margin+")");
+        
+        var force = d3.layout.force()
+            .nodes(nodes)
+            .links([])
+            .size([width-2*margin,height-2*margin])
+            .charge(-3)
+            .start();
+        
+        
+        
+        $.getJSON('data.json', function(data) {
+          jsonData = data;
+        });
+        
+        
+        
+        setInterval(function() {
+          var newCircle = {};
+          newCircle.data = jsonData[0];
+          n = nodes.push(newCircle);
+          force.nodes(nodes).start();
+          
+          if (Math.random() <=.5) {
+            nodes.splice(0,1); 
+          }
+          
+          map.selectAll('circle').data(nodes, function(d) { return d.index; })
+            .enter()
+            .append('circle')
+            .attr('r','3')
+            .attr('x', Math.random()*width)
+            .attr('y', Math.random()*height)
+            .style('fill', function(d) { return colorScale(continents[d.data.Continent]); });                                   
+          map.selectAll('circle').data(nodes, function(d) { return d.index; })
+            .exit()
+            .transition()
+            .duration(400)
+            .style('fill', 'red')
+            .attr('r',10)         
+            .remove();
+        },1000);
+        
+        
+        force.on('tick', function(e) {
+          
+          map.selectAll('circle')
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; })
+            
+            });
+        
+      });
+    </script>
+    <style>
+      svg {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    
+  </body>
+</html>

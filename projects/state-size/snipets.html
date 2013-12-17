@@ -1,0 +1,21 @@
+  circles
+              .on('mouseover', function(d) {
+                $svg.append(this);
+                var thisradius =  parseInt(d3.select(this).select('.circle').attr('r'),10);
+                tip.css({'left':parseInt(d.x+$svg.position().left-.5*tip.width(),10),'top':parseInt(d.y+$svg.position().top-tip.height()-thisradius-20,10)});
+                tip.fadeIn();
+                tip.empty().html(tiptext(d));
+                d3.select(this).classed("selected", true);
+              })
+              .on('mouseout', function(d) {
+                tip.hide();
+                d3.select(this).classed("selected", false);
+              });
+
+
+function tiptext(circledata){
+          var str = "";
+          str += "<h3>" + circledata.state + "</h3>";
+      str += $('#date').html() + "'s pages: " + circledata.population[decade];
+      return str;
+      }

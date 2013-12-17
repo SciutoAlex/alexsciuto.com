@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Waves of Ideology</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>
+  <style type="text/css">
+    body {
+    font-size:10px;
+    font-family:Tahoma, arial, san-serif;
+    }
+    
+    #container {
+      width:700px;
+      margin:0px auto;
+    }
+    
+    #keys {
+      height:120px;
+    }
+  
+    #mainnumbers {
+      font-size:10em;
+      font-weight:bold;
+      text-align: center;
+    }
+    
+    .number {
+      width:63px;
+      height:120px;
+      float:left;
+      position:relative;
+    }
+    
+    .bar {
+      background:gray;
+      width:58px;
+      }
+      
+    .label {
+      position:absolute;
+      bottom:40px;
+      width:63px;
+      text-align:center;
+      }
+      
+    .top {
+      position:absolute;
+      bottom:56px;      
+    }
+    
+    .bottom {
+      position:absolute;
+      top:84px;      
+    }
+    
+    
+  </style>
+
+</head>
+<body>
+<div id="container">
+  <div id="mainnumbers"></div>
+  <div id="keys">
+    <div class="number"><div class="top bar"></div><div class="label">2</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">3</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">4</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">5</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">6</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">7</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">8</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">9</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">10</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">11</div><div class="bottom bar"></div></div>
+    <div class="number"><div class="top bar"></div><div class="label">12</div><div class="bottom bar"></div></div>
+  </div>
+  
+</div>
+
+
+<script type = "text/javascript">
+  (function($){
+    $(document).ready(function() {
+         var numbers = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0); // array for numbers
+         var offsets = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0); // array for difference from norm
+         var percents = new Array(0, 0/36,1/36, 2/36, 3/36, 4/36, 5/36,6/36,  5/36, 4/36, 3/36, 2/36,1/36); // probabilities 
+         var abs = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0);  // for calculating size of bar charts
+         
+         var totalrolls = 0;
+         var chartheight = 50;
+         var ready = true;
+         
+         $('body').bind('keypress', function(e) {
+          var code = (e.keyCode ? e.keyCode : e.which);
+          if(ready == true) {
+            if((e.keyCode || e.which) == 32) {
+              ready = false;
+              var r1 = Math.ceil(Math.random()*6);
+              var r2 = Math.ceil(Math.random()*6);
+              var roll = r1+r2;
+              $('#mainnumbers').empty().append(r1 + " + " + r2 + " = " + roll + "<br/>");
+              numbers[roll] = parseInt(numbers[roll], 10)+1;
+              $.each(numbers, function(i) {
+                var expected = parseInt(totalrolls*percents[i]); 
+                offsets[i] = parseInt(numbers[i]-expected,10);
+              });
+              update();  
+              totalrolls++;
+            }
+          }
+         });
+         
+         function update() {
+         $.each(offsets, function(i) {
+           abs[i] = Math.abs(offsets[i]);
+         });
+         var max = Math.max.apply(Math, abs);
+         var dy = chartheight/max;
+         $('#keys').children().each(function(i) {
+           var $this = $(this);
+           $this.find('.label').empty().append(parseInt(i+2, 10) + ":" + numbers[i+2]);
+           if (offsets[i+2] > 0) {
+             $this.find('.bottom').css('height',0);
+            $this.find(".top").animate({
+              "height":dy*offsets[i+2]
+            }, 50).css("background", "green");   
+           } else if (offsets[i+2] < 0) {
+             $this.find('.top').css('height',0);
+             $this.find(".bottom").animate({
+              "height":-1*dy*offsets[i+2]
+            }, 50).css("background", "red");   
+          }  else {
+            $this.find('.top').animate({
+              "height":-1*dy*offsets[i+2]
+            }, 50)
+            $this.find('.bottom').animate({
+              "height":-1*dy*offsets[i+2]
+            }, 50)  
+            }  
+         });
+         
+         setTimeout(function() {ready = true},1250);           
+         }
+         
+         
+ 
+         
+           
+        
+            
+    });
+  })(jQuery);
+
+  
+  
+</script>
+</body>
+</html>

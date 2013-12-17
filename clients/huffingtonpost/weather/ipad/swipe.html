@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    
+    
+    
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../d3.js"></script>
+    <script type="text/javascript" src="//use.typekit.net/wzl2qlx.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <link rel="stylesheet" href="../reset.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../swipe.js"></script>
+    <script>
+      $(function() {
+        var data;
+        
+        d3.json("../data.json", function(json) {
+          var parseDate = d3.time.format('%B %e, %Y');  
+          for(var i in json) {
+            var state = json[i].state;
+            json[i].date = parseDate.parse(json[i].dateFormatted);
+            className = state.toLowerCase().replace(/ /g, '-'); 
+            json[i].class = className;
+            
+            
+          }
+          data = json;
+          
+          d3.select('.swipe-wrap').selectAll('div')
+            .data(data)
+            .enter()
+            .append('div')
+            .text(function(d) { return d.state; })
+            .attr('class', function(d) { return d.class });
+          window.mySwipe = Swipe(document.getElementById('slider'), {
+            callback : function(i, d) {
+              data.map(function(st) {
+                if (st.class == d3.select(d).attr('class')) {
+                  console.log(st);
+                }
+              });
+            }
+          });
+          //app.init();
+        });
+        
+      });
+    </script>
+    
+    <style>
+      body {
+        font-family:"futura-pt-condensed";
+        font-size:15px;
+      }
+      #container {
+        width:960px;
+        height:650px;
+        padding:20px;
+        border:1px solid #aaa;
+        margin:20px auto;
+        position:relative;
+        background: url('../bg.png') 50% 50%;
+      }
+      
+      #list {
+        width:160px;
+        position:absolute;
+        top:10px;
+        left:10px;
+        display:none;
+      }
+      
+      #list p {
+        font-family: "futura-pt-condensed",sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        text-align:left;
+        cursor:pointer;
+        padding:4px;
+      }
+      
+      #graph {
+        position:absolute;
+        top:10px;
+        left:170px;
+      }
+      
+      .clear {
+        clear:both;
+      }
+      
+      #info {
+        float:right;
+        width:275px;
+        
+      }
+      #info table {
+        width:275px;
+      }
+      #info .state {
+        font-size:50px;
+        text-align:center;
+      }
+      
+      
+      #info td {
+        padding:0 0 10px 0;
+      }
+      
+      
+      #info .label {
+        text-align:right;
+        padding:5px 10px 0 0;
+        font-size:16px;
+        vertical-align:top;
+        border-right: 1px solid black;
+        border-top: 1px solid black;
+      }
+      
+      
+      #info .stat {
+        font-size:40px;
+        padding-left:10px;
+      }
+      
+      
+      #timeline .label {
+        font-size:10px;
+      }
+      
+      h1 {
+        font-size:50px;
+        font-weight:700;
+        line-height:40px;
+      }
+      
+      #info p {
+        font-family:arial;
+        font-size:12px; 
+        line-height:16px;
+        padding-bottom:10px;
+        border-bottom: 1px dotted black;
+        margin-bottom:10px;
+      }
+      /* SVG Style */
+      .highcircles, .avgcircles {
+        stroke: #aaa;
+        fill-opacity:0;
+        stroke-opacity:.2;
+        transition-duration: .5s;
+        
+      }
+      
+      .selectedhigh, .selectedavg {
+        fill-opacity:0;
+        stroke-width:6;
+      }
+      
+      .selected {
+        stroke-width:4;
+        stroke-opacity:1;
+        font-weight:bold;
+      }
+      
+      .donut {
+        fill-opacity:1;
+      }
+      
+      .axisr {
+        
+        
+      }
+      
+      .axisr text {
+        font-size:12px;
+        fill:#000;
+      }
+      
+      .axisr line {
+        stroke:#aaa;
+        stroke-width:1
+      }
+      
+      /*Mobile styles */
+      
+      .swipe {
+        overflow: hidden;
+        visibility: hidden;
+        position: relative;
+      }
+      .swipe-wrap {
+        overflow: hidden;
+        position: relative;
+      }
+      .swipe-wrap > div {
+        float:left;
+        width:100%;
+        position: relative;
+      }
+      
+      .swipe-wrap {
+      }
+      
+      .swipe-wrap div {
+        margin:00px auto; 
+        text-align:center;
+        background-color:gray;
+        font-size:40px;
+        padding:30px 0;
+      }
+    </style>
+    
+  </head>
+  
+  <body>
+    <div id='slider' class='swipe'>
+      <div class='swipe-wrap'>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,293 @@
+/*
+Skin Name:Dark Blue
+Skin URI: http://jsbox.net/
+Description:
+Version:1.0
+Author: Jay Kwong
+Author URI: http://jsbox.net/
+*/
+
+
+body{
+	background: url(images/bg.jpg) repeat-x  center  top fixed  #fff;
+	}
+
+/*Top Bar */
+
+#pages{
+		background: url(images/bg_3.png) repeat-x left top #fff;
+	}
+	
+	
+.top_line{
+	background: #000000;
+	}
+	
+/*link */
+a, a:link {
+	color: #46aed9;
+	}
+	
+a:visited {
+	color:#46aed9;
+	}
+a:hover, a:active {
+	color: #333333;
+	}
+
+
+/*title*/
+#menu_page .tit{
+	background:url(images/tit.gif);
+}
+
+
+#menu_page .tit a{
+	background:url(images/tit.gif);
+	color:#FFFFFF;
+	}
+	
+#menu_page .tit a:hover{
+	color: #29ABD6;
+	}
+	
+#menu_page .des{
+	background: url(images/des.gif);
+	color:#FFFFFF;
+	}
+	
+#menu_page .left{
+	background:url(images/logo.png) top left repeat;
+}
+
+#menu_page {
+	background:url(images/logo.png) top left repeat;
+}
+
+
+/*=======================================================Pages Menu*/
+	
+/*list style*/
+
+	
+	#menu_page li a{
+	border-bottom:1px solid  #F0F0F0;
+	color: #333333;
+	}
+	#menu_page li a:hover{
+	background: url(images/ss.gif) repeat 0%;
+	color:#46aed9;
+	}
+
+	#menu_page li.current_page_item a,
+	#menu_page li.current_page_item a:hover {
+	background: url(images/ss.gif) repeat 0%;
+	color:#46aed9;
+	
+	}
+
+
+/*==========================================================Cat Menu*/
+		
+#menu_cata{
+	background: #2b2b2b; 
+	}
+
+#menu_cata .left{}
+
+	#menu_cata .cat_tit{
+		color:#FFFFFF;
+		background:url(images/symb.gif) right center no-repeat;
+		}
+	
+	#menu_cata .cat_tit span{
+		color: #999999;
+		}
+
+	
+/*list style*/
+	#menu_cata li{
+	border-right:1px solid #666666;
+	color:#fff;	
+	}
+	
+	
+	#menu_cata li a{
+	background: url(images/menu_over_off.gif) repeat 0%;
+	color: #CCCCCC;
+	}
+	
+	
+	#menu_cata li a:hover{
+	background: url(images/menu_over.gif) repeat 0%;
+	color:#444444;
+	}
+/*==========================================================side*/
+#side{
+	background: url(images/bg_4.png) repeat-x top left #1f1f1f;
+	}
+	
+#side h2,#side h2 a,#side h2 a:hover,#side h2 a:visited {
+	color:#FFFFFF;
+	}
+	
+	
+#side h2{
+	border-bottom:1px  solid #ccc;
+	border-top:2px  solid  #ccc;
+	}
+
+	
+
+
+/*----------------------------------------------------------------------------list style right*/
+.sb-about p{
+	color: #999999;
+	}	
+	
+.secondary h2 { /* Secondary H2 is sidebar headlines */
+	color: #999999;
+	border-bottom:1px solid  #DDDDDD;
+	border-top:2px solid  #fff;
+	}
+	
+	.secondary h2 .a{ /* Secondary H2 is sidebar headlines */
+	color: #333333;
+	}
+	
+
+	
+.secondary li, .secondary ol li {
+	color: #333333;
+	border: 1px solid  #fff;
+	border-bottom:1px solid #FAFAFA;
+	}
+
+
+.secondary li a, .secondary ol li a {
+	color: #333;
+	}
+
+	
+.secondary li a:hover, .secondary ol li a:hover{
+	color:#fff;
+	}
+	
+.secondary li:hover, .secondary ol li:hover{
+	background:url(images/layout2_p_19.gif) left top  no-repeat #3a3a3a;
+	}
+	
+	
+#recent-posts .date{
+	color: #CCCCCC;
+	}
+	
+#recent-posts .comments{
+	color: #56B3D6;
+	}	
+#recent_comment img{
+	border:1px solid #EEEEEE;
+	}	
+#recent_comment a{
+	color:#000;
+	}	
+	
+
+#meta_rss{
+	border:1px solid #CFEBF3;
+	background: url(images/ress_meta.gif) right bottom no-repeat;
+	color: #2fb1dc;
+	}
+	
+#meta_rss a{
+	color: #2fb1dc;
+	background:url(images/feed.png) top left no-repeat;
+	}
+
+/*==============================================================================footer*/	
+
+
+/*footer*/	
+
+#footpage li{
+	border-right:1px solid  #CCCCCC;
+}
+
+#footpage li a{
+	color:#999999
+
+}
+
+#footpage li a:hover{
+	color: #E22C5E;
+
+}
+
+#footpage{
+	background:#f7f7f7 url(images/bg_5.png) bottom repeat-x;
+	}
+	
+#foot_info{
+	background:#fff;
+	}
+	
+#footer {
+	color: #b2b2b2;
+	}
+	
+#footer a {
+	color: #b2b2b2;
+	}
+
+#footer a:hover {
+	color: #000;
+	}
+	
+/*===============================================================================*/
+
+
+h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
+	color:#CCCCCC
+	}
+	
+.entry-content {
+	color: #444;
+	}
+	
+.metalinks {
+	border-bottom:1PX  dotted #CCCCCC;
+	}
+	
+	
+.entry-meta { /* Time and category for blog entries */
+	background: #fff;
+	border-bottom:1px  dotted #EFEFEF;
+	border-top:1px dotted #EFEFEF;
+	color: #CCCCCC;
+	}
+
+
+.entry-meta a{ /* Time and category for blog entries */
+	color: #ccc;
+	}
+	
+#commentlist li {
+	border-bottom:1px dotted  #CCCCCC;
+	}	
+	
+.commentsrsslink {
+	background: url('images/feed.png') left top no-repeat;
+	}
+	
+	
+.navigation {
+	border-bottom:1PX dotted  #CCCCCC;
+	border-TOP:1PX dotted #ccc;
+	}
+.navigation .left {
+	background:url(images/l.gif) no-repeat left center;
+	}
+
+.navigation .right {
+	background:url(images/r.gif) no-repeat  right center;
+	}

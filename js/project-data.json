@@ -1,0 +1,143 @@
+{
+    "gardenpot": {
+        "onImage": "img/garden-on.png",
+        "offImage": "img/garden-off.png",
+        "title": "GardenPot Ubicomp System",
+        "category": "interaction design",
+        "medium": "Video Sketch",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "December 2013<br/>Carnegie Mellon University",
+        "url": "cmu/portfolio/garden-ubicomp"
+    },
+    "chomp": {
+        "onImage": "img/chomp-on.jpg",
+        "offImage": "img/chomp-off.jpg",
+        "title": "Reinventing Mobile Work",
+        "category": "interaction design",
+        "medium": "Mobile Application",
+        "description": "Experiments in creating visuals using JavaScript to draw shapes on the HTML canvas object.",
+        "date": "October 2013<br/>Carnegie Mellon University",
+        "url": "cmu/portfolio/chomp-mobile-app/"
+    },
+      "canvasExperiments": {
+        "onImage": "img/canvas-on.jpg",
+        "offImage": "img/canvas-off.jpg",
+        "title": "Canvas Experiments",
+        "category": "web development",
+        "medium": "Website",
+        "description": "Experiments in creating visuals using JavaScript to draw shapes on the HTML canvas object.",
+        "date": "ongoing",
+        "url": "canvas-experiments/random-walk-1.php"
+    },
+    "timeKeepr": {
+        "onImage": "img/timekeepron.jpg",
+        "offImage": "img/timekeeproff.jpg",
+        "title": "Time Keepr",
+        "category": "web development",
+        "medium": "Website",
+        "description": "At my work, we have to keep track of clients and time. I never liked the interface that the official time-tracking program developed, so I made my own program to keep track of time.",
+        "date": "October 2012",
+        "url": "projects/timekeepr/"
+    },
+    "adlessWeather": {
+        "onImage": "img/weatheron.jpg",
+        "offImage": "img/weatheroff.jpg",
+        "title": "Ad-less Weather",
+        "category": "web development",
+        "medium": "Website",
+        "description": "In order to learn more and xml and how PHP parses that data, and in order to never have to go on weather.com again, I made a weather forecasting Website.",
+        "date": "January 2013",
+        "url": "weather/"
+    },
+    "microwave": {
+        "onImage": "img/microwaveon.jpg",
+        "offImage": "img/microwaveoff.jpg",
+        "title": "A Better Microwave Control",
+        "category": "interaction design",
+        "medium": "Concept Poster",
+        "description": "In order to learn more and xml and how PHP parses that data, and in order to never have to go on weather.com again, I made a weather forecasting Website.",
+        "date": "September 2013<br/>Carnegie Mellon University",
+        "url": "cmu/interaction-design/microwave/"
+    },
+    "stateSize": {
+        "onImage": "img/state-sizeon.jpg",
+        "offImage": "img/state-sizeoff.jpg",
+        "title": "State Size Interactive Visualization",
+        "category": "data visualization",
+        "medium": "Interactive Chart",
+        "description": "The United States has taken a decenial census since 1780. Well, now you can see how the United States has grown in size.",
+        "date": "December 2012",
+        "url": "projects/state-size"
+    },
+    "hexPlay": {
+        "onImage": "img/box1on.jpg",
+        "offImage": "img/box1off.jpg",
+        "title": "HexPlay Paint App",
+        "category": "art creation",
+        "medium": "Website",
+        "description": "One of my earliest programming endeavors, but still one of my favorites. A great way to pass the time if you're bored at work.",
+        "date": "January 2012",
+        "url": "hexplay/"
+    },
+    "historicalSentate": {
+        "onImage": "img/box2on.jpg",
+        "offImage": "img/box2off.jpg",
+        "title": "Senate Ideology",
+        "category": "data visualization",
+        "medium": "Interactive Chart",
+        "description": "Interactive graphic charting the swings of ideology in the US Senate. See the ideological rank of every Senator who has ever served.",
+        "date": "March 2012",
+        "url": "historicalsenate/index.html"
+    },
+    "scienceBooks": {
+        "onImage": "img/sciencebookon.jpg",
+        "offImage": "img/sciencebookoff.jpg",
+        "title": "Children's Book of Graphics",
+        "category": "information design",
+        "medium": "Published Book",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "April 2013<br/>Lerner Publishing",
+        "url": "projects/science-books/"
+    },
+    "afganistan": {
+        "onImage": "img/afganon.jpg",
+        "offImage": "img/afganoff.jpg",
+        "title": "Boots on the Ground:<br/> Troop Levels in Afganistan",
+        "category": "data visualization",
+        "medium": "Published Book",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "April 2011",
+        "url": "projects/afgan"
+    },
+    "pghneighborhood": {
+        "onImage": "img/pghneighbor-on.jpg",
+        "offImage": "img/pghneighbor-off.jpg",
+        "title": "Pittsburgh Residence Guide",
+        "category": "information design",
+        "medium": "Informational Poster",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "September 2013<br/>Carnegie Mellon University",
+        "url": "cmu/portfolio/pgh-neighborhoods"
+    },
+      "webThings": {
+        "onImage": "img/web-on.jpg",
+        "offImage": "img/web-off.jpg",
+        "title": "IxD and My Practices",
+        "category": "information design",
+        "medium": "Informational Poster",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "October 2013<br/>Carnegie Mellon University",
+        "url": "cmu/portfolio/web-of-things"
+    },
+      "voyager": {
+        "onImage": "img/voyageron.jpg",
+        "offImage": "img/voyageroff.jpg",
+        "title": "The Path of Voyager 1",
+        "category": "information design",
+        "medium": "Video Animation",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "November 2013<br/>Carnegie Mellon University",
+        "url": "cmu/portfolio/voyager"
+    }
+    
+}

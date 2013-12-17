@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+      Test Raphael
+    </title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script><style type="text/css">
+      #canvas_container_container {
+        margin:0px auto;
+        background: url('center.jpg');
+        width:1086px;
+        height:1000px;
+        position:relative;
+      }
+      
+      #canvas_container {
+        margin:0px auto;
+        }
+      
+      body {
+        background: url('background.jpg');
+        position:relative;
+        
+        
+      }
+      
+      #test {
+        display:none;
+        position:absolute;
+        top:50px;
+        left:245px;
+      }
+
+    </style>
+  </head>
+  <body>
+  <div id="canvas_container_container">
+    <div id="canvas_container">
+      <div id="test">
+        <img src="letter.jpg">
+      </div>
+    </div>
+  </div>
+    
+    
+    
+    <script type="text/javascript">
+window.onload = function() {
+  var r = 90;
+  var hexwidth = r*2*(Math.sin(60 * Math.PI / 180));
+  var hexheight = 2*r;
+  var xoffset = 1.5*hexwidth+2;
+  var yoffset = 100;
+  var xdif = r*2*(Math.sin(60 * Math.PI / 180));
+  var ydif = r*2*(Math.cos(41 * Math.PI / 180));
+  var counter = 0;
+  var step = 0;
+  var finalx=0;
+  var finaly=0;
+  var finalhex;
+  
+  $('#canvas_container').css('width', 5*hexwidth);
+  $('#canvas_container').css('height', 5*hexwidth);
+  
+  Raphael.fn.hexagon = function(radius, locx, locy) {
+      var path = ""
+      for (var i = 0; i <= 6; i++) {
+         var a = i * 60,
+          x = radius * Math.cos(a * Math.PI / 180),
+          y = radius * Math.sin(a * Math.PI / 180)
+        path += (i == 0 ? "M" : "L") + (locx + x) + "," + (locy + y)
+      }
+      path += "Z"
+      return this.path(path);
+  }
+  
+  function hex(order, color, x, y) {
+    this.order=order;
+    this.color=color;
+    this.x=x;
+    this.y=y;
+    
+  }
+    
+  var arr = new Array(18);
+  
+  arr[0] = new hex(1, "#243A1B", xoffset, yoffset);
+  arr[1] = new hex(1, "#EAAA38", xoffset + xdif, yoffset);
+  arr[2] = new hex(1, "#333333", xoffset + 2*xdif, yoffset);
+  arr[3] = new hex(1, "#4F1E16", xoffset + 2.5*xdif, yoffset + ydif);
+  arr[4] = new hex(1, "#243A1B", xoffset + 3*xdif, yoffset + ydif*2);
+  arr[5] = new hex(1, "#EAAA38", xoffset + 2.5*xdif, yoffset + ydif*3);
+  arr[6] = new hex(1, "#689956", xoffset + 2*xdif, yoffset + ydif*4);
+  arr[7] = new hex(1, "#243A1B", xoffset + xdif, yoffset + ydif*4);
+  arr[8] = new hex(1, "#EBE5D4", xoffset , yoffset + ydif*4);
+  arr[9] = new hex(1, "#333333", xoffset - .5*xdif, yoffset + ydif*3);
+  arr[10] = new hex(1, "#EAAA38", xoffset - 1*xdif, yoffset + ydif*2);
+  arr[11] = new hex(1, "#689956", xoffset - .5*xdif, yoffset + ydif);
+  arr[12] = new hex(1, "#4F1E16", xoffset + .5*xdif, yoffset + ydif);
+  arr[13] = new hex(1, "#689956", xoffset + 1.5*xdif, yoffset + ydif);
+  arr[14] = new hex(1, "#689956", xoffset + 2*xdif, yoffset + ydif*2);
+  arr[15] = new hex(1, "#EAAA38", xoffset + 1.5*xdif, yoffset + ydif*3);
+  arr[16] = new hex(1, "#243A1B", xoffset + .5*xdif, yoffset + ydif*3);
+  arr[17] = new hex(1, "#4F1E16", xoffset , yoffset + ydif*2);
+  arr[18] = new hex(1, "#333333", xoffset + xdif, yoffset + ydif*2);
+  
+    
+  paper = new Raphael("canvas_container", 786, 740);
+  
+  $.each(arr, function() {
+    var color = this.color;
+    this.hexagon = paper.hexagon(r, this.x, this.y).attr({
+      fill:"#fff",
+      "stroke-width": 5,
+      stroke: '#3399CC',
+      "opacity":0,
+      "stroke-opacity" : .4
+    }).rotate(30);
+    
+  });
+  
+  function steptwo() {
+    
+    $.each(arr, function() {
+      var x = this.x;
+      var y = this.y;
+      var h = this;
+      var on = false;
+      var color = this.color;
+      this.hexagon.mouseover( function() {
+        if (counter <= arr.length) {
+        this.animate({
+          fill: color
+        }, 250);
+        }
+        if (on == false) {
+          on = true;
+          finalx = x;
+          finaly = y;
+          finalhex = h;
+          counter++;
+        }
+        if (counter == arr.length) {
+          step = 3;
+          counter++;
+          stepthree();
+        }
+        
+      });  
+      
+    });
+  }
+  
+  function stepthree() {  
+    if (counter == arr.length+1) {
+    $.each(arr, function() {
+      if (this != finalhex) {
+        this.hexagon.animate({
+          "opacity": 0
+        }, 1000);
+      } else {
+        this.hexagon.rotate(-30).animate({
+          path: "M90,50l600,0l0,600l-600,0z",
+          fill: "#fff"
+        }, 1000);
+        finalstep();
+      }
+      
+    });
+    counter++;
+    }
+  }
+  
+  function finalstep() {
+    $('#test').fadeIn(3000);
+  }
+  
+  
+  var doSomethingWithValue = function(v) {
+      v.hexagon.animate({"opacity":1}, 100);
+      console.log(v);
+  }
+
+var timer = function(a, n) {       
+    var delay = 100; // a second, probably change this to same duration as the fadeIn()
+    doSomethingWithValue(a[n]); // do work
+    n += 1;
+    if (n == a.length) {
+      step = 2;
+        steptwo();
+        //$('#test').append("working");
+        
+    } else {
+        // repeat after delay
+        setTimeout(function() {timer(a, n)}, delay);
+    }
+}
+
+// kick things off starting at first entry
+timer(arr, 0);
+}
+    
+    
+    
+    
+    </script>
+  </body>
+</html>

@@ -1,0 +1,168 @@
+/*   
+Theme Name: Colorfully Minimal
+Theme URI: www.alexsciuto.com
+Description: A Colorfully Minimal Theme
+Author: Alex Sciuto
+Author URI: sciutoalex
+Template: 
+Version: .1
+.
+General comments/License Statement if any.
+.
+*/
+/* Fonts */
+@font-face {
+	font-family: 'FFFAtlantisCondensedRegular';
+	src: url('fonts/pf_ronda_seven.eot');
+	src: local('FFF Atlantis Condensed Regular'), local('PFRondaSeven'), url('fonts/pf_ronda_seven.woff') format('woff'), url('fonts/pf_ronda_seven.ttf') format('truetype');
+}
+
+/* Structure */
+#centerdiv {
+margin:0 auto;
+width:760px;
+}
+
+#contentwrapper {margin:20px auto; width:585px; float:left; }
+body {background-color:RGB(230,230,230); background-image: url('http://alexsciuto.com/blog/wp-content/themes/Colorfully%20Minimal/img/bggradient.png'); background-repeat:repeat-y; background-position: top center; font-family:tahoma;}
+#menu {margin:10px 0px 0px 10px; float:right; width:165px;}
+
+/* Header */
+#banner {height:400px; padding-bottom:0px; border-bottom:5px solid RGB(200,200,200); margin-bottom:15px; background:url('http://alexsciuto.com/blog/wp-content/themes/Colorfully%20Minimal/img/banner.png') center bottom no-repeat;}
+
+
+/* Footer */
+.navigation {margin:-40px 0px 20px 0px; padding-bottom:20px;}
+
+/* Menu */
+
+#tagcloud, #categories, #latestposts {
+padding-left:0px;
+margin:0px 0px 20px 0px;
+list-style-type:none;
+color:RGB(200,200,200);
+}
+
+
+li {
+line-height:1.5em;
+}
+
+#menu a {
+text-decoration:none;
+color: RGB(200,200,200);
+}
+
+#menu a:hover {
+text-decoration:none;
+color: RGB(100,100,100);
+}
+
+.menutitle {
+margin:0px;
+color:RGB(100,100,100);
+}
+
+/* Posts */
+img {border-style:none;}
+.code {font-family:courier; font-size:.7em; line-height:1; background:RGB(200,200,200); border: 2px dashed; padding:5px; margin:5px;}
+.commentlink {font-weight:bold; float:right;}
+.text {width:500px; margin:0px auto; color:RGB(40,40,50);}
+blockquote {background: RGB(240,240,240); padding:5px; font-size:.8em; line-height:1.6em; border-left:4px solid RGB(100,100,100)}
+.wp-caption-text {margin:0px 0px 0px 0px; color:black; line-height:1em; font-size:.7em; font-weight:bold; color:RGB(40,40,50);}
+.aligncenter {margin:0px auto;}
+.alignleft {float:left;}
+.alignright {float:right;}
+.date {font-family:'FFFAtlantisCondensedRegular'; font-size:6pt; color:white; padding:0px 27px 1px 10px; background: url('http://alexsciuto.com/blog/wp-content/themes/Colorfully%20Minimal/img/White_triangle.png') no-repeat; background-position: 100% -18px;  display:inline;}
+.title a {font-size:1.3em; color:black}
+.title {margin:-5px 0px 5px 7px; line-height:26px;}
+p {color:RGB(50,50,50); font-family:tahoma; font-size:13px; line-height:1.3em; padding:.7em 6px .7em 6px;}
+.title {margin: 5px 0px 5px 5px}
+h1, h2, h3, h4, h5, h6, p {margin:0px 10px 0px 10px;}
+.bold {font-weight:bold;}
+
+.photography .date {background-color:black;}
+.photography .content {border-top: 8px solid; border-right: 3px solid;  border-left: 3px solid; border-bottom: 3px solid; background:black;}
+.photography {color:black; width:586px; margin-top:11px; border: 0px solid transparent; border-top: 0px solid; margin-bottom:50px;}
+.photography .entry a {color:transparent;}
+.photography .entry {position:relative; top:0px; margin:0px 0 -0px 0px;}
+.photography p {color:gray;}
+.photography .bottom {background:black; color:black; margin:0px; font-size:.8em; text-transform:lowercase; padding:5px 3px 3px 3px;}
+.photography .bottom a {color:black;}
+.photography .bottom:hover {color:white;}
+.photography .bottom:hover a {color:white;}
+.photography .bottom:hover a:visited {color:purple;}
+
+
+
+.china .date {background-color:red;}
+.china .content {background:white; border-top: 8px solid; border-right: 3px solid;  border-left: 3px solid; border-bottom: 3px solid;}
+.china {color:red; width:586px; margin-top:11px; border: 0px solid transparent; border-top: 0px solid; }
+.china .entry {position:relative; color:black; top:-0px; margin: 0 0px 0px;}
+.china .bottom {background:red; color:red; margin:0px; font-size:.8em; text-transform:lowercase; padding:5px 3px 3px 3px;}
+.china .bottom a {color:red;}
+.china .bottom:hover {color:black;}
+.china .bottom:hover a {color:black;}
+.china .bottom:hover a:visited {color:purple;}
+.china {margin-bottom:50px;}
+
+.food .date {background-color:RGB(80,185,70);}
+.food .content {background:white; border-top: 8px solid; border-right: 3px solid;  border-left: 3px solid; border-bottom: 3px solid;}
+.food {color:RGB(80,185,70); width:586px; margin-top:11px; border: 0px solid transparent; border-top: 0px solid; }
+.food .entry {position:relative; top:-0px; color:black; margin:0 0 0px 0px;}
+.food .bottom {background:RGB(80,185,70); color:RGB(80,185,70); margin:0px; font-size:.8em; text-transform:lowercase; padding:5px 3px 3px 3px;}
+.food .bottom a {color:RGB(80,185,70);}
+.food .bottom:hover {color:white;}
+.food .bottom:hover a {color:white;}
+.food .bottom:hover a:visited {color:RGB(255,200,255);}
+.food {margin-bottom:50px;}
+
+.internet .date {background-color:RGB(45,130,200);}
+.internet .content {background:white; border-top: 8px solid; border-right: 3px solid;  border-left: 3px solid; border-bottom: 3px solid;}
+.internet {color:RGB(45,130,200); width:586px; margin-top:11px; border: 0px solid transparent; border-top: 0px solid; }
+.internet .entry {position:relative; top:-0px; color:black; margin:0 0 0px 0px;}
+.internet .bottom {background:RGB(45,130,200); color:RGB(45,130,200); margin:0px; font-size:.8em; text-transform:lowercase; padding:5px 3px 3px 3px;}
+.internet .bottom a {color:RGB(45,130,200);}
+.internet .bottom:hover {color:black;}
+.internet .bottom:hover a {color:black;}
+.internet .bottom:hover a:visited {color:purple;}
+.internet {margin-bottom:50px;}
+
+
+.design .date {background-color:RGB(250,220,60); color:black;}
+.design .content {background:white; border-top: 8px solid; border-right: 3px solid;  border-left: 3px solid; border-bottom: 3px solid;}
+.design {color:RGB(250,220,60); width:586px; margin-top:11px; border: 0px solid transparent; border-top: 0px solid; }
+.design .entry {position:relative; color:black; top:-0px; margin:0 0 0px 0px;}
+.design .bottom {background:RGB(250,220,60); color:RGB(250,220,60); margin:0px; font-size:.8em; text-transform:lowercase; padding:5px 3px 3px 3px;}
+.design .bottom a {color:RGB(250,220,60);}
+.design .bottom:hover {color:black;}
+.design .bottom:hover a {color:black;}
+.design .bottom:hover a:visited {color:purple;}
+.design {margin-bottom:50px;}
+
+.post .date {background-color:gray;}
+.post .content {background:white; border-top: 8px solid; border-right: 3px solid;  border-left: 3px solid; border-bottom: 3px solid;}
+.post {color:gray; width:586px; margin-top:11px; border: 0px solid transparent; border-top: 0px solid; }
+.post .entry {position:relative; color:black; top:-0px; margin:0 0 0px 0px;}
+.post .bottom {background:gray; color:gray; margin:0px; font-size:.8em; text-transform:lowercase; padding:5px 3px 3px 3px;}
+.post .bottom a {color:gray;}
+.post .bottom:hover {color:white;}
+.post .bottom:hover a {color:white;}
+.post .bottom:hover a:visited {color:RGB(255,200,255);}
+.post {margin-bottom:50px;}
+
+/*Comments*/
+label {font-weight:bold;}
+.commenttext {margin-bottom:14px;}
+.comments {margin:0px; min-height:465px; background-color:white;}
+.commentsinput {float:right; background-color:white; solid white; padding:15px;}
+.comments p {margin-bottom:0px; padding:0px;}
+.commentsinput input {width:247px; padding-left:4px; border:0px; border-bottom: 1px solid black; font-size:1.8em;}
+.commentslist {padding-top:22px; margin-left:7px;}
+.commentslist li {list-style-type:none; border-bottom:0px solid; border-top:0px solid; margin-bottom:0px; line-height:1em;}
+.commentslist li.alt {border-bottom:0px solid; border-top:0px solid; margin-bottom:0px;}
+cite {font-size:.6em; padding-left:11px; font-style:normal; color:gray; font-style:normal; color:gray;}
+textarea {width:250px; border:1px solid black; font-family:Tahoma; font-weight:regular; margin-top:15px;}
+#submit {display:block; font-weight:bold;color:black; background-color:white; border:black 1px solid; width:252px; text-align:center; padding:4px; text-decoration:none;}
+#submit:active {display:block; font-weight:bold; color:white; background-color:black; border:black 1px solid; width:252; text-align:center; padding:4px; text-decoration:none;}
+

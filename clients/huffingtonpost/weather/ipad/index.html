@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    
+    
+    
+    
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../d3.js"></script>
+    <script type="text/javascript" src="//use.typekit.net/wzl2qlx.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <link rel="stylesheet" href="../reset.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="../swipe.js"></script>
+    
+    
+    <script>
+      $(function(){
+        
+        var data,
+            r = 400,
+            //margin = {"top":-20, "bottom":30, "left":150, "right":30},
+            speedOn = 0, 
+            app = new Visual(),
+            animationduration = 2000,
+            animationCompleted = 0;
+        
+        d3.json("../data.json", function(json) {
+          var parseDate = d3.time.format('%B %e, %Y');  
+          for(var i in json) {
+            var state = json[i].state;
+            json[i].date = parseDate.parse(json[i].dateFormatted);
+            className = state.toLowerCase().replace(/ /g, '-'); 
+            json[i].class = className;
+            if(json[i].class == "california") {
+              app.setState(json[i]);
+            }
+            
+          }
+          //console.log(json);
+          data = json;
+          app.init();
+          app.redraw();
+        });
+        
+        
+        
+        function Visual() {
+          var list,
+              svg,
+              donut,
+              timeline,
+              labels;
+          
+          var selectedState,
+              highCircles,
+              avgCircles,
+              infoselect = d3.select('#info');
+          
+          
+          var blue = "#007BC7",
+              gray = "#eeeeee",
+              red = "#D3562C",
+              lightblue = "#5C9DA9",
+              lightgray = "#fdfdfd",
+              lightred = "#E4F62B",
+              timelinecircler = 2;
+          
+          var svg = d3.select('#container').select('svg')
+              .attr('width', r+20)
+              .attr('height', r+20)
+              .attr('id', 'graph')
+              .append('g')
+              .attr('transform', "translate(10, 10)");
+          
+          
+          
+          
+          
+          var scaler = d3.scale.linear()
+              .range([0, r/2]);
+          
+          
+          
+          var axisrconstructor = d3.svg.axis()
+              .scale(scaler)
+              .ticks(12)
+              .tickSubdivide(2)
+              .tickSize(6,3,1)
+              .tickFormat(function(d) { return d + '°';});
+          
+          
+          
+          var donutconstructor = d3.svg.arc()
+              .innerRadius(1)
+              .outerRadius(3)
+              .startAngle(0)
+              .endAngle(2*Math.PI);
+          
+          var scalec = d3.scale.linear()
+              .domain([39, 87, 134])
+              .range([blue, gray, red]);
+          
+          var scaleg = d3.scale.linear()
+              .domain([39, 87, 134])
+              .range(['#ddd', '#555', '#ddd']);
+          
+          
+          
+          var gradient = svg
+              .append("radialGradient")
+              .attr("id", "gradient")
+              .attr('cx', '50%')
+              .attr('cy', '50%')
+              .attr('r', '50%')
+              .attr('fx', '50%')
+              .attr('fy', '50%');
+          
+          gradient.append('stop')
+            .attr('offset', '0%')
+            .style('stop-color', lightblue);
+          gradient.append('stop')
+            .attr('offset', '100%')
+            .style('stop-color', lightred);
+          gradient.append('stop')
+            .attr('offset', '50%')
+            .style('stop-color', lightgray);
+          
+          
+          
+          
+          this.init = function() {
+            
+            
+            
+            scaler.domain([
+              0,
+              //d3.min(data.map(function(d) { return d.avgTemp; })), 
+              d3.round(d3.max(data.map(function(d) { return d.highTemp; })),-1)
+            ]);
+            
+            var list = d3.select('.swipe-wrap').selectAll('div')
+                .data(data)
+                .enter()
+                .append('div')
+                .text(function(d) { return d.state; })
+                .attr('class', function(d) { return d.class });
+            
+            window.mySwipe = Swipe(document.getElementById('slider'), {
+              startSlide : 4,
+              callback : function(i, d) {
+                data.map(function(st) {
+                  if (st.class == d3.select(d).attr('class')) {
+                    selectedState = st;
+                  }
+                  app.redraw();
+                });
+              }
+            });
+            
+            
+            
+            
+            donut = svg.append('g')
+              .attr('transform','translate('+r/2+','+r/2+')');
+            
+            donut
+              .append('path')
+              .attr('class', 'donut')
+              .attr('d', donutconstructor)
+              
+              ; 
+            
+            
+            
+            
+            highCircles = svg.append('g').attr('class', 'highcircles').selectAll('.highcircles')
+              .data(data)
+              .enter()
+              .append('circle')
+              .attr('r', function(d) { return scaler(d.highTemp); })
+              .style('stroke', function(d){ return scaleg(d.highTemp); })
+              .style('stroke-width', 2)
+              .style('fill-opacity', 0)
+              .attr('transform','translate('+r/2+','+r/2+')')
+              ;
+            
+            
+            avgCircles = svg.append('g').attr('class', 'avgcircles').selectAll('.avgcircles')
+              .data(data)
+              .enter()
+              .append('circle')
+              .attr('r', function(d) { return scaler(d.avgTemp); })
+              .style('stroke', function(d){ return scaleg(d.avgTemp); })
+              .style('stroke-width', 2)
+              .attr('transform','translate('+r/2+','+r/2+')');
+            
+            svg.append('circle').attr('class', 'selectedhigh').attr('transform','translate('+r/2+','+r/2+')').attr('r', 0);
+            svg.append('circle').attr('class', 'selectedavg').attr('transform','translate('+r/2+','+r/2+')').attr('r', 0); 
+            
+            var axisr = svg.append('g')
+                .attr('transform','translate('+r/2+','+r/2+') rotate('+-60+')')
+                .attr('class', 'axisr')
+                .call(axisrconstructor);
+            
+            axisr.selectAll('text')
+              .attr('transform','translate(13,10)  rotate('+60+')');
+            
+            labels = svg  
+              .append('g') 
+              .attr('transform','translate('+r/2+','+r/2+')')
+              .selectAll('.highLow')
+              .data([selectedState.highTemp, selectedState.avgTemp])
+              .enter()
+              .append('text');
+            
+            
+          }
+            
+            this.redraw = function(speed) {
+              if(!speed) {
+                speed = 500;
+              }
+              
+              
+              donutconstructor
+                .innerRadius(scaler(selectedState.avgTemp))
+                .outerRadius(scaler(selectedState.highTemp));
+              
+              donut.select('.donut')
+                .attr('d', donutconstructor);
+              
+              svg.select('.selectedhigh')
+                .attr('r', scaler(selectedState.highTemp))
+                .style('stroke', scalec(selectedState.highTemp));
+              
+              svg.select('.selectedavg')
+                .attr('r', scaler(selectedState.avgTemp))
+                .style('stroke', scalec(selectedState.avgTemp)); 
+              
+              
+              infoselect.select('#info .state').text(selectedState.state);
+              infoselect.select('#info .highTemp').text(selectedState.highTemp+'°');
+              infoselect.select('#info .avgTemp').text(selectedState.avgTemp+'°');
+              infoselect.select('#info .location').text(selectedState.station);
+              infoselect.select('#info .date').text(selectedState.dateFormatted);
+              
+               labels
+                .data([
+                  {
+                    "temp": selectedState.highTemp, 
+                    "label" : "High Temp",
+                    "align" : "end",
+                    "offset" : 5
+                  },
+                  {
+                    "temp": selectedState.avgTemp, 
+                    "label" : "Avg Temp",
+                    "align" : "start",
+                    "offset" : -5
+                  }])
+                .transition()
+                .duration(speed)
+                .attr('x', function(d) { return scaler(d.temp) - d.offset; })
+                .text(function(d) { return d.label; })
+                .attr('text-anchor', function(d) { return d.align; });
+              
+              
+              
+            }
+              
+              this.animationOver = function() {
+                if (animationCompleted >= 51) {
+                  console.log('finished'); 
+                  $('#list').fadeIn();
+                  this.redraw(2000);
+                }
+              }
+                
+                this.setState = function(obj) {
+                  selectedState = obj;
+                  
+                }
+                  
+                  
+                  
+                  
+                  };
+        
+      });
+    </script>
+    <style>
+      body {
+        font-family:"futura-pt-condensed";
+        font-size:15px;
+      }
+      #container {
+        padding:20px 0;
+        width:100%;
+        
+        border:1px solid #aaa;
+        margin:0px auto;
+        position:relative;
+        background: url('../bg.png') 50% 0%;
+      }
+      
+      
+      
+      #graph {
+        position:relative;
+        margin:0px auto;
+      }
+      
+      .clear {
+        clear:both;
+      }
+      
+      #info {
+        float:right;
+        
+      }
+      #info table {
+        width:275px;
+      }
+      #info .state {
+        font-size:50px;
+        text-align:center;
+      }
+      
+      
+      #info td {
+        padding:0 0 10px 0;
+      }
+      
+      
+      #info .label {
+        text-align:right;
+        padding:5px 10px 0 0;
+        font-size:16px;
+        vertical-align:top;
+        border-right: 1px solid black;
+        border-top: 1px solid black;
+      }
+      
+      
+      #info .stat {
+        font-size:40px;
+        padding-left:10px;
+      }
+      
+      
+      #timeline .label {
+        font-size:10px;
+      }
+      
+      h1 {
+        font-size:60px;
+        font-weight:700;
+        line-height:40px;
+        margin-bottom:10px;
+      }
+      
+      p {
+        font-size:30px; 
+      }
+      #info p {
+        font-family:arial;
+        font-size:30px; 
+        line-height:16px;
+        padding-bottom:10px;
+        border-bottom: 1px dotted black;
+        margin-bottom:10px;
+      }
+      
+      .indent {
+        padding:0px 20px;
+      }
+      /* SVG Style */
+      .highcircles, .avgcircles {
+        stroke: #aaa;
+        fill-opacity:0;
+        stroke-opacity:.2;
+        transition-duration: .5s;
+        
+      }
+      
+      .selectedhigh, .selectedavg {
+        fill-opacity:0;
+        stroke-width:6;
+      }
+      
+      .selected {
+        stroke-width:4;
+        stroke-opacity:1;
+        font-weight:bold;
+      }
+      
+      .donut {
+        fill-opacity:0;
+      }
+      
+      .axisr {
+        
+        
+      }
+      
+      .axisr text {
+        font-size:12px;
+        fill:#000;
+      }
+      
+      .axisr line {
+        stroke:#aaa;
+        stroke-width:1
+      }
+      
+      /*Mobile styles */
+      
+      .swipe {
+        margin:20px 0;
+        overflow: hidden;
+        visibility: hidden;
+        position: relative;
+        border-top: 1px solid gray;
+        border-bottom: 1px solid gray;
+        background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 56%, rgba(0,0,0,0.2) 99%, rgba(0,0,0,0.2) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(56%,rgba(0,0,0,0)), color-stop(99%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.2))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 56%,rgba(0,0,0,0.2) 99%,rgba(0,0,0,0.2) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 56%,rgba(0,0,0,0.2) 99%,rgba(0,0,0,0.2) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 56%,rgba(0,0,0,0.2) 99%,rgba(0,0,0,0.2) 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 56%,rgba(0,0,0,0.2) 99%,rgba(0,0,0,0.2) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33000000', endColorstr='#33000000',GradientType=0 ); /* IE6-9 */
+        
+      }
+      .swipe-wrap {
+        overflow: hidden;
+        position: relative;
+      }
+      .swipe-wrap > div {
+        float:left;
+        width:100%;
+        position: relative;
+      }
+      
+      .swipe-wrap {
+      }
+      
+      .swipe-wrap div {
+        margin:00px auto; 
+        text-align:center;
+        font-size:40px;
+        padding:30px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      
+      
+      
+      <div class="indent">
+        <div id="info">
+          
+          <table width="250" valign="top" >
+            <tr>
+              <td valign="top" colspan="4"  style="padding:0px;"></td>
+            </tr>
+            <tr>
+              <td class="label">High<br/>Temp</td>
+              <td class="stat highTemp">134°</td>
+              <td style="padding-left:20px;" class="label">Average<br/>Temp</td>
+              <td class="stat avgTemp">58.9°</td>
+            </tr>
+            <tr>
+              <td class="label">date</td>
+              <td class="stat date" colspan="3">July 10, 1913</td>
+            </tr>
+            <tr>
+              <td class="label">location</td>
+              <td class="stat location" colspan="3">Greenland Ranch</td>
+            </tr>
+          </table>
+        </div>
+        <svg></svg>
+      </div>
+      <div id="list">
+        <div id='slider' class='swipe'>
+          <div class='swipe-wrap'>
+          </div>
+        </div>
+      </div>
+      <div class="indent">
+        <h1>The Hottest Day Ever Turns 100</h1>
+        <p>July 11, 2013, marks 100 years since the hottest day on record in the U.S., when temperatures reached 134 degrees in Death Valley. Calif. But another U.S. heat record was broken in 2012 — it was the warmest on record for the continental U.S., according to NOAA, with average temperatures reacing 55.3. A full degree warmer then the previous record set in 1998, 2012’s average temperature was also 3.2 degrees warmer then the 20th century U.S. average. Ahead, we illustrate average temperatures in the U.S. from 1913 to today by state. <br/>— <i>James Gerken and AJ Barbosa</i></p>
+      </div>
+      
+      <div class="clear"></div>
+    </div>
+  </body>
+</html>
