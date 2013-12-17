@@ -73,7 +73,7 @@
                    <a href="http://www.twitter.com/sciutoalex/"><img src="<?=ROOT_URL;?>/img/twitter.jpg" alt="" width="29" /></a>
                 </li> 
                 <li>
-                  <p class="small"><a href="<?=ROOT_URL;?>/blog"></a></p>
+                  <p class="small"><a href="<?=ROOT_URL;?>/blog">Blog</a></p>
                 </li>
                 <?php if( $opts['page_name'] != "index" ) { ?>
                 <li>
