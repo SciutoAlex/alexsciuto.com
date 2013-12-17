@@ -15,7 +15,7 @@
         "title": "Reinventing Mobile Work",
         "category": "interaction design",
         "medium": "Mobile Application",
-        "description"s: "Experiments in creating visuals using JavaScript to draw shapes on the HTML canvas object.",
+        "description": "Experiments in creating visuals using JavaScript to draw shapes on the HTML canvas object.",
         "date": "October 2013<br/>Carnegie Mellon University",
         "url": "cmu/portfolio/chomp-mobile-app/"
     },
@@ -87,7 +87,7 @@
         "medium": "Interactive Chart",
         "description": "Interactive graphic charting the swings of ideology in the US Senate. See the ideological rank of every Senator who has ever served.",
         "date": "March 2012",
-        "url": "historicalsenate/index.php"
+        "url": "historicalsenate/index.html"
     },
     "scienceBooks": {
         "onImage": "img/sciencebookon.jpg",
