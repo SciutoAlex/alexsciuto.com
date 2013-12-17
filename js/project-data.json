@@ -87,7 +87,7 @@
         "medium": "Interactive Chart",
         "description": "Interactive graphic charting the swings of ideology in the US Senate. See the ideological rank of every Senator who has ever served.",
         "date": "March 2012",
-        "url": "historicalsenate/index.html"
+        "url": "historicalsenate/index.php"
     },
     "scienceBooks": {
         "onImage": "img/sciencebookon.jpg",
