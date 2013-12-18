@@ -262,7 +262,7 @@
           this['raphaelpath'] = paper.path(this['shape']['path']).attr({"stroke-opacity":'1',"stroke-width":"1","stroke":color(senator['bin']),"stroke-linecap":"round","fill":color(senator['bin']),"fill-opacity":"0","stroke-linejoin":"round"})
             .mouseover(function() {
               this.toFront();
-              this.attr({"opacity":"1","stroke-width":"8"});
+              this.attr({"fill":"none","opacity":"1","stroke-width":"8"});
               tipText = "<strong>" + senator['firstname'] + " " + senator['lastname'] + "</strong><br/>" + senator['state'] + "<br/> Served in " + senator['servicelength'] + (senator['servicelength'] == 1 ? " Congress." : " Congresses.") + "<br/><br/>Ideological rank during final term Congress: " + senator['finalrank'] + "<br/>" + " Ideological rank during first term in Congress: " + senator['initrank'];
                  topcolor = color(senator['bin']);
                  info.css('visibility','visible');
