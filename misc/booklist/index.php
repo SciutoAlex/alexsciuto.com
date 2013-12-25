@@ -91,6 +91,12 @@
               "head2" : "Alberto Cairo",
               "url" : "http://www.peachpit.com/store/functional-art-an-introduction-to-information-graphics-9780321834737",
               "bought" : false
+            },
+            {
+              "head" : "Envisioning Information",
+              "head2" : "Edward Tufte",
+              "url" : "http://www.amazon.com/Envisioning-Information-Edward-R-Tufte/dp/0961392118",
+              "bought" : true
             }
             
           ]
