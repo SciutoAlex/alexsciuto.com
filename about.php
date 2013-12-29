@@ -72,20 +72,11 @@
         <p class="details">Collaborated on a data project envisioning how interactive news graphics could best be translated onto mobile devices.</p>  
       </div>
       <div class="entry">
-        <h3>Off-Campus Program Assistant</h3>
-        <p class="institution">Carleton College | Madrid, Spain</p>
-        <p class="details">"Project Manager" for off-campus study program. 25 students, three countries, ten months, one professor.</p>  
-      </div>
-      <div class="entry">
         <h3>Research and Design Intern</h3>
         <p class="institution">Talking Points Memo | NY</p>
         <p class="details">Maintained web articles, edited photography, and worked with web developer on interactive features.</p>  
       </div>
-      <div class="entry">
-        <h3>Educational Advisor</h3>
-        <p class="institution">Taurus Education | Shanghai, China</p>
-        <p class="details">Maintained web articles, edited photography, and worked with web developer on interactive features.</p>  
-      </div>
+      
     </div>
   </div>
   <div class="col-r">
