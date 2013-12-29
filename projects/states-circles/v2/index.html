@@ -16,7 +16,7 @@
       
       
       $(function(){
-        
+         
         var years = [1790,1800,1810,1820,1830,1840,1850,1860,1870,1880,1890,1900,1910,1920,1930,1940,1950,1960,1970,1980,1990,2000,2010];        
         
         var doc = $(document),
@@ -28,6 +28,18 @@
             ranksWidth = ranksWindow.width(),
             ranksHeight = ranksWindow.height();
         
+        if(isNaN(bubblesWidth)) {
+          bubblesWidth = 800;
+        }
+         if(isNaN(bubblesHeight)) {
+          bubblesHeight = 900;
+        }
+        if(isNaN(ranksWidth)) {
+          ranksWidth = 230;
+        }
+         if(isNaN(ranksHeight)) {
+          ranksHeight = 600;
+        }
         
         var pow = 2,
             amp = -.33;
@@ -72,7 +84,8 @@
         
         //create force layout and function for updating on d3's tick
         var force = d3.layout.force();
-        
+       
+    
         force
           .gravity(.3)
           .size([bubblesWidth+200, bubblesWidth-200])
@@ -84,9 +97,9 @@
         force.on("tick", function(d) {
           label.attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
-          
-          
-          circle.attr("transform", function(d) { return "translate(" + parseInt(d.x,10) + "," + parseInt(d.y,10) + ")"; })
+           
+         
+          circles.attr("transform", function(d) {  return "translate(" + parseInt(d.x,10) + "," + parseInt(d.y,10) + ")"; })
             
             
             
@@ -301,7 +314,7 @@
             
             var arr = $(this).find('svg');
             
-            console.log(arr[0]);
+         
             
             d3.select(arr[0]).selectAll('.points')
               .data($(this).data('linedataarray'))
