@@ -225,7 +225,12 @@ line-height: 16px;
   background: url('/img/bgshadow.png');
 }
 
-
+.quote p {
+  font-size: 1.3em;
+font-weight: 100;
+line-height: 1.5em;
+margin-bottom: 13px;
+}
 
 label {
   color:#b51616;
@@ -383,11 +388,13 @@ label {
 
 body {
   font-family:"museo-sans";
+
 }
 #container {
   max-width:1030px;
   margin:0px auto;
   margin-bottom:150px;
+
 }
 
 .col1 {
