@@ -9,12 +9,31 @@
   
 </style>
 
-  <div class="section intro">
-    <div class="col1"><img src="<?= ROOT_URL ?>/img/alex-portrait2.jpg" alt=""></div>
-    <div class="col4 last"><p>Welcome! I'm Alex Sciuto. I'm an inveterate learner, and I get very excited about whatever I'm doing. Right now I'm getting really into the phenomenology of Martin Heidegger, Backbone.js, and visualizing people's social information.</p></div>
-    <div class="clear"></div>
+<div class="section intro border-bottom">
+  <div class="col1"><img src="<?= ROOT_URL ?>/img/alex-portrait2.jpg" alt=""></div>
+  <div class="col4 last"><p>Welcome! I'm Alex Sciuto. I'm an inveterate learner, and I get very excited about whatever I'm doing. Right now I'm getting really into the phenomenology of Martin Heidegger, Backbone.js, and visualizing people's social information.</p></div>
+  <div class="clear"></div>
+</div>
+<div class="section border-bottom">
+<div class="steps quote" >
+    <div class="step">
+      <strong></strong>
+      <p>Credibility vanishes in clouds of chartjunk; who would trust a chart that looks like a video game?</p>
+        <strong>&mdash;Edward Tufte</strong>
     </div>
-  <div class="resume">
+   
+    <div class="step">
+      <p>The "micro" in "microinteractions" implies it is about the small things. Small? Yes. Unimportant? Absolutely not! Microinteractions is about those critical details that make the difference between a friendly experience and traumatic anxiety.</p>
+        <strong>&mdash;Don Norman</strong>
+    </div>
+   <div class="step">
+      <p>The operating <em>moral</em> premise of information design should be that our readers are alert and caring; they maybe be busy, eager to get on twith it, but they are no stupid.</p>
+      <strong>&mdash;Edward Tufte</strong>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<div class="resume">
   <div class="col-l">
     <div class="section">
       <h2>Education</h2>
@@ -122,9 +141,9 @@
         <h2>Life Locations</h2>
         <img src="img/locations.png" width="100%" alt="">
         <ul>
-        <li>St. Louis</li>
-        <li>New York City</li>
-        <li>Pittsburgh</li>
+          <li>St. Louis</li>
+          <li>New York City</li>
+          <li>Pittsburgh</li>
           <li>Shanghai, China</li>
           <li>Madrid, Spain</li>
           <li>Maastricht, the Netherlands</li>
