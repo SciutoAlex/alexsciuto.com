@@ -50,6 +50,9 @@
       float:left;
       margin-top:17px;
       position:relative;
+      font-size:10px;
+      letter-spacing:1px;
+      color:#aaa;
     }
     #info{
        position : fixed;
@@ -165,7 +168,7 @@
       <div data="4843" class="individual" style="top:1630px;"><strong>Andrew Jackson</strong><br/>Seventh President</div>
     </div>
     <div id = "graph"></div>
-    <div style="display:none;" id = "dates"></div>
+    <div id = "dates"></div>
   </div>
 </div>
 
@@ -259,17 +262,17 @@
           });
           //$('#error').append(senator['path']+ "<br/>");
           
-          this['raphaelpath'] = paper.path(this['shape']['path']).attr({"stroke-opacity":'1',"stroke-width":"1","stroke":color(senator['bin']),"stroke-linecap":"round","fill":color(senator['bin']),"fill-opacity":"0","stroke-linejoin":"round"})
+          this['raphaelpath'] = paper.path(this['shape']['path']).attr({"stroke-opacity":offopacity,"stroke-width":"1","stroke":color(senator['bin']),"stroke-linecap":"round","fill":color(senator['bin']),"fill-opacity":"0","stroke-linejoin":"round"})
             .mouseover(function() {
               this.toFront();
-              this.attr({"fill":"none","opacity":"1","stroke-width":"8"});
+              this.attr({"fill":"none","stroke-opacity":"1","stroke-width":"8"});
               tipText = "<strong>" + senator['firstname'] + " " + senator['lastname'] + "</strong><br/>" + senator['state'] + "<br/> Served in " + senator['servicelength'] + (senator['servicelength'] == 1 ? " Congress." : " Congresses.") + "<br/><br/>Ideological rank during final term Congress: " + senator['finalrank'] + "<br/>" + " Ideological rank during first term in Congress: " + senator['initrank'];
                  topcolor = color(senator['bin']);
                  info.css('visibility','visible');
                  over = true;
             })
             .mouseout(function() {
-              this.attr({"opacity":offopacity,"stroke-width":"1"});
+              this.attr({"stroke-opacity":offopacity,"stroke-width":"1"});
               info.css('visibility','hidden');
                  over = false;
             });
@@ -355,14 +358,14 @@
             var congress = (year-1786)/2;
             $.each(organizeddata, function() {
               if ((this['firstsenate'] == congress) || (this['finalsenate'] == congress-1)) {
-                this['shape']['circle'].attr({"opacity":"1","r":"4"});
-                this['raphaelpath'].attr({"opacity":"1","stroke-width":"3"});
+                this['shape']['circle'].attr({"stroke-opacity":"1","r":"4"});
+                this['raphaelpath'].attr({"stroke-opacity":"1","stroke-width":"3"});
               }
             });
           }, function() {
             $.each(organizeddata, function() {
-              this['shape']['circle'].attr({"opacity":offopacity, "r":"2"});
-              this['raphaelpath'].attr({"opacity":offopacity,"stroke-width":"1"});
+              this['shape']['circle'].attr({"stroke-opacity":offopacity, "r":"2"});
+              this['raphaelpath'].attr({"stroke-opacity":offopacity,"stroke-width":"1"});
             });
           });
         });
