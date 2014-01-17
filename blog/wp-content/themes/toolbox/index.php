@@ -13,7 +13,7 @@
   */
   
   get_header();
-  $showYear = 2;
+  $show_year = 2014;
   ?>
 
 <div id="primary" class="full-width">
@@ -45,31 +45,52 @@
     <?php $fullPost = false; ?>
     
     
-    <?php /* Here we list the all the blog posts in two columns */ ?>
-    <?php $list_started = false; ?>
+    
+    <?php /* Here we list the all the blog posts in two columns
+  
+  <h2></h2>
+  <.list-article>
+  <.col-2>
+  <.col-l><.col-r>
+  <.clearit>
+
+  */ ?>
+   
+    <?php /* Initialize our list variables */ 
+  $blogs_for_year_counter = 1;
+  $list_started = false;
+
+  
+  /* HTML code to start the list */
+  echo "<h2>$currentYear</h2>";
+  echo "<div class='list-article'>";
+  ?>   
+    
+    
     <?php else : ?>
     
-    
-    <?php if ($currentYear !== $showYear) : ?>
-<?php $blogs_for_year_counter = 1; ?>
-       <?php $showYear = $currentYear; ?>
-    <?php if ($list_started) : ?>
-    <?php echo ($blogs_for_year_counter % 1) ? '' : '</div><div class="clearit"></div></div>'; ?>
-     <?php echo ($blogs_for_year_counter % 2) ? '' : '</div></div>'; ?>
-    <?php endif; ?>
-    <?php $list_started = true; ?>
-       <h2><?php echo $currentYear; ?></h2>
-       <div class="list-article">
-    <?php endif; ?>
-    
-    <?php echo ($blogs_for_year_counter % 2) ? '<div class="col-2">' : ''; ?>
+    <?php /* Code to insert when a new year appears */ 
+  if($show_year != $currentYear) {
+    $show_year = $currentYear;
     
     
+    echo (($blogs_for_year_counter % 2) == 1) ? '': '<div class="col-r"></div><div class="clearit"></div><!-- to make up for the odd number of posts --></div>'; 
+    echo "</div><!-- Ends .list-article div> -->";
+      echo "<h2>$currentYear</h2>"; 
+    echo "<div class='list-article'>";
+    
+    $blogs_for_year_counter = 1;
+    
+  }
+  ?>
+    
+    
+    <?php /* Display the Two-column snippet. */ ?>
+    <?php echo (($blogs_for_year_counter % 2) == 1) ? '<div class="col-2">' : ''; ?>
     <div class="<?php echo ($blogs_for_year_counter % 2) ? 'col-l' : 'col-r' ?>">
       <p><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'toolbox' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></p>
     </div>
-    
-    <?php echo ($blogs_for_year_counter % 2) ? '' : '</div><div class="clearit"></div>'; ?>
+         <?php echo (($blogs_for_year_counter % 2) == 1) ? '' : '<div class="clearit"></div></div>'; ?>
     <?php $blogs_for_year_counter++; ?>
     
     
@@ -77,7 +98,7 @@
     <?php endif; ?>
     
     <?php endwhile; ?>
-  </ul>
+    </div>
     
     
     <?php else : ?>
