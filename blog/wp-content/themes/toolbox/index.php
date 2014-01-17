@@ -13,7 +13,7 @@
   */
   
   get_header();
-  $showYear = 2011;
+  $showYear = 2;
   ?>
 
 <div id="primary" class="full-width">
@@ -43,26 +43,34 @@
     <?php if ( $fullPost ) : ?>
     <?php get_template_part( 'content', get_post_format() ); ?>
     <?php $fullPost = false; ?>
-     <div class="list-article">
+    
+    
+    <?php /* Here we list the all the blog posts in two columns */ ?>
+    <?php $list_started = false; ?>
     <?php else : ?>
     
     
     <?php if ($currentYear !== $showYear) : ?>
-  </div>
+<?php $blogs_for_year_counter = 1; ?>
        <?php $showYear = $currentYear; ?>
-    <h2><?php echo $currentYear; ?></h2>
-    <div class="list-article">
-      <?php endif; ?>
-      
-      <?php echo ($wp_query->current_post % 2) ? '<div class="col-2">' : ''; ?>
-      
-      
-      <div class="<?php echo ($wp_query->current_post % 2) ? 'col-l' : 'col-r' ?>">
-        <p><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'toolbox' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></p>
-      </div>
-      
-      <?php echo ($wp_query->current_post % 2) ? '' : '</div><div class="clearit"></div>'; ?>
-      
+    <?php if ($list_started) : ?>
+    <?php echo ($blogs_for_year_counter % 1) ? '' : '</div><div class="clearit"></div></div>'; ?>
+     <?php echo ($blogs_for_year_counter % 2) ? '' : '</div></div>'; ?>
+    <?php endif; ?>
+    <?php $list_started = true; ?>
+       <h2><?php echo $currentYear; ?></h2>
+       <div class="list-article">
+    <?php endif; ?>
+    
+    <?php echo ($blogs_for_year_counter % 2) ? '<div class="col-2">' : ''; ?>
+    
+    
+    <div class="<?php echo ($blogs_for_year_counter % 2) ? 'col-l' : 'col-r' ?>">
+      <p><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'toolbox' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></p>
+    </div>
+    
+    <?php echo ($blogs_for_year_counter % 2) ? '' : '</div><div class="clearit"></div>'; ?>
+    <?php $blogs_for_year_counter++; ?>
     
     
     
