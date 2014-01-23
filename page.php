@@ -33,6 +33,13 @@
       })();
       
     </script>
+    <script src="<?=ROOT_URL;?>/js/image-lens.js"></script>
+  <script>
+    $(function() {
+      $('.zoom').imageLens({ borderSize: 3, borderColor: "#1f0f13", lensSize:350 });
+      $('.imagelotoens').css('box-shadow', '');
+    });
+  </script>
   </head>
   <body>
     <div id="container">
