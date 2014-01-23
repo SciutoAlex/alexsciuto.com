@@ -9,7 +9,8 @@
       </div>
     <div>
      
-      <div class="zoom" data-large="img/web-poster.jpg" width="1500" height="2400" data-width="2573" data-height="4200"><img src="img/web-poster.jpg" alt=""></div><p class="zoomcaption"><a href="zoom.php" target="_blank">view larger image</a></p>
+      <div width="1500" height="2400"><img class='zoom' src="img/web-poster.jpg" alt="">
+      </div>
   </div>
   </div>
   <div class="col2 last" >
@@ -42,7 +43,7 @@
 
   <div class="clear"></div>
 </div>    
-<script src="<?=ROOT_URL;?>/js/photoZoom.js"></script>
+
   <div class="clear"></div>
 
 <?php page_about();?>

@@ -71,8 +71,8 @@ The greatest challenge for me was finding the right level of visual complexity t
       I learned a lot from this project about the process of design. I thought through not just how I wanted the design to look, but I considered who would be viewing the design and where they'd view it and why they'd want to view it. I discovered that these deeper considerations are actually the kind of design I'm interested in executing. Visual design is essential, but there's so much more to think about and discover.</p>
     </p>
   </div>
-  <div class="col3 last"><div class="zoom" data-large="img/neighborhood-final-large.jpg" data-width="2490" data-height="1338"><img src="img/neighborhood-final2.jpg" alt=""></div><p class="zoomcaption"><a href="zoom.php">view larger image</a></p></div>
-  <script src="/js/photoZoom.js"></script>
+  <div class="col3 last"><img src="img/neighborhood-final-large.jpg" class="zoom" alt=""></div>
+
 
   <script>
    

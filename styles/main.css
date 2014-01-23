@@ -707,6 +707,14 @@ strong {
   cursor:pointer;
 }
 
+.imagelens {
+background-color: #fefefd; /* layer fill content */
+-moz-box-shadow: 0 5px 17px #909798; /* drop shadow */
+-webkit-box-shadow: 0 5px 17px #909798; /* drop shadow */
+box-shadow: 0 5px 17px #909798; /* drop shadow */
+cursor:none;
+}
+
 
 @media (max-width: 900px) {
 
