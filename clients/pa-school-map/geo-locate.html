@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?sensor=false">
+    </script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript">
+      
+      var geocoder;
+      var finalData = [];
+      var totalLength = 3074;
+      var count = 0;
+      var errorCount = 0;
+      
+      function initialize() {
+        geocoder = new google.maps.Geocoder();
+        
+        
+        d3.csv('address.csv', function(d) {
+          return {
+            address : d.address + " " + d.city + " " + "PA " + d.zip
+          }
+            
+            }, function(data) {
+              
+              
+              
+              
+              
+              codeAddress(data[count].address);
+              
+              
+              function codeAddress(addr) {
+                var address = addr;
+                setTimeout(function() {
+                  geocoder.geocode( { 'address': address}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                      
+                      
+                      
+                      newParagraph = document.createElement('p');
+                      // Create some text
+                      newText = document.createTextNode(JSON.stringify(results[0].geometry.location.d) + "," + JSON.stringify(results[0].geometry.location.e) + "," + JSON.stringify(results[0].formatted_address));
+                      // Put the text in the new paragraph element
+                      newParagraph.appendChild(newText);
+                      // Append the new paragraph to the update Div
+                      document.getElementById('output').appendChild(newParagraph);
+                      
+                      
+                      count++;
+                      codeAddress(data[count].address);
+                    } else {
+                      console.log("Geocode was not successful for the following reason: " + status + ". " + addr);
+                      
+                      
+                      errorCount++;
+                      
+                      if (errorCount % 20) {
+                        setTimeout(function() {
+                          codeAddress(data[count].address);
+                          errorCount = 0;
+                        }, 20000);
+                      } else {
+                        codeAddress(data[count].address);
+                        errorCount++;
+                      }
+                      
+                      if (status == "") {
+                        count++;
+                      }
+                    }
+                    
+                    
+                    
+                  });
+                }, parseInt(500 + Math.random()*1000));
+                
+              }
+              
+            });
+      }
+      
+      
+      window.onload = initialize();
+      
+      
+      
+      
+      
+      
+      
+    </script>
+  </head>
+  <body>
+    <div id="output"></div>
+  </body>
+</html>

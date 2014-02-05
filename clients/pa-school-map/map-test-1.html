@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="d3.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+    <script>
+      $(function(){
+        var map = L.mapbox.map('map', 'examples.map-20v6611k')
+            .setView([40.94492899999999,-78.96997899999997], 8);
+        
+        
+        d3.csv("geocode.csv", function(d) {
+          
+          for (var i = 0; i < d.length; i++){
+            var point = d[i];
+            console.log([parseFloat(point.lat), parseFloat(point.lon)]);
+            var x = L.mapbox.markerLayer({
+              // this feature is in the GeoJSON format: see geojson.org
+              // for the full specification
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                // coordinates here are in longitude, latitude order because
+                // x, y is the standard for GeoJSON and many formats
+                coordinates: [parseFloat(point.lon), parseFloat(point.lat)]
+              },
+              properties: {
+                title: point.name,
+                description: point.add,
+                // one can customize markers by adding simplestyle properties
+                // http://mapbox.com/developers/simplestyle/
+                'marker-size': 'small',
+                'marker-color': '#38ee87'
+              }
+            }).addTo(map);
+            
+           
+          }
+          
+           d3.json("pa-counties.topojson", function(error, us) {
+      console.log(us);
+      var subunits = topojson.feature(us, us.objects['pa-counties']);
+             L.geoJson(subunits, {
+              
+               "style" : {
+        fillColor: "#000",
+        weight: 2,
+        opacity: 1,
+        color: '#014704',
+        dashArray: '3,10',
+        fillOpacity: 0
+    } 
+               
+             }).addTo(map);
+           });
+          
+        });
+        
+        
+      });
+    </script>
+    <style>
+      body { margin:0; padding:0; }
+      #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+  </head>
+  <body>
+    <div id='map'></div>
+  </body>
+</html>
