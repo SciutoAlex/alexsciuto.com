@@ -14,6 +14,7 @@
         var map = L.mapbox.map('map', "examples.map-vyofok3q")
             .setView([40.94492899999999,-78.96997899999997], 8);
         
+      
         
         
         d3.csv("geocode.csv", function(d) {
@@ -87,6 +88,10 @@
             
           }
           
+          
+          
+        });
+        
           d3.json("pa-counties.topojson", function(error, us) {
             
             var subunits = topojson.feature(us, us.objects['pa-counties']);
@@ -94,18 +99,16 @@
               
               "style" : {
                 fillColor: "#000",
-                weight: 2,
+                weight: 1,
                 opacity: 1,
-                color: '#eee',
-                dashArray: '3,10',
-                fillOpacity: 0
+                color: '#572900',
+                dashArray: '1,2',
+                fillOpacity: 0,
+                lineCap: "round"
               } 
               
             }).addTo(map);
           });
-          
-        });
-        
         
         function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
           var R = 6371; // Radius of the earth in km
