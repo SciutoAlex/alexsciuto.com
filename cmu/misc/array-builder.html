@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Fauna+One' rel='stylesheet' type='text/css'>
+    <script>
+      $(function(){
+        
+        var rows = $('tr'),
+            cells = $('td'),
+            resetButton = $('#reset'),
+            reverse = $('#reverse');
+        
+        cells.click(function() {
+          $(this).toggleClass('selected');
+          output();
+        });
+        
+        reverse.click(function() {
+          cells.toggleClass('selected');
+          output();
+        })
+        
+        resetButton.click(function() {
+          cells.removeClass('selected');
+          output();
+        });
+        
+        function output() {
+          var output = "{<br/>";
+          $.each(rows, function(i) {
+            var thisrowoutput = "{";
+            var theseCells = $(this).find('td');
+            $.each(theseCells, function(i) {
+              if( $(this).hasClass('selected') ) {
+                thisrowoutput += "1,";
+              } else {
+                thisrowoutput += "0,";
+              }
+            });
+            thisrowoutput = thisrowoutput.substring(0, thisrowoutput.length - 1)
+            
+              if(i != rows.length-1) {
+            thisrowoutput += "},<br/>";
+              } else {
+                  thisrowoutput += "}<br/>";
+              }
+            
+            output += thisrowoutput;
+          });
+          output += "}";
+          
+          $(".output pre").html(output);
+                   
+        }
+        
+        
+      });
+    </script>
+    <style>
+      
+      body {
+        margin-top:20px;
+        width:100%;
+         text-align:center;
+        background:#e1e4e8;
+        font-family: 'Fauna One', serif;
+      }
+      
+      .container {
+        text-align:left;
+        padding:20px;
+        border-radius:20px;
+        display:inline-block;
+        margin: auto;
+        border:2px solid #4a76a3;
+        background-color: #d6dce3; /* layer fill content + color overlay */
+-moz-box-shadow: inset 0 0 29px 3px rgba(79,79,79,.34); /* inner glow */
+-webkit-box-shadow: inset 0 0 29px 3px rgba(79,79,79,.34); /* inner glow */
+box-shadow: inset 0 0 29px 3px rgba(79,79,79,.34); /* inner glow */
+        
+        -moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px; /* border radius */
+      }
+      
+      pre {
+        font-size:18px;
+      }
+      
+      td {
+        width: 20px;
+        height: 20px;
+        background: #5f8cba;
+      }
+      
+      td:hover {
+        background: #2c5885;
+        cursor:pointer;
+        -webkit-transition: all 200ms ease-in-out;
+-moz-transition: all 200ms ease-in-out;
+-ms-transition: all 200ms ease-in-out;
+-o-transition: all 200ms ease-in-out;
+transition: all 200ms ease-in-out;
+      }
+      
+      .selected {
+        background: #173757;
+        -webkit-transition: all 500ms ease-in-out;
+-moz-transition: all 500ms ease-in-out;
+-ms-transition: all 500ms ease-in-out;
+-o-transition: all 500ms ease-in-out;
+transition: all 500ms ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+     <h1>8x8 grid to array</h1>
+    <div class="container">
+    <table>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <div class="output">
+      <pre>{
+{0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0},
+{0,1,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0}
+}</pre>
+   
+    </div>
+        <button id="reset">Reset</button>
+    <button id="reverse">Reverse</button>
+    </div>
+   
+  </body>
+</html>
