@@ -22,13 +22,13 @@
           cells.toggleClass('selected');
           output();
         })
+          
+          resetButton.click(function() {
+            cells.removeClass('selected');
+            output();
+          });
         
-        resetButton.click(function() {
-          cells.removeClass('selected');
-          output();
-        });
-        
-        function output() {
+        function outputArray() {
           var output = "{<br/>";
           $.each(rows, function(i) {
             var thisrowoutput = "{";
@@ -41,19 +41,118 @@
               }
             });
             thisrowoutput = thisrowoutput.substring(0, thisrowoutput.length - 1)
-            
+              
               if(i != rows.length-1) {
-            thisrowoutput += "},<br/>";
+                thisrowoutput += "},<br/>";
               } else {
-                  thisrowoutput += "}<br/>";
+                thisrowoutput += "}<br/>";
               }
             
             output += thisrowoutput;
           });
           output += "}";
           
-          $(".output pre").html(output);
-                   
+          $(".output .array").html(output);
+        }
+        
+        
+        function output() {
+         outputBinary();
+         outputArray(); 
+          outputHex();
+        }
+        function outputBinary() {
+          
+          var output = "";
+          $.each(rows, function(i) {
+            var thisrowoutput = "B";
+            var theseCells = $(this).find('td');
+            $.each(theseCells, function(i) {
+              if( $(this).hasClass('selected') ) {
+                thisrowoutput += "1";
+              } else {
+                thisrowoutput += "0";
+              }
+            });
+
+              
+              if(i != rows.length-1) {
+                thisrowoutput += ",<br/>";
+              } else {
+                thisrowoutput += "<br/>";
+              }
+            
+            output += thisrowoutput;
+          });
+          
+          $(".output .binary").html(output);
+        }
+        
+         function outputHex() {
+          
+           var output = "{";
+          $.each(rows, function(i) {
+            var thisrowoutput = ""
+            var theseCells = $(this).find('td');
+            var thisHexValue = "0x";
+            $.each(theseCells, function(i) {
+              if( $(this).hasClass('selected') ) {
+                thisrowoutput += "1";
+              } else {
+                thisrowoutput += "0";
+              }
+            });
+            thisrowoutput = thisHexValue + binaryToHex(thisrowoutput);
+
+              
+              if(i != rows.length-1) {
+                thisrowoutput += ", ";
+              } else {
+                thisrowoutput += "}";
+              }
+            
+            output += thisrowoutput;
+          });
+          
+          $(".output .hex").html(output);
+        }
+        
+        function binaryToHex(s) {
+          var i, k, part, accum, ret = '';
+          for (i = s.length-1; i >= 3; i -= 4) {
+            // extract out in substrings of 4 and convert to hex
+            part = s.substr(i+1-4, 4);
+            accum = 0;
+            for (k = 0; k < 4; k += 1) {
+              if (part[k] !== '0' && part[k] !== '1') {
+                // invalid character
+                return { valid: false };
+              }
+              // compute the length 4 substring
+              accum = accum * 2 + parseInt(part[k], 10);
+            }
+            if (accum >= 10) {
+              // 'A' to 'F'
+              ret = String.fromCharCode(accum - 10 + 'A'.charCodeAt(0)) + ret;
+            } else {
+              // '0' to '9'
+              ret = String(accum) + ret;
+            }
+          }
+          // remaining characters, i = 0, 1, or 2
+          if (i >= 0) {
+            accum = 0;
+            // convert from front
+            for (k = 0; k <= i; k += 1) {
+              if (s[k] !== '0' && s[k] !== '1') {
+                return { valid: false };
+              }
+              accum = accum * 2 + parseInt(s[k], 10);
+            }
+            // 3 bits, value cannot exceed 2^3 - 1 = 7, just convert
+            ret = String(accum) + ret;
+          }
+          return ret;
         }
         
         
@@ -64,7 +163,7 @@
       body {
         margin-top:20px;
         width:100%;
-         text-align:center;
+        text-align:center;
         background:#e1e4e8;
         font-family: 'Fauna One', serif;
       }
@@ -77,136 +176,137 @@
         margin: auto;
         border:2px solid #4a76a3;
         background-color: #d6dce3; /* layer fill content + color overlay */
--moz-box-shadow: inset 0 0 29px 3px rgba(79,79,79,.34); /* inner glow */
--webkit-box-shadow: inset 0 0 29px 3px rgba(79,79,79,.34); /* inner glow */
-box-shadow: inset 0 0 29px 3px rgba(79,79,79,.34); /* inner glow */
+        -moz-box-shadow: inset 0 0 29px 3px rgba(79,79,79,.34); /* inner glow */
+        -webkit-box-shadow: inset 0 0 29px 3px rgba(79,79,79,.34); /* inner glow */
+        box-shadow: inset 0 0 29px 3px rgba(79,79,79,.34); /* inner glow */
         
         -moz-border-radius: 5px;
--webkit-border-radius: 5px;
-border-radius: 5px; /* border radius */
+        -webkit-border-radius: 5px;
+        border-radius: 5px; /* border radius */
       }
       
       pre {
-        font-size:18px;
+        font-size:12px;
       }
       
       td {
         width: 20px;
         height: 20px;
         background: #5f8cba;
-            
+        
         -moz-border-radius: 2px;
--webkit-border-radius: 2px;
-border-radius: 2px; /* border radius */
+        -webkit-border-radius: 2px;
+        border-radius: <2></2>px; /* border radius */
       }
       
       td:hover {
-        background: #2c5885;
-        cursor:pointer;
-        -webkit-transition: all 200ms ease-in-out;
--moz-transition: all 200ms ease-in-out;
--ms-transition: all 200ms ease-in-out;
--o-transition: all 200ms ease-in-out;
-transition: all 200ms ease-in-out;
+      background: #2c5885;
+      cursor:pointer;
+      -webkit-transition: all 200ms ease-in-out;
+      -moz-transition: all 200ms ease-in-out;
+      -ms-transition: all 200ms ease-in-out;
+      -o-transition: all 200ms ease-in-out;
+      transition: all 200ms ease-in-out;
       }
       
       .selected {
-        background: #173757;
-        -webkit-transition: all 500ms ease-in-out;
--moz-transition: all 500ms ease-in-out;
--ms-transition: all 500ms ease-in-out;
--o-transition: all 500ms ease-in-out;
-transition: all 500ms ease-in-out;
+      background: #173757;
+      -webkit-transition: all 500ms ease-in-out;
+      -moz-transition: all 500ms ease-in-out;
+      -ms-transition: all 500ms ease-in-out;
+      -o-transition: all 500ms ease-in-out;
+      transition: all 500ms ease-in-out;
       }
     </style>
   </head>
   <body>
-     <h1>8x8 grid to array</h1>
+    <h1>8x8 grid to array</h1>
     <div class="container">
-    <table>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
-    <div class="output">
-      <pre>{
+      <table>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <div class="output">
+        <h3>Array</h3>
+        <pre class="array">{
 {0,0,0,0,0,0,0,0},
 {0,0,0,0,0,0,0,0},
 {0,0,0,0,0,0,0,0},
@@ -216,11 +316,22 @@ transition: all 500ms ease-in-out;
 {0,0,0,0,0,0,0,0},
 {0,0,0,0,0,0,0,0}
 }</pre>
-   
+        <h3>Binary</h3>
+        <pre class="binary">B00000000,
+B00000000,
+B00000000,
+B00000000,
+B00000000,
+B00000000,
+B00000000,
+B00000000</pre>
+        <h3>Hex</h3>
+        <pre class="hex">{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}</pre>
+        
+      </div>
+      <button id="reset">Reset</button>
+      <button id="reverse">Reverse</button>
     </div>
-        <button id="reset">Reset</button>
-    <button id="reverse">Reverse</button>
-    </div>
-   
+    
   </body>
 </html>
