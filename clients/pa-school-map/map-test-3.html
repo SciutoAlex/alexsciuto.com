@@ -9,14 +9,50 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+    
+    
+    
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/typeahead.js"></script>
+    <link rel="stylesheet" href="css/auto-complete.css">
+    
     <script>
       $(function(){
-        var map = L.mapbox.map('map', "examples.map-vyofok3q")
+        
+        
+        ///Global Variables //////////////////////////
+        
+        var map = L.mapbox.map('map', "examples.map-vyofok3q", { zoomControl: false })
             .setView([40.94492899999999,-78.96997899999997], 8);
         
-      
+        new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
+        
+        var opacityScale = d3.scale.linear()
+            .range([.2,.8]);
+        
+        var colorScale = d3.scale.linear()
+            .range(["#fff","#ddd"]);
+        
+        var autoCompleteArray = [];
+        var schoolsArray = [];
+        
+        var resetButton = $('#reset-zoom');
+        
+        var polyline = L.polyline([], {color: 'red'}).addTo(map);
         
         
+        ///Access the School geocodes //////////////////////////
         d3.csv("geocode.csv", function(d) {
           
           var distanceArray = [];
@@ -26,37 +62,85 @@
             
             d[i].distance = 999999;
             
+            point.lat = parseFloat(point.lat);
+            point.lon = parseFloat(point.lon);
+            
             for (var j = 0; j < d.length; j++){
               if(i != j) {
                 var otherpoint = d[j];
-                var distancebetweenpoints = getDistanceFromLatLonInKm(parseFloat(point.lat),parseFloat(point.lon),parseFloat(otherpoint.lat),parseFloat(otherpoint.lon));
+                var distancebetweenpoints = getDistanceFromLatLonInKm(point.lat,point.lon,parseFloat(otherpoint.lat),parseFloat(otherpoint.lon));
                 if (distancebetweenpoints < d[i].distance) {
                   d[i].distance = distancebetweenpoints;
+                  d[i].otherLat = parseFloat(otherpoint.lat);
+                  d[i].otherLon = parseFloat(otherpoint.lon);
+                  d[i].deltaLat = Math.abs(d[i].otherLat - point.lat);
+                  d[i].deltaLon = Math.abs(d[i].otherLon - point.lon);
+                  
                 }
               }
             }
-            console.log(d[i].distance + " " + d[i].add);
+            
             distanceArray.push(d[i].distance);
             
           }
           
-  
-          var opacityScale = d3.scale.linear()
-              .domain(d3.extent(distanceArray))
-              .range([.2,.8]);
+          opacityScale.domain(d3.extent(distanceArray));
+          colorScale.domain(d3.extent(distanceArray));
           
-          var colorScale = d3.scale.linear()
-              .domain(d3.extent(distanceArray))
-              .range(["#fff","#db391c"]);
           
           for (var i = 0; i < d.length; i++){
             
-            var point = d[i];
+            var x = new schoolObject(d[i]);
+            schoolsArray.push(x);
             
+          }
+          
+          //Autocomplete///////////////
+          afterLoadingObjects();
+          
+        });
+        
+        
+        ///Access the County Shapes //////////////////////////
+        
+        d3.json("pa-counties.topojson", function(error, us) {
+          
+          var subunits = topojson.feature(us, us.objects['pa-counties']);
+          L.geoJson(subunits, {
             
-            //
+            "style" : {
+              fillColor: "#000",
+              weight: 1,
+              opacity: 1,
+              color: '#572900',
+              dashArray: '1,2',
+              fillOpacity: 0,
+              lineCap: "round"
+            } 
             
-            var x = L.mapbox.markerLayer({
+          }).addTo(map);
+        });
+        
+        
+        
+        ///School objects //////////////////////////
+        
+        var schoolObject = function(d) {
+          
+          var thisObject = this;
+          
+          var point = d;
+          this.point = d;
+          this.name = d.name;
+          
+          //
+          
+          var thisSchoolSelected = function() {
+            return SchoolSelected(thisObject);
+           
+            };
+              
+              this.marker = L.mapbox.markerLayer({
               // this feature is in the GeoJSON format: see geojson.org
               // for the full specification
               type: 'Feature',
@@ -72,70 +156,167 @@
                 // one can customize markers by adding simplestyle properties
                 // http://mapbox.com/developers/simplestyle/
                 'marker-size': 'small',
-                'marker-color': '#38ee87'
+                'marker-color': '#ddd'
               }
-            }).addTo(map);
+            }).addTo(map).on('click', thisSchoolSelected);
             
             
+            this.fillColor = colorScale(point.distance);
+            this.fillOpacity = opacityScale(point.distance);
             
-            var circle = L.circle([parseFloat(point.lat), parseFloat(point.lon)], point.distance*1000, {
+            this.circle = L.circle([parseFloat(point.lat), parseFloat(point.lon)], point.distance*1000, {
               weight: 1,
-              color : "#a32610",
-              fillColor: colorScale(point.distance),
-              fillOpacity: opacityScale(point.distance)
+              color : "#999",
+              fillColor: this.fillColor,
+              fillOpacity: this.fillOpacity
             }).addTo(map);
             
             
+            autoCompleteArray.push(this);
+            
+            
+            this.resetColors = function() {
+              thisObject.circle.setStyle( {
+                fillColor: thisObject.fillColor,
+                fillOpacity: thisObject.fillOpacity
+              }); 
+            }
+              
+              };
+          
+          
+          var afterLoadingObjects = function(){
+            
+            
+            var numbers = new Bloodhound({
+              datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.point.name); },
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              local: autoCompleteArray
+            });
+            
+            // initialize the bloodhound suggestion engine
+            numbers.initialize();
+            
+            // instantiate the typeahead UI
+            var myTypeahead = $('.typeahead').typeahead( { 
+              "hint" : false 
+            }, {
+              displayKey: 'name',
+              source: numbers.ttAdapter()
+            });
+            
+            myTypeahead.on('typeahead:selected',function(evt,data){
+              console.log(data);
+              SchoolSelected(data); //selected datum object
+              
+            });
+            
+          };
+          
+          var SchoolSelected = function(schoolObj) {
+            console.log(schoolObj);
+            
+            polyline.setLatLngs([
+              [schoolObj.point.lat, schoolObj.point.lon], 
+              [schoolObj.point.otherLat, schoolObj.point.otherLon]
+            ]);
+            
+            var zoomlevel = 0;
+            var x = schoolObj.point.distance;
+            switch (true) {
+                
+              case (x < 9):
+                zoomlevel = 13;
+                break;
+                  case (x > 8 && x < 12):
+                zoomlevel = 12;
+                break;
+                  case (x > 12):
+                zoomlevel = 11;
+                break;
+                  default:
+                zoomlevel = 9;
+                break;
+                  }
+
+            
+            var latcenter = (schoolObj.point.lat + schoolObj.point.otherLat)/2;
+            var loncenter = (schoolObj.point.lon + schoolObj.point.otherLon)/2;
+            map.setView([latcenter, loncenter], zoomlevel);
+            resetButton.fadeIn();
+            resetColors();
+            schoolObj.circle.setStyle({fillColor: 'red'});
+            schoolObj.marker.setStyle({fillColor: 'red'});
+            
+            
+          };
+          
+          var resetZoom = function() {
+            polyline.setLatLngs([]);
+            resetColors();
+            map.setView([40.94492899999999,-78.96997899999997], 8);
+            resetButton.fadeOut();
+          };  
+          
+          resetButton.click(resetZoom);
+          
+          map.on('movestart', function() {
+            resetButton.fadeIn();
+          });
+          
+          var resetColors = function() {
+            schoolsArray.map(function(obj) { obj.resetColors(); });
+          };
+          
+          
+          
+          //MISC Function//////////////////
+          
+          function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2-lat1);  // deg2rad below
+            var dLon = deg2rad(lon2-lon1); 
+            var a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2)
+                ; 
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            var d = R * c; // Distance in km
+            return d;
           }
           
-          
+          function deg2rad(deg) {
+            return deg * (Math.PI/180)
+              }
           
         });
-        
-          d3.json("pa-counties.topojson", function(error, us) {
-            
-            var subunits = topojson.feature(us, us.objects['pa-counties']);
-            L.geoJson(subunits, {
-              
-              "style" : {
-                fillColor: "#000",
-                weight: 1,
-                opacity: 1,
-                color: '#572900',
-                dashArray: '1,2',
-                fillOpacity: 0,
-                lineCap: "round"
-              } 
-              
-            }).addTo(map);
-          });
-        
-        function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
-          var R = 6371; // Radius of the earth in km
-          var dLat = deg2rad(lat2-lat1);  // deg2rad below
-          var dLon = deg2rad(lon2-lon1); 
-          var a = 
-              Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-              Math.sin(dLon/2) * Math.sin(dLon/2)
-              ; 
-          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-          var d = R * c; // Distance in km
-          return d;
-        }
-        
-        function deg2rad(deg) {
-          return deg * (Math.PI/180)
-            }
-        
-      });
     </script>
     <style>
-      body { margin:0; padding:0; }
-      #map { position:absolute; top:0; bottom:0; width:100%; }
+      html { height:100%; }
+      body { margin:0; padding:0; height:100%;}
+      .row {height:100%;}
+      .row > div {height:100%;}
+      #map { position:absolute; top:0; left:0; width:100%; height:100%; }
+      form { position:absolute; top: 10; left:10; z-index:99;}
+      
+      #reset-zoom {display:none;}
     </style>
   </head>
   <body>
-    <div id='map'></div>
+    <div class="row">
+      <div class="col-md-12">
+        
+        <div id="map"></div>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-inline" >
+            <div class="form-group">
+              <input type="text" class="typeahead form-control" placeholder="Search">
+            </div>
+            <button id="reset-zoom" type="button" class="btn btn-warning">Reset Zoom</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

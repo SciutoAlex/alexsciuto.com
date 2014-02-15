@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="d3.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+    
+    
+    
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/typeahead.js"></script>
+    <link rel="stylesheet" href="css/auto-complete.css">
+    
+    <script>
+      $(function() {
+        var sports = [
+          "Basketball",
+          "Bowling",
+          "Cheer",
+          "Cross Country",
+          "Field Hockey",
+          "Football",
+          "Girl's Tennis",
+          "Golf",
+          "Gymnastics",
+          "Indoor Track & Field",
+          "Lacrosse",
+          "Rifle",
+          "Soccer",
+          "Soccer (Fall)",
+          "Soccer (Spring)",
+          "Softball",
+          "Swimming & Diving",
+          "Tennis",
+          "Track & Field",
+          "Volleyball",
+          "Water Polo",
+          "Wrestling"
+        ];
+        
+        var sportTable = $('#sports');
+        
+        $.each(sports, function(sport) {
+          var row = $('<tr>');
+          
+          var hasMen = (Math.random() > .4) ? "true" : "";
+          var hasWomen = (Math.random() > .4) ? "true" : "";
+          
+          if (hasWomen) {
+            $('<td><div><span class="glyphicon glyphicon-ok"></span></div>').appendTo(row).addClass('gender women-true');
+      } else {
+      $('<td><div></div>').appendTo(row).addClass('gender women');
+      }
+      $('<td><div></div>').appendTo(row).html(sports[sport]).addClass('name');
+      
+      if (hasMen) {
+      $('<td><div></div>').appendTo(row).addClass('gender men');
+      } else {
+      $('<td><div><span class="glyphicon glyphicon-ok"></span></div>').appendTo(row).addClass('gender men-true');
+      }
+      row.appendTo(sportTable); 
+      
+      });
+      });
+      </script>
+      <style>
+        html { height:100%; }
+        body { margin:0; padding:0; height:100%; background:gray;}
+        .row {height:100%;}
+        .row > div {height:100%;}
+        #map { position:absolute; top:0; left:0; width:100%; height:100%; }
+        form { position:absolute; top: 10; left:10; z-index:99;}
+        
+        #reset-zoom {display:none;}
+        
+        
+        .sidebar {
+          background:white;
+          width:400px;
+          margin:20px;
+          padding:20px; 
+        }
+        
+        
+        
+        .details {
+          font-size:12px;
+          margin-bottom:20px;
+        }
+        
+        .details label {
+          margin-top:10px;
+          margin-bottom:0px;
+        }
+        
+        .details label:first-child {
+          margin:0;
+        }
+        
+        
+        #sports {
+          text-align:center;
+          line-height:12px;
+          font-size:10px;
+        }
+        
+        #sports thead {
+          background:#dedede;
+          font-weight:bold;
+         
+        }
+        
+        #sports thead td {
+          padding:3px;
+        }
+        
+        td div {
+          color:white;
+          height:15px;
+          margin:2px;
+          background:#f0f0f0;
+          
+        }
+        
+        .gender {
+          width:50px;
+          
+        }
+        
+        #sports tr {
+          border-top:1px solid #d1d1d1;
+        }
+        
+        #sports .name {
+          padding: 0px 5px;
+        }
+        
+        
+        .men-true div {
+          background:#286bad;
+        }
+        
+        .women-true div {
+          background: #f7a8bb;
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </style>
+      </head>
+      <body>
+        <div class="sidebar">
+          <div class="details">
+          <label>School</label>
+          <div class="school">The Neighborhood Academy</div>
+          <div class="wiki"><a href="#">Wikipedia</a>, <a href="#">Website</a></div>
+          <div class="district">District 4</div>
+          <div class="piaa-district">PIAA District #7</div>
+          <label>Details</label>
+          <div class="type">Private School</div>
+          <div class="enrollment">50</div>
+          
+          <label>Address</label>
+            <div class="address">709 North Aiken Ave.<br/>Pittsburgh PA 15206</div>
+          <label>Athletic Director</label>
+            <div class="ad">Darrell Schmitt<br/><a href="#">darrell.schmitt@theneighborhoodacademy.org</a></div>
+          </div>
+          <table id="sports">
+            <thead>
+            <tr>
+              <td>Women</td>
+              <td>Sport</td>
+              <td>Men</td>
+              </tr>
+            </thead>
+          </table>
+          
+          
+          
+        </div>
+        
+      </body>
+      </html>

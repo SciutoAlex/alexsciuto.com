@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="d3.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+    
+    
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/typeahead.js"></script>
+    
+    <script>
+      $(function(){
+        
+        
+        
+        
+        ///Global Variables //////////////////////////
+        
+        var autoCompleteArray = [];
+        
+        ///Access the School geocodes //////////////////////////
+        d3.csv("geocode.csv", function(d) {
+          
+          for (var i = 0; i < d.length; i++){
+            
+            autoCompleteArray.push( {
+              "name" : d[i].name
+            });
+            
+          }
+          
+          var numbers = new Bloodhound({
+            datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.name); },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: autoCompleteArray
+          });
+          
+          // initialize the bloodhound suggestion engine
+          numbers.initialize();
+          
+          // instantiate the typeahead UI
+          var myTypeahead = $('.typeahead').typeahead(
+            { 
+              "hint" : false 
+            }, 
+            {
+              displayKey: 'name',
+              source: numbers.ttAdapter()
+            });
+          
+          myTypeahead.on('typeahead:selected',function(evt,data){
+            console.log('data==>' + data.name); //selected datum object
+          });
+          
+          
+          
+          
+          
+        });
+        
+        
+        ///Access the County Shapes //////////////////////////
+        
+        
+        
+        ///School objects //////////////////////////
+        
+        
+        
+        
+        
+        
+        
+        
+        //MISC Function//////////////////
+        
+      });
+    </script>
+    <style>
+      
+      
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      
+      <div class="col-md-12">
+        
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input type="text" class="typeahead form-control" placeholder="Search">
+          </div>
+          
+        </form>
+        
+      </div>
+    </body>
+    </html>
