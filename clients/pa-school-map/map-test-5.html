@@ -60,10 +60,53 @@
         })
             .setLatLng([0,0])
             .setContent('')
-      .addTo(map);
+            .addTo(map);
         
         var sidebar = $('.sidebar');
+        
+        
+        
+         ///Access the County Shapes //////////////////////////
+        
+        var listOfCountyColor = ["DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Green","GreenYellow","HoneyDew","HotPink","IndianRed ","Indigo ","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen"];
+        var listOfCountyNames = ["Clarion","Blair","Elk","Greene","Westmoreland","Mercer","Butler","Washington","Beaver","Lawrence","Allegheny","Bedford","Erie","Centre","Jefferson","Cambria","Franklin","Indiana","Potter","Forest","Clearfield","Crawford","Huntingdon","McKean","Venango","Fulton","Armstrong","Fayette","Somerset","Cameron","Warren"];
+        
+        var leafletCounties;
+        d3.json("pa-counties-select.topojson", function(error, us) {
+          var subunits = topojson.feature(us, us.objects['counties-pa']);
+          var leafletCounties = L.geoJson(subunits, {
+            "style" : function(feature) {
+              return {
+                fillColor:listOfCountyColor[listOfCountyNames.indexOf(feature.properties.name)],
+                weight: 3,
+                opacity: .2,
+                color: '#572900',
+                fillOpacity: .1,
+                lineCap: "round"
+              }
+                },
+            onEachFeature : function(feature, layer) {
+            console.log(feature);
+              label = new L.Label();
+              label.setContent(feature.properties.name);
+              label.setLatLng(layer.getBounds().getCenter());
+              map.showLabel(label);
+            } 
+          
+                    
+                    }).addTo(map).sendToBack();
+          
+          console.log(subunits)
+            
+            });
+        
+        
+        
+        
+        
         ///Access the School geocodes //////////////////////////
+        
+        
         d3.csv("geocode.csv", function(d) {
           
           var distanceArray = [];
@@ -100,6 +143,7 @@
           colorScale.domain(d3.extent(distanceArray));
           
           
+          
           for (var i = 0; i < d.length; i++){
             
             var x = new schoolObject(d[i]);
@@ -110,28 +154,11 @@
           //Autocomplete///////////////
           afterLoadingObjects();
           
+         
         });
         
         
-        ///Access the County Shapes //////////////////////////
-        
-        d3.json("pa-counties.topojson", function(error, us) {
-          
-          var subunits = topojson.feature(us, us.objects['pa-counties']);
-          L.geoJson(subunits, {
-            
-            "style" : {
-              fillColor: "#000",
-              weight: 1,
-              opacity: 1,
-              color: '#572900',
-              dashArray: '1,2',
-              fillOpacity: 0,
-              lineCap: "round"
-            } 
-            
-          }).addTo(map);
-        });
+       
         
         
         
@@ -163,12 +190,19 @@
               coordinates: [parseFloat(point.lon), parseFloat(point.lat)]
             },
             properties: {
-              
+              'title' : point.name,
+              'description' : 'City Here. ' + d.displayDistance + ' miles to nearest facility',
               'marker-size': 'small',
               'marker-color': '#b0d194'
             }
           }).addTo(map).on('click', thisSchoolSelected);
           
+          this.marker.on('mouseover', function(e) {
+            e.layer.openPopup();
+          });
+          this.marker.on('mouseout', function(e) {
+            e.layer.closePopup();
+          });
           this.markerColor = '#b0d194';
           this.fillColor = colorScale(point.distance);
           this.fillOpacity = opacityScale(point.distance);
@@ -178,7 +212,7 @@
             color : "#999",
             fillColor: this.fillColor,
             fillOpacity: this.fillOpacity
-          }).addTo(map);
+          }).addTo(map).bringToFront();
           
           
           autoCompleteArray.push(this);
@@ -192,7 +226,7 @@
               color : "#999"
             }); 
             
-          
+            
             thisObject.marker.setStyle( {
               'marker-color' : thisObject.markerColor
             });
@@ -231,7 +265,7 @@
         
         var SchoolSelected = function(schoolObj) {
           
-         
+          
           
           setTimeout(function() {
             sidebar.addClass('sidebar-active');
@@ -266,13 +300,13 @@
           
           
           map.setView([latcenter, loncenter], zoomlevel);
-           distanceMarker.setLatLng([latcenter, loncenter]).setContent(schoolObj.point.displayDistance + " miles");
+          distanceMarker.setLatLng([latcenter, loncenter]).setContent(schoolObj.point.displayDistance + " miles");
           resetButton.fadeIn();
           resetColors();
           
           schoolObj.circle.bringToFront();
-        
-         
+          
+          
           polyline.bringToFront();
           //let the zoom do it's thing then recolor
           setTimeout(function() {
@@ -491,6 +525,11 @@
         .leaflet-popup-content {
           padding: 0 10px 0;
           font-weight:bold;
+        }
+        
+        .leaflet-popup-content .marker-description{
+          font-size:10px;
+          font-weight:normal;
         }
         
       </style>
