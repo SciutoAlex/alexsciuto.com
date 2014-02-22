@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title> MS Paint</title>
+    <link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    
+    
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    
+    <link type="text/css" href="css/style.css" id="css-uiestate" rel="stylesheet"/>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+    <script>
+      
+      var geocoder, map;
+      
+      function codeAddress(address) {
+        var lat;
+        var lon;
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+          'address': address
+        }, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            lat = results[0].geometry.location.d;
+            lon = results[0].geometry.location.e;
+            result = results[0].geometry.location;
+            var mapOptions = {
+              zoom: 15,
+              center: new google.maps.LatLng(lat, lon)
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'),
+                                      mapOptions);
+            
+            var marker = new google.maps.Marker({
+              map: map,
+              position: new google.maps.LatLng(lat, lon)
+            });
+            
+          }
+          
+          
+        });
+        
+      }
+      function initialize() {
+        addressValue = document.getElementById('map-canvas').innerHTML;
+        codeAddress(addressValue);
+        
+        
+      }
+      
+      var addressValue;
+      
+      google.maps.event.addDomListener(window, 'load', initialize);
+      
+      $(function() {
+        var tabs = $('.event-screen').children().hide();
+        $('.incident-section').show();
+        
+        var buttons = $('.nav a').on('click', function() {
+          
+          
+          //show the correct screen
+          showTab($(this).attr('data-tab'));
+          
+          
+          //power the tabbed menu;
+          $(this).parent().siblings().removeClass('active');
+          $(this).parent().addClass('active');
+        });
+        
+        var showTab = function(tabName) {
+          $('.event-screen').children().hide();
+          $('.' + tabName + '-section').show();
+          console.log($('.' + tabName + '-section'));
+          
+        };
+      });
+      
+    </script>
+  </head>
+  <body>
+    
+    <div id="app">
+      
+      
+      <header>
+        <div class="container-fluid">
+          <div class="top-bar row">
+            <div class="col-xs-9">
+              <div class="event-id">
+                343 South Fairmount - Feb. 19
+              </div>
+              
+            </div>
+            <div class="logout col-xs-3">
+              <div>
+                <label>
+                  Alex Sciuto
+                </label>
+                <button type="button" class="btn btn-default">
+                  <span class="glyphicon glyphicon-log-out"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav id="section-nav">
+          <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a data-tab="incident" href="#"><span class="glyphicon glyphicon-home"></span><br/>Incident</a></li>
+            <li><a data-tab="time" href="#"><span class="glyphicon glyphicon-time"></span><br/>Time Log</a></li>
+            <li><a data-tab="people" href="#"><span class="glyphicon glyphicon-user"></span><br/>People</a></li>
+            <li><a data-tab="inventory" href="#"><span class="glyphicon glyphicon-list"></span><br/>Inventory</a></li>
+            <li><a data-tab="truck" href="#"><span class="glyphicon glyphicon-wrench"></span><br/>Truck Data</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="event-screen">
+        
+        
+        <!--Incident Section -->
+        <div class="incident-section">
+          <div class="container-fluid">
+            
+            <div class="row">
+              <div class="col-xs-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Salvation Army Person</div>
+                  <div class="panel-body">
+                    <p>John Smith is currently logged in and is in charge of this account.</p>
+                    <button type="button" class="btn btn-warning">Logout and Switch Users</button>
+                  </div>
+                </div>
+                
+                <div class="panel panel-default">
+                  <div class="panel-heading">Incident Selection</div>
+                  <div class="panel-body">
+                    <p>Select which incident you are going to</p>
+                    <select>
+                      <option value="volvo">Volvo</option>
+                      <option value="saab">Saab</option>
+                      <option value="mercedes">Mercedes</option>
+                      <option value="audi">Audi</option>
+                    </select>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="col-xs-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Notes from Administrator</div>
+                  <div class="panel-body">
+                    <p>The Salvation Army is a Christian denominational church and international charitable organization structured in a quasi-military fashion. The organization reports worldwide membership of over 1.5 million,[1] consisting of soldiers, officers and adherents known as Salvationists. Its founders Catherine and William Booth sought to bring salvation to the poor, destitute and hungry by meeting both their "physical and spiritual needs". It has a presence in 126 countries,[2] running charity shops, operating shelters for the homeless, and providing disaster relief and humanitarian aid to developing countries.
+                    </p>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">Google Map of Location</div>
+                  <div class="panel-body">
+                    <div id="map-canvas">343 South Fairmount St. 15232</div>
+                  </div>
+                </div>
+                
+                
+              </div>
+              <div class="col-xs-6">
+                <label>Date</label>
+                <input type="time">
+              </div>
+            </div>
+          </div><!-- /row -->
+          
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-12">
+                  <button type="button" class="btn btn-default">Click when at Incident</button>
+                </div>
+              </div>
+            </div><!-- /row -->
+            
+            
+            <div class="row">
+              <div class="col-xs-6">
+                <label>Time of Incident:</label>
+                <input type="time" value="23:20:50">
+              </div>
+              
+              <div class="col-xs-6">
+                <label>Location of Incident:</label>
+                <address>
+                  343 South Fairmount St.
+                  Pittsburgh PA 15232
+                  [-40.3423, 70.34234]
+                </address>
+              </div>
+            </div>
+            
+          </div><!-- /row -->
+        </div>
+        <!-- End Incident Section> -->
+        
+        
+        
+        <!--Time Section -->
+        <div class="time-section">
+          <div class="container-fluid">
+            
+            <div class="panel panel-default">
+              <div class="panel-heading">Time of Call</div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <button type="button" disabled="disabled" class="btn btn-success btn-lg">Added by the Admin</button>
+                  </div><!-- /row -->
+                  <div class="col-xs-3">
+                    9:34pm 
+                  </div><!-- /row -->
+                  <div class="col-xs-3">
+                    78 South Carson St.
+                  </div><!-- /row -->
+                  <div class="col-xs-3">
+                    [-80,23.42]
+                  </div><!-- /row -->
+                </div>
+              </div>
+            </div>
+            
+            <div class="panel panel-default">
+              <div class="panel-heading">Depart Station</div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <button type="button"  class="btn btn-success btn-lg">Added by the Admin</button>
+                  </div><!-- /row -->
+                  <div class="col-xs-9">
+                    Check in when you 
+                  </div><!-- /row -->
+                </div>
+              </div>
+            </div>
+            
+            <div class="panel panel-default">
+              <div class="panel-heading">Time of Call</div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <button type="button"  class="btn btn-success btn-lg">Added by the Admin</button>
+                  </div><!-- /row -->
+                  <div class="col-xs-9">
+                    Check in when you 
+                  </div><!-- /row -->
+                </div>
+              </div>
+            </div>
+            
+            <div class="panel panel-default">
+              <div class="panel-heading">Time of Call</div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <button type="button" class="btn btn-success  btn-lg">Added by the Admin</button>
+                  </div><!-- /row -->
+                  <div class="col-xs-9">
+                    Check in when you 
+                  </div><!-- /row -->
+                </div>
+              </div>
+            </div>
+            
+            <div class="panel panel-default">
+              <div class="panel-heading">Time of Call</div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <button type="button" class="btn btn-success btn-lg">Added by the Admin</button>
+                  </div><!-- /row -->
+                  <div class="col-xs-9">
+                    Check in when you 
+                  </div><!-- /row -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Time Section> -->
+        
+        
+        <!--People Section -->
+        <div class="people-section">
+          <div class="container-fluid">
+            <div class="alert alert-info">If you add a person, but leave their hours as zero, they will be assigned time based on the entries from the time entries in the time log tab</div>
+            <div class="people">
+              <div class="col-xs-6">
+                <table class="people-table">
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              
+              <div class="col-xs-6">
+                <table class="people-table">
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-2">&nbsp;</div>
+              <div class="col-xs-8">
+                <button class="full-width-button btn btn-lg btn-default" data-toggle="modal" data-target="#myModal">Add a person</button>
+              </div>
+              <div class="col-xs-2">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+        <!-- People Section> -->
+        
+        
+        <!--Inventory Section -->
+        <div class="inventory-section">
+          <div class="container-fluid">
+            <div class="people">
+              <div class="col-xs-6">
+                <table class="people-table">
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              
+              <div class="col-xs-6">
+                <table class="people-table">
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="people-photo">
+                      <div class="img-container" style="background:url('img/person1.jpg'); background-size:100%;"></div>
+                    </td>
+                    <td  class="people-name">
+                      Jen Sanders
+                    </td>
+                    <td  class="people-check">
+                      <input type="checkbox">
+                    </td>
+                    <td  class="people-up-down">
+                      <div class="btn-group  btn-lg " role="toolbar">
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></div>
+                        <div class="btn-group btn btn-default">2.5 hours</div>
+                        <div class="btn-group btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-2">&nbsp;</div>
+              <div class="col-xs-8">
+                <button class="full-width-button btn btn-lg btn-default" data-toggle="modal" data-target="#myModal">Add a person</button>
+              </div>
+              <div class="col-xs-2">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+        <!-- Inventory Section> -->
+        
+        
+        <!--Truck Section -->
+        <div class="truck-section">
+          <div class="container-fluid">
+            <div class="panel panel-default">
+              <div class="panel-heading">Select the vehicle you are using</div>
+              <div class="panel-body">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default">Blue</button>
+                  <button type="button" class="btn btn-default">Red</button>
+                  <button type="button" class="btn btn-default">Green</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Departing Mileage</div>
+                  <div class="panel-body">
+                    <input type="number" value="0000">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-xs-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Ending Mileage</div>
+                  <div class="panel-body">
+                    <input type="number" value="0000">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Fuel Level</div>
+                  <div class="panel-body">
+                    <input type="range" value="0000">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-xs-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Water Level</div>
+                  <div class="panel-body">
+                    <input type="range" value="0000">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <!-- End truck Section> -->
+        
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    <!-- Modal Boxes -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <table class="table">
+                  <tr>
+                    <td>Mary Hannington</td><td><input type="checkbox"></td>
+                  </tr>
+                  <tr>
+                    <td>Mary Hannington</td><td><input type="checkbox"></td>
+                  </tr>
+                  <tr>
+                    <td>Mary Hannington</td><td><input type="checkbox"></td>
+                  </tr>
+                  <tr>
+                    <td>Mary Hannington</td><td><input type="checkbox"></td>
+                  </tr>
+                  <tr>
+                    <td>Mary Hannington</td><td><input type="checkbox"></td>
+                  </tr>
+                  <tr>
+                    <td>Mary Hannington</td><td><input type="checkbox"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </body>
+</html>

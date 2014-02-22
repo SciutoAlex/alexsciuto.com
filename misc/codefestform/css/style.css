@@ -1,0 +1,104 @@
+html {
+    font-size:10px;
+
+}
+
+img {
+  max-width:100%;
+}
+
+body {
+  font-family: 'Istok Web', sans-serif;
+  padding:0;
+  margin:0;
+}
+
+#app {
+ margin:0px 0; 
+}
+
+header {
+
+  color:white;
+  padding:0rem;
+}
+
+header .event-id {
+    font-size:2.5rem;
+}
+
+header .top-bar {
+  padding:1rem;
+    background:#E51D2E;
+}
+
+header nav {  
+        padding:10px;
+        margin:10px 0 0 0;
+}
+header nav span {
+font-size:3rem;
+}
+
+header .top-bar span {
+  color:#E51D2E;
+}
+
+.logout {
+  text-align:right;
+}
+
+nav {
+  padding: 0 20px;
+}
+
+
+
+
+
+
+
+#map-canvas {
+  height:300px;
+}
+
+
+
+
+.person .img-container {
+  width:50px;
+  height:50px;
+  border-radius:100px;
+}
+
+.people-table {
+  width:100%;
+}
+
+.people-table tr {
+ border-bottom:1px solid gray; 
+}
+.people-photo {
+
+}
+.people-name {
+  width:20%;
+}
+
+.people-check {
+  width:20%;
+}
+
+.people-up-down {
+  width:50%;
+}
+
+
+
+
+
+.full-width-button {
+  width:100%;
+}
+
+
