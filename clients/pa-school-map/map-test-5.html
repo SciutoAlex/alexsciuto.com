@@ -41,6 +41,9 @@
         
         new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
         
+        
+        var labelGroup = new L.layerGroup().addTo(map);
+        
         var opacityScale = d3.scale.linear()
             .range([.2,.8]);
         
@@ -76,8 +79,7 @@
           var subunits = topojson.feature(us, us.objects['counties-pa']);
           var leafletCounties = L.geoJson(subunits, {
             "style" : function(feature) {
-              return {
-                fillColor:listOfCountyColor[listOfCountyNames.indexOf(feature.properties.name)],
+              return {                fillColor:listOfCountyColor[listOfCountyNames.indexOf(feature.properties.name)],
                 weight: 3,
                 opacity: .2,
                 color: '#572900',
@@ -87,14 +89,22 @@
                 },
             onEachFeature : function(feature, layer) {
             console.log(feature);
-              label = new L.Label();
-              label.setContent(feature.properties.name);
-              label.setLatLng(layer.getBounds().getCenter());
-              map.showLabel(label);
+             
+              var countyLabel = L.divIcon({
+                html : "<div class='countyname'>" + feature.properties.name + "<\/div>",
+                iconSize : 0
+              });
+              
+              var thislayer = L.marker(layer.getBounds().getCenter(), {icon: countyLabel, iconSize: 0}).addTo(map);
+              
+              labelGroup.addLayer(thislayer);
+   
+              
+         
             } 
           
                     
-                    }).addTo(map).sendToBack();
+                    }).addTo(map);
           
           console.log(subunits)
             
@@ -175,6 +185,7 @@
           //
           
           var thisSchoolSelected = function() {
+        
             return SchoolSelected(thisObject);
             
           };
@@ -530,6 +541,16 @@
         .leaflet-popup-content .marker-description{
           font-size:10px;
           font-weight:normal;
+        }
+        
+        .countyname {
+          color:gray;
+          background:rgba(255,255,255,.5);
+          margin:1px; 
+        }
+        
+        .leaflet-div-icon {
+          border:0px;
         }
         
       </style>
