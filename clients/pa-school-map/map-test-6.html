@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="d3.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+    
+    <script src="js/leaflet-label.js"></script>
+    <link rel="stylesheet" href="css/leaflet-label.css">
+    
+    
+    
+    
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/typeahead.js"></script>
+    <link rel="stylesheet" href="css/auto-complete.css">
+    
+    
+    <script>
+      $(function(){
+        
+        
+        ///Global Variables //////////////////////////
+        
+        var map = L.mapbox.map('map', "sciutoalex.h75l2dei", { zoomControl: false, maxZoom :12, minZoom : 8 })
+            .setView([40.94492899999999,-78.96997899999997], 8);
+        
+        new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
+        
+        
+        var labelGroup = new L.layerGroup().addTo(map);
+        
+        var opacityScale = d3.scale.linear()
+            .range([.2,.8]);
+        
+        var colorScale = d3.scale.linear()
+            .range(["#fff","#ddd"]);
+        
+        var autoCompleteArray = [];
+        var schoolsArray = [];
+        var facilitiesArray = [];
+        
+        var resetButton = $('#reset-zoom');
+        
+        var polyline = L.polyline([], {color: 'red'}).bindLabel("" + " miles", {noHide : true}).addTo(map);
+        
+        var distanceMarker = L.popup({
+          autoPan : false,
+          closeButton : false
+        })
+            .setLatLng([0,0])
+            .setContent('')
+            .addTo(map);
+        
+        var sidebar = $('.sidebar');
+        
+        
+        
+        ///Access the County Shapes //////////////////////////
+        
+        var listOfCountyColor = ["DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Green","GreenYellow","HoneyDew","HotPink","IndianRed ","Indigo ","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen"];
+        var listOfCountyNames = ["Clarion","Blair","Elk","Greene","Westmoreland","Mercer","Butler","Washington","Beaver","Lawrence","Allegheny","Bedford","Erie","Centre","Jefferson","Cambria","Franklin","Indiana","Potter","Forest","Clearfield","Crawford","Huntingdon","McKean","Venango","Fulton","Armstrong","Fayette","Somerset","Cameron","Warren"];
+        
+        var leafletCounties;
+        d3.json("pa-counties-select.topojson", function(error, us) {
+          var subunits = topojson.feature(us, us.objects['counties-pa']);
+          var leafletCounties = L.geoJson(subunits, {
+            "style" : function(feature) {
+              return {                fillColor:listOfCountyColor[listOfCountyNames.indexOf(feature.properties.name)],
+                                      weight: 3,
+                                      opacity: .2,
+                                      color: '#572900',
+                                      fillOpacity: .1,
+                                      lineCap: "round"
+                                     }
+                },
+            onEachFeature : function(feature, layer) {
+              
+              
+              var countyLabel = L.divIcon({
+                html : "<div class='countyname'>" + feature.properties.name + "<\/div>",
+                iconSize : 0
+              });
+              
+              var thislayer = L.marker(layer.getBounds().getCenter(), {icon: countyLabel, iconSize: 0}).addTo(map);
+              
+              labelGroup.addLayer(thislayer);
+              
+              
+              
+            } 
+            
+            
+          }).addTo(map);
+          
+          
+          
+        });
+        
+        
+        
+        
+        
+        ///Access the School geocodes //////////////////////////
+        
+        
+        d3.csv("geocode.csv", function(schools) {
+          d3.csv("js/facilities.csv", function(facilities) {
+            
+            var distanceArray = [];
+            //preprocess and find out the different lengths
+            for (var i = 0; i < schools.length; i++){
+              var schoolPoint = schools[i];
+              
+              schools[i].distance = 999999;
+              
+              schoolPoint.lat = parseFloat(schoolPoint.lat);
+              schoolPoint.lon = parseFloat(schoolPoint.lon);
+              
+              for (var j = 0; j < facilities.length; j++){
+                if(i != j) {
+                  var otherpoint = facilities[j];
+                  var distancebetweenpoints = getDistanceFromLatLonInKm(schoolPoint.lat,schoolPoint.lon,parseFloat(otherpoint.lat),parseFloat(otherpoint.lon));
+                  if (distancebetweenpoints < schoolPoint.distance) {
+                    schoolPoint.distance = distancebetweenpoints;
+                    schoolPoint.facilityLat = parseFloat(otherpoint.lat);
+                    schoolPoint.facilityLon = parseFloat(otherpoint.lon);
+                    schoolPoint.deltaLat = Math.abs(schoolPoint.facilityLat - schoolPoint.lat);
+                    schoolPoint.deltaLon = Math.abs(schoolPoint.facilityLon - schoolPoint.lon);
+                    schoolPoint.displayDistance = parseInt(distancebetweenpoints*100)/100;
+                    
+                  }
+                }
+              }
+              
+              distanceArray.push(schoolPoint.distance);
+              
+            }
+            
+            opacityScale.domain(d3.extent(distanceArray));
+            colorScale.domain(d3.extent(distanceArray));
+            
+            
+            
+            for (var i = 0; i < schools.length; i++){
+              
+              var x = new schoolObject(schools[i]);
+              schoolsArray.push(x);
+              
+            }
+            
+            for (var i = 0; i < facilities.length; i++){
+              
+              var x = new facilityObject(facilities[i]);
+              facilitiesArray.push(x);
+              
+            }
+            
+            //Autocomplete///////////////
+            afterLoadingObjects();
+            
+          });
+        });
+        
+        
+        
+        
+        ///Facilities objects //////////////////////////
+        var facilityObject = function(d) {
+          var thisObject = this;
+          
+          var point = d;
+          this.point = d;
+          this.name = d.name;
+          
+          this.marker = L.mapbox.markerLayer({
+            // this feature is in the GeoJSON format: see geojson.org
+            // for the full specification
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              // coordinates here are in longitude, latitude order because
+              // x, y is the standard for GeoJSON and many formats
+              coordinates: [parseFloat(point.lon), parseFloat(point.lat)]
+            },
+            properties: {
+              'title' : point.name,
+              'description' : 'City Here. ' + d.displayDistance + ' miles to nearest facility',
+              'marker-size': 'small',
+              'marker-color': '#b0d194'
+            }
+          }).addTo(map).on('click', thisSchoolSelected);
+        };
+        
+        ///School objects //////////////////////////
+        
+        var schoolObject = function(d) {
+          
+          var thisObject = this;
+          
+          var point = d;
+          this.point = d;
+          this.name = d.name;
+          
+          //
+          
+          var thisSchoolSelected = function() {
+            
+            return SchoolSelected(thisObject);
+            
+          };
+          
+          this.marker = L.mapbox.markerLayer({
+            // this feature is in the GeoJSON format: see geojson.org
+            // for the full specification
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              // coordinates here are in longitude, latitude order because
+              // x, y is the standard for GeoJSON and many formats
+              coordinates: [parseFloat(point.lon), parseFloat(point.lat)]
+            },
+            properties: {
+              'title' : point.name,
+              'description' : 'City Here. ' + d.displayDistance + ' miles to nearest facility',
+              
+              "icon": {
+                "iconUrl": "",
+                "iconSize": [50, 50], // size of the icon
+                "iconAnchor": [25, 25], // point of the icon which will correspond to marker's location
+                "popupAnchor": [0, -25], // point from which the popup should open relative to the iconAnchor
+                "className": "school"
+              }
+            }
+          }).addTo(map).on('click', thisSchoolSelected);
+          
+          this.marker.on('mouseover', function(e) {
+            e.layer.openPopup();
+          });
+          this.marker.on('mouseout', function(e) {
+            e.layer.closePopup();
+          });
+          this.markerColor = '#b0d194';
+          this.fillColor = colorScale(point.distance);
+          this.fillOpacity = opacityScale(point.distance);
+          
+          
+          
+          var pointA = new L.LatLng(point.lat, point.lon);
+          var pointB = new L.LatLng(point.facilityLat, point.facilityLon);
+          var pointList = [pointA, pointB];
+          
+          var firstpolyline = new L.Polyline(pointList, {
+            color: 'red',
+            weight: 5,
+            opacity: 0.5,
+            smoothFactor: 1
+            
+          }).addTo(map);
+          
+          console.log(firstpolyline);
+          
+          
+          
+          autoCompleteArray.push(this);
+          
+          
+          this.resetColors = function() {
+            thisObject.circle.setStyle( {
+              fillColor: thisObject.fillColor,
+              fillOpacity: thisObject.fillOpacity,
+              weight:1,
+              color : "#999"
+            }); 
+            
+            
+            thisObject.marker.setStyle( {
+              'marker-color' : thisObject.markerColor
+            });
+          }
+            
+            };
+        
+        
+        var afterLoadingObjects = function(){
+          
+          
+          var numbers = new Bloodhound({
+            datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.point.name); },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: autoCompleteArray
+          });
+          
+          // initialize the bloodhound suggestion engine
+          numbers.initialize();
+          
+          // instantiate the typeahead UI
+          var myTypeahead = $('.typeahead').typeahead( { 
+            "hint" : false 
+          }, {
+            displayKey: 'name',
+            source: numbers.ttAdapter()
+          });
+          
+          myTypeahead.on('typeahead:selected',function(evt,data){
+            
+            SchoolSelected(data); //selected datum object
+            
+          });
+          
+        };
+        
+        var SchoolSelected = function(schoolObj) {
+          
+          
+          
+          setTimeout(function() {
+            sidebar.addClass('sidebar-active');
+          }, 500);
+          
+          polyline.setLatLngs([
+            [schoolObj.point.lat, schoolObj.point.lon], 
+            [schoolObj.point.otherLat, schoolObj.point.otherLon]
+          ]);
+          
+          var zoomlevel = 0;
+          var x = schoolObj.point.distance;
+          switch (true) {
+              
+            case (x < 9):
+              zoomlevel = 13;
+              break;
+                case (x > 8 && x < 12):
+              zoomlevel = 12;
+              break;
+                case (x > 12):
+              zoomlevel = 11;
+              break;
+                default:
+              zoomlevel = 9;
+              break;
+                }
+          
+          
+          var latcenter = (schoolObj.point.lat + schoolObj.point.otherLat)/2;
+          var loncenter = (schoolObj.point.lon + schoolObj.point.otherLon)/2;
+          
+          
+          map.setView([latcenter, loncenter], zoomlevel);
+          distanceMarker.setLatLng([latcenter, loncenter]).setContent(schoolObj.point.displayDistance + " miles");
+          resetButton.fadeIn();
+          resetColors();
+          
+          schoolObj.circle.bringToFront();
+          
+          
+          polyline.bringToFront();
+          //let the zoom do it's thing then recolor
+          setTimeout(function() {
+            schoolObj.circle.setStyle({color: 'red', 'weight' : 5});
+            schoolObj.marker.setStyle({'marker-size' : 'large'});
+          }, 500);
+          
+          
+        };
+        
+        var resetZoom = function() {
+          sidebar.removeClass('sidebar-active');
+          polyline.setLatLngs([]);
+          resetColors();
+          map.setView([40.94492899999999,-78.96997899999997], 8);
+          resetButton.fadeOut();
+          
+          distanceMarker.setLatLng([0,0]);
+        };  
+        
+        resetButton.click(resetZoom);
+        
+        map.on('movestart', function() {
+          resetButton.fadeIn();
+        });
+        
+        var resetColors = function() {
+          schoolsArray.map(function(obj) { obj.resetColors(); });
+        };
+        
+        
+        
+        //Sidebar action///////////////////////
+        var sports = [
+          "Basketball",
+          "Bowling",
+          "Cheer",
+          "Cross Country",
+          "Field Hockey",
+          "Football",
+          "Girl's Tennis",
+          "Golf",
+          "Gymnastics",
+          "Indoor Track & Field",
+          "Lacrosse",
+          "Rifle",
+          "Soccer",
+          "Soccer (Fall)",
+          "Soccer (Spring)",
+          "Softball",
+          "Swimming & Diving",
+          "Tennis",
+          "Track & Field",
+          "Volleyball",
+          "Water Polo",
+          "Wrestling"
+        ];
+        
+        var sportTable = $('#sports');
+        
+        $.each(sports, function(sport) {
+          var row = $('<tr>');
+          
+          var hasMen = (Math.random() > .4) ? "true" : "";
+          var hasWomen = (Math.random() > .4) ? "true" : "";
+          
+          if (hasWomen) {
+            $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender women-true');
+          } else {
+            $('<td><div><\/div>').appendTo(row).addClass('gender women');
+          }
+          $('<td><div><\/div>').appendTo(row).html(sports[sport]).addClass('name');
+          
+          if (hasMen) {
+            $('<td><div><\/div>').appendTo(row).addClass('gender men');
+          } else {
+            $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender men-true');
+          }
+          row.appendTo(sportTable); 
+          
+        });
+        
+        
+        
+        //MISC Function//////////////////
+        
+        function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+          var R = 6371; // Radius of the earth in km
+          var dLat = deg2rad(lat2-lat1);  // deg2rad below
+          var dLon = deg2rad(lon2-lon1); 
+          var a = 
+              Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+              Math.sin(dLon/2) * Math.sin(dLon/2)
+              ; 
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+          var d = R * c; // Distance in km
+          return d;
+        }
+        
+        function deg2rad(deg) {
+          return deg * (Math.PI/180)
+            }
+        
+      });
+    </script>
+    <style>
+      html { height:100%; }
+      body { margin:0; padding:0; height:100%;}
+      .row {height:100%; overflow:hidden;}
+      .row > div {height:100%;}
+      #map { position:absolute; top:0; left:0; width:100%; height:100%; }
+      form { position:absolute; top: 10; left:10; z-index:99;}
+      
+      #reset-zoom {display:none;}
+      
+      
+      /*Sidebar Styles*/
+      
+      .sidebar {
+        background:white;
+        width:250px;
+        margin:0px;
+        padding:10px; 
+        position:absolute;
+        right:-270px;
+        box-shadow:0 0 5px 4px rgba(0,0,0,.2);
+        height:100%;
+        z-index:99;
+        transition:500ms cubic-bezier(.64,.02,.39,1) all;
+      }
+      
+      .sidebar-active {
+        right:40px; 
+        transition:500ms cubic-bezier(.64,.02,.39,1) all;
+      }
+      
+      
+      
+      .details {
+        font-size:12px;
+        margin-bottom:20px;
+      }
+      
+      .details label {
+        margin-top:10px;
+        margin-bottom:0px;
+      }
+      
+      
+      
+      .details .school {
+        font-size:16px;
+      }
+      
+      
+      #sports {
+        text-align:center;
+        line-height:12px;
+        font-size:10px;
+        
+      }
+      
+      #sports thead {
+        background:#dedede;
+        font-weight:bold;
+        
+      }
+      
+      #sports thead td {
+        padding:3px;
+      }
+      
+      td div {
+        color:white;
+        height:15px;
+        margin:2px;
+        background:#f0f0f0;
+      }
+      
+      
+      
+      .gender {
+        width:70px;
+        
+      }
+      
+      #sports tr {
+        border-top:1px solid #d1d1d1;
+      }
+      
+      #sports .name {
+        padding: 0px 5px;
+      }
+      
+      .women div{
+        margin-left:0;
+      }
+      
+      .men div{
+        margin-right:0;
+      }
+      .men-true div {
+        background:#286bad;
+        margin-right:0;
+      }
+      
+      .women-true div {
+        background: #f7a8bb;
+        margin-left:0;
+      }
+      
+      
+      
+      /* Leaflet Hacks */
+      .leaflet-popup-content {
+        padding: 0 10px 0;
+        font-weight:bold;
+      }
+      
+      .leaflet-popup-content .marker-description{
+        font-size:10px;
+        font-weight:normal;
+      }
+      
+      .countyname {
+        color:gray;
+        background:rgba(255,255,255,.5);
+        margin:1px; 
+      }
+      
+      .leaflet-div-icon {
+        border:0px;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-md-12">
+        
+        <div id="map"></div>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-inline" >
+            <div class="form-group">
+              <input type="text" class="typeahead form-control" placeholder="Search">
+            </div>
+            <button id="reset-zoom" type="button" class="btn btn-warning">Reset Zoom</button>
+          </div>
+        </form>
+        
+        <div class="sidebar">
+          <div class="details">
+            <div class="school">The Neighborhood Academy</div>
+            <div class="wiki"><a href="#">Wikipedia</a>, <a href="#">Website</a></div>
+            <div class="district">District 4</div>
+            <div class="piaa-district">PIAA District #7</div>
+            <label>Details</label>
+            <div class="type">Private School</div>
+            <div class="enrollment">50</div>
+            
+            <label>Address</label>
+            <div class="address">709 North Aiken Ave.<br/>Pittsburgh PA 15206</div>
+            <label>Athletic Director</label>
+            <div class="ad">Darrell Schmitt<br/><a href="#">darrell.schmitt@theneighborhoodacademy.org</a></div>
+          </div>
+          <table id="sports">
+            <thead>
+              <tr>
+                <td>Women</td>
+                <td>Sport</td>
+                <td>Men</td>
+              </tr>
+            </thead>
+          </table>
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

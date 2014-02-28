@@ -23,10 +23,15 @@
         geocoder = new google.maps.Geocoder();
         
         
-        d3.csv('address.csv', function(d) {
+        d3.csv('js/facilities.csv', function(d) {
+          
           return {
-            address : d.address + " " + d.city + " " + "PA " + d.zip
+            address: d["STREET ADDRESS"] + " " + d["CITY"] + " " + d["PA ZIP"] 
           }
+          
+          /* for addresses.csv return {
+            address : d.address + " " + d.city + " " + "PA " + d.zip
+        }*/
             
             }, function(data) {
               
