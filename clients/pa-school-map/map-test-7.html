@@ -368,7 +368,7 @@
                 case (x < 50):
               zoomlevel = 11;
               break;
-                case (x < 120):
+                case (x < 100):
               zoomlevel = 10;
               break;
                 default:
@@ -384,6 +384,7 @@
           map.setView([latcenter, loncenter], zoomlevel);
           distanceMarker.setLatLng([latcenter, loncenter]).setContent(schoolObj.point.displayDistance + " miles");
           resetButton.fadeIn();
+          console.log(distanceMarker);
           
         
           
