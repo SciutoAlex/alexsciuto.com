@@ -44,7 +44,7 @@
         new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
         
         var dynamicHTML = document.getElementById('mustacheTemplate').innerHTML;
-
+        
         
         map.on('drag', function(e) {
           console.log(map.getCenter() + " - " + map.getZoom());
@@ -177,8 +177,8 @@
                     schoolPoint.deltaLat = Math.abs(schoolPoint.facilityLat - schoolPoint.lat);
                     schoolPoint.deltaLon = Math.abs(schoolPoint.facilityLon - schoolPoint.lon);
                     schoolPoint.displayDistance = parseInt(schoolPoint.distance*100)/100;
-                schoolPoint.facilityData = otherpoint;
-                   
+                    schoolPoint.facilityData = otherpoint;
+                    
                     
                   }
                 }
@@ -201,7 +201,7 @@
             }
             
             for (var i = 0; i < schools.length; i++){
-           
+              
               var x = new schoolObject(schools[i]);
               schoolsArray.push(x);
               
@@ -225,7 +225,7 @@
           this.point = d;
           this.name = d.name;
           
-        
+          
           
           this.marker = L.marker([parseFloat(point.lat), parseFloat(point.lon)], {
             icon : hospitalIcon 
@@ -490,39 +490,39 @@
           
           var sportTable = $('#sports');
           sportTable.html('');
-        
-        $.each(sports, function(sport) {
-          var row = $('<tr>');
           
-    
-          
-          if (schoolObj.point[sports[sport].girlid] == "X") {
-            $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender women-true');
-          } else {
-            $('<td><div><\/div>').appendTo(row).addClass('gender women');
-          }
-          $('<td><div><\/div>').appendTo(row).html(sports[sport].name).addClass('name');
-          
-          if (schoolObj.point[sports[sport].boyid] != "X") {
-            $('<td><div><\/div>').appendTo(row).addClass('gender men');
-          } else {
-            $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender men-true');
-          }
-          row.appendTo(sportTable); 
-          
-        });
+          $.each(sports, function(sport) {
+            var row = $('<tr>');
+            
+            
+            
+            if (schoolObj.point[sports[sport].girlid] == "X") {
+              $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender women-true');
+            } else {
+              $('<td><div><\/div>').appendTo(row).addClass('gender women');
+            }
+            $('<td><div><\/div>').appendTo(row).html(sports[sport].name).addClass('name');
+            
+            if (schoolObj.point[sports[sport].boyid] != "X") {
+              $('<td><div><\/div>').appendTo(row).addClass('gender men');
+            } else {
+              $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender men-true');
+            }
+            row.appendTo(sportTable); 
+            
+          });
           
         }
             
-        
-        
-        $('.region-zoom').on("click", function(e) {
-          e.preventDefault();
-          var lat = $(this).attr('data-lat');
-          var lon = $(this).attr('data-lon');
-          var zoom = $(this).attr('data-zoom');
-          map.setView([lat, lon], zoom);
-        });
+            
+            
+            $('.region-zoom').on("click", function(e) {
+              e.preventDefault();
+              var lat = $(this).attr('data-lat');
+              var lon = $(this).attr('data-lon');
+              var zoom = $(this).attr('data-zoom');
+              map.setView([lat, lon], zoom);
+            });
         
         //MISC Function//////////////////
         
@@ -552,6 +552,7 @@
       body { margin:0; padding:0; height:100%;}
       .row {height:100%; overflow:hidden;}
       .row > div {height:100%;}
+      .container-liquid {height:100%; padding-left:15px;}
       #map { position:absolute; top:0; left:0; width:100%; height:100%; }
       form { position:absolute; top: 10; left:10; z-index:99;}
       
@@ -653,6 +654,33 @@
         margin-left:0;
       }
       
+      .zooms {
+    position:absolute;
+    top:60px;
+    width:200px;
+    background:red;
+    left:-10px;
+    padding:0 0px;
+    border-radius:10px;
+        color:white;
+}
+      
+      .zooms h2 {
+        font-size:15px;
+        padding:4px 10%;
+      }
+
+.zooms button {
+    border:0px;
+    text-align:left;
+    width:100%;
+    border-bottom:1px white solid;
+    background:red;
+    padding:4px 10%;
+    color:white;
+    font-size:12px;
+}
+      
       
       
       /* Leaflet Hacks */
@@ -679,69 +707,76 @@
     </style>
   </head>
   <body>
-    <div class="row">
-      <div class="col-md-12">
-        
-        <div id="map"></div>
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-inline" >
-            <div class="form-group">
-              <input type="text" class="typeahead form-control" placeholder="Search">
+    <div class="container-liquid">
+      <div class="row">
+        <div class="col-md-12">
+          
+          <div id="map"></div>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-inline" >
+              <div class="form-group">
+                <input type="text" class="typeahead form-control" placeholder="Search">
+              </div>
+              <button id="reset-zoom" type="button" class="btn btn-warning">Reset Zoom</button>
             </div>
-            <button id="reset-zoom" type="button" class="btn btn-warning">Reset Zoom</button>
-          </div>
+            
+          </form>
+          
+          <div class="zooms">
+            <h2>County Zoom</h2>
           <button class="region-zoom" data-lat="40.44486" data-lon="-79.9791" data-zoom="10">Allegheny</button>
-          <button class="region-zoom" data-lat="40.79822" data-lon="-80.33752" data-zoom="10">Beaver/Lawrence</button>
-          <button class="region-zoom" data-lat="40.12009" data-lon="-79.31923" data-zoom="10">Sommerset/Westmoreland</button>
-          <button class="region-zoom" data-lat="40.23341" data-lon="-80.16174" data-zoom="10">Washington</button>
-          <button class="region-zoom" data-lat="41.03068" data-lon="-79.64813" data-zoom="10">Butler/Clarion</button>
-          <button class="region-zoom" data-lat="39.93607" data-lon="-79.90219" data-zoom="10">Greene/Fayette</button>
-          <button class="region-zoom" data-lat="40.74622" data-lon="-79.22104" data-zoom="10">Armstrong/Indiana</button>
-          <button class="region-zoom" data-lat="42.04623" data-lon="-80.05463" data-zoom="10">Erie</button>
-          <button class="region-zoom" data-lat="41.51166" data-lon="-79.96399" data-zoom="10">Mercer/Crawford/Warren</button>
-        </form>
-        
-        <div class="sidebar">
-          <div class="details">
+            <button class="region-zoom" data-lat="40.79822" data-lon="-80.33752" data-zoom="10">Beaver/Lawrence</button>
+            <button class="region-zoom" data-lat="40.12009" data-lon="-79.31923" data-zoom="10">Sommerset/Westmoreland</button>
+            <button class="region-zoom" data-lat="40.23341" data-lon="-80.16174" data-zoom="10">Washington</button>
+            <button class="region-zoom" data-lat="41.03068" data-lon="-79.64813" data-zoom="10">Butler/Clarion</button>
+            <button class="region-zoom" data-lat="39.93607" data-lon="-79.90219" data-zoom="10">Greene/Fayette</button>
+            <button class="region-zoom" data-lat="40.74622" data-lon="-79.22104" data-zoom="10">Armstrong/Indiana</button>
+            <button class="region-zoom" data-lat="42.04623" data-lon="-80.05463" data-zoom="10">Erie</button>
+            <button class="region-zoom" data-lat="41.51166" data-lon="-79.96399" data-zoom="10">Mercer/Crawford/Warren</button>
+          </div>
+          
+          <div class="sidebar">
+            <div class="details">
+              
+            </div>
+            <table id="sports">
+              <thead>
+                <tr>
+                  <td>Women</td>
+                  <td>Sport</td>
+                  <td>Men</td>
+                </tr>
+              </thead>
+            </table>
+            
             
           </div>
-          <table id="sports">
-            <thead>
-              <tr>
-                <td>Women</td>
-                <td>Sport</td>
-                <td>Men</td>
-              </tr>
-            </thead>
-          </table>
-          
-          
         </div>
       </div>
     </div>
     <script id="mustacheTemplate" type="text/html">
       <div class='detailsTemplate'>
         <div class='school'>{{school}}</div>
-      <div class='wiki'><a href='#'>Wikipedia</a>, <a href='#'>Website</a></div>
-      <div class='district'>{{district}} school district </div>
-      <div class='piaa-district'>PIAA District #{{piaa-district}}</div>
-      <div class='type'>{{type}}, {{total}} students</div>
-      
-      <label>Address</label>
-      <div class='address'>{{address}}<br/>{{city}} PA {{zip}}<br/>{{county}} County</div>
-      <label>Athletic Director</label>
-      <div class='ad'>{{athletic-name}}, <a href='MAILTO:{{athletic-email}}'>{{athletic-email}}</a></div>
-      
-      {{#facilityData}}
-      <label>Nearest Facility</label>
-      <div class="address">
-        {{facility}}<br/>
-        {{city}}, 
-         {{/facilityData}}
-        {{displayDistance}} miles away
+        <div class='wiki'><a href='#'>Wikipedia</a>, <a href='#'>Website</a></div>
+        <div class='district'>{{district}} school district </div>
+        <div class='piaa-district'>PIAA District #{{piaa-district}}</div>
+        <div class='type'>{{type}}, {{total}} students</div>
+        
+        <label>Address</label>
+        <div class='address'>{{address}}<br/>{{city}} PA {{zip}}<br/>{{county}} County</div>
+        <label>Athletic Director</label>
+        <div class='ad'>{{athletic-name}}, <a href='MAILTO:{{athletic-email}}'>{{athletic-email}}</a></div>
+        
+        {{#facilityData}}
+        <label>Nearest Facility</label>
+        <div class="address">
+          {{facility}}<br/>
+          {{city}}, 
+          {{/facilityData}}
+          {{displayDistance}} miles away
+        </div>
+        
       </div>
-     
-    </div>
     </script>
     
   </body>
