@@ -11,9 +11,8 @@
     <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
     
     <script src="js/leaflet-label.js"></script>
-
     <link rel="stylesheet" href="css/leaflet-label.css">
-    
+    <script src="js/mustache.js"></script>
     
     
     
@@ -39,12 +38,13 @@
         
         ///Global Variables //////////////////////////
         
-        
-        var sideBarTemplate = Mustache.template($('
         var map = L.mapbox.map('map', "sciutoalex.h75l2dei", { zoomControl: false, maxZoom :12, minZoom : 8 })
             .setView([40.94492899999999,-78.96997899999997], 8);
         
         new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
+        
+        var dynamicHTML = document.getElementById('mustacheTemplate').innerHTML;
+
         
         map.on('drag', function(e) {
           console.log(map.getCenter() + " - " + map.getZoom());
@@ -153,7 +153,7 @@
         ///Access the School geocodes //////////////////////////
         
         
-        d3.csv("geocode.csv", function(schools) {
+        d3.csv("js/school-data.csv", function(schools) {
           d3.csv("js/facilities.csv", function(facilities) {
             
             var distanceArray = [];
@@ -169,14 +169,16 @@
               for (var j = 0; j < facilities.length; j++){
                 if(i != j) {
                   var otherpoint = facilities[j];
-                  var distancebetweenpoints = getDistanceFromLatLonInKm(schoolPoint.lat,schoolPoint.lon,parseFloat(otherpoint.lat),parseFloat(otherpoint.lon));
+                  var distancebetweenpoints = getDistanceFromLatLonInMi(schoolPoint.lat,schoolPoint.lon,parseFloat(otherpoint.lat),parseFloat(otherpoint.lon));
                   if (distancebetweenpoints < schoolPoint.distance) {
                     schoolPoint.distance = distancebetweenpoints;
                     schoolPoint.facilityLat = parseFloat(otherpoint.lat);
                     schoolPoint.facilityLon = parseFloat(otherpoint.lon);
                     schoolPoint.deltaLat = Math.abs(schoolPoint.facilityLat - schoolPoint.lat);
                     schoolPoint.deltaLon = Math.abs(schoolPoint.facilityLon - schoolPoint.lon);
-                    schoolPoint.displayDistance = parseInt(distancebetweenpoints*100)/100;
+                    schoolPoint.displayDistance = parseInt(schoolPoint.distance*100)/100;
+                schoolPoint.facilityData = otherpoint;
+                   
                     
                   }
                 }
@@ -199,7 +201,7 @@
             }
             
             for (var i = 0; i < schools.length; i++){
-              
+           
               var x = new schoolObject(schools[i]);
               schoolsArray.push(x);
               
@@ -223,12 +225,14 @@
           this.point = d;
           this.name = d.name;
           
-         this.marker = L.marker([parseFloat(point.lat), parseFloat(point.lon)], {
+        
+          
+          this.marker = L.marker([parseFloat(point.lat), parseFloat(point.lon)], {
             icon : hospitalIcon 
           })
             .addTo(map)
             .bindPopup(d.facility, {closeButton:false})
-           //.on('click', thisSchoolSelected)
+            //.on('click', thisSchoolSelected)
             .on('mouseover', function(e) {
               this.openPopup();
             })
@@ -246,10 +250,16 @@
           
           var thisObject = this;
           
+          
+          
           var point = d;
           this.point = d;
-          this.name = d.name;
+          this.name = d.school;
           
+          
+          console.log(this.point.displayDistance);
+          
+          this.point.facilityData.distance = this.point.displayDistance;
           //
           
           var thisSchoolSelected = function() {
@@ -310,15 +320,15 @@
           
           this.resetColors = function() {
             this.line.setStyle(lineStyle);
-             if (point.distance > 50) {
-            this.marker.setIcon(grayIcon);
-             } else {
-            this.marker.setIcon(greenIcon);
-             }
+            if (point.distance > 50) {
+              this.marker.setIcon(grayIcon);
+            } else {
+              this.marker.setIcon(greenIcon);
+            }
           };
           
           this.grayColors = function() {
-             this.line.setStyle(lineStyle);
+            this.line.setStyle(lineStyle);
             this.marker.setIcon(grayIcon);
             this.line.setStyle({
               color: "gray"
@@ -332,7 +342,7 @@
           
           
           var numbers = new Bloodhound({
-            datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.point.name); },
+            datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.point.school); },
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             local: autoCompleteArray
           });
@@ -362,7 +372,9 @@
           console.log(schoolObj);
           grayColors();
           schoolObj.line.setStyle({color:"#115903"});
-           schoolObj.marker.setIcon(greenIcon);
+          schoolObj.marker.setIcon(greenIcon);
+          
+          loadTable(schoolObj);
           setTimeout(function() {
             sidebar.addClass('sidebar-active');
           }, 500);
@@ -403,11 +415,11 @@
           resetButton.fadeIn();
           console.log(distanceMarker);
           
-        
           
-         
           
-     
+          
+          
+          
           
           
         };
@@ -440,46 +452,58 @@
         
         //Sidebar action///////////////////////
         var sports = [
-          "Basketball",
-          "Bowling",
-          "Cheer",
-          "Cross Country",
-          "Field Hockey",
-          "Football",
-          "Girl's Tennis",
-          "Golf",
-          "Gymnastics",
-          "Indoor Track & Field",
-          "Lacrosse",
-          "Rifle",
-          "Soccer",
-          "Soccer (Fall)",
-          "Soccer (Spring)",
-          "Softball",
-          "Swimming & Diving",
-          "Tennis",
-          "Track & Field",
-          "Volleyball",
-          "Water Polo",
-          "Wrestling"
+          {"name":"Basketball","girlid" : null,"boyid" : "boy-baseball"},
+          {"name":"Bowling","girlid" : "girl-bowling","boyid" : "boy-bowling"},
+          {"name":"Cheer","girlid" : "girl-cheer","boyid" : null},
+          {"name":"Cross Country","girlid" : "girl-xcountry","boyid" : "boy-xcountry"},
+          {"name":"Field Hockey","girlid" : "girl-hockey","boyid" : null},
+          {"name":"Football","girlid" : null,"boyid" : "boy-fb"},
+          {"name":"Golf","girlid" : "girl-golf","boyid" : "boy-golf"},
+          {"name":"Gymnastics","girlid" : "girl-gymnastics","boyid" : null},
+          {"name":"Indoor Track & Field","girlid" : "girl-track","boyid" : "boy-track"},
+          {"name":"Lacrosse","girlid" : "girl-lax","boyid" : "boy-lax"},
+          {"name":"Rifle","girlid" : "girl-rifle","boyid" : "boy-rifle"},
+          {"name":"Soccer","girlid" : null,"boyid" : "boy-soccer"},
+          {"name":"Soccer (Fall)","girlid" : "girl-fallsoccer","boyid" : null},
+          {"name":"Soccer (Spring)","girlid" : "girl-springsoccer","boyid" : null},
+          {"name":"Softball","girlid" : "girl-softball","boyid" : null},
+          {"name":"Swimming & Diving","girlid" : "girl-swimming","boyid" : "boy-swimming"},
+          {"name":"Tennis","girlid" : "girl-tennis","boyid" : "boy-tennis"},
+          {"name":"Track & Field","girlid" : "girl-outdoortrack","boyid" : "boy-outdoortrack"},
+          {"name":"Volleyball","girlid" : "girl-volleyball","boyid" : "boy-volleyball"},
+          {"name":"Water Polo","girlid" : "girl-waterpolo","boyid" : "boy-waterpolo"},
+          {"name":"Wrestling","girlid" : null,"boyid" : "boy-wrestling"},
+          {"name":"Hockey","girlid" : "girl-hockey","boyid" : "boy-hockey"}
         ];
         
-        var sportTable = $('#sports');
+        
+        var loadTable = function(schoolObj) {
+          
+          var mustacheData = {
+            "school" : "name",
+            "district" : "pittsburgh" 
+          };
+          
+          
+          var renderedHTML = Mustache.render(dynamicHTML, schoolObj.point);
+          $('.details').html(renderedHTML);
+          
+          var sportTable = $('#sports');
+          sportTable.html('');
         
         $.each(sports, function(sport) {
           var row = $('<tr>');
           
-          var hasMen = (Math.random() > .4) ? "true" : "";
-          var hasWomen = (Math.random() > .4) ? "true" : "";
+    
           
-          if (hasWomen) {
+          if (schoolObj.point[sports[sport].girlid] == "X") {
             $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender women-true');
           } else {
             $('<td><div><\/div>').appendTo(row).addClass('gender women');
           }
-          $('<td><div><\/div>').appendTo(row).html(sports[sport]).addClass('name');
+          $('<td><div><\/div>').appendTo(row).html(sports[sport].name).addClass('name');
           
-          if (hasMen) {
+          if (schoolObj.point[sports[sport].boyid] != "X") {
             $('<td><div><\/div>').appendTo(row).addClass('gender men');
           } else {
             $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender men-true');
@@ -487,6 +511,9 @@
           row.appendTo(sportTable); 
           
         });
+          
+        }
+            
         
         
         $('.region-zoom').on("click", function(e) {
@@ -499,7 +526,7 @@
         
         //MISC Function//////////////////
         
-        function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+        function getDistanceFromLatLonInMi(lat1,lon1,lat2,lon2) {
           var R = 6371; // Radius of the earth in km
           var dLat = deg2rad(lat2-lat1);  // deg2rad below
           var dLon = deg2rad(lon2-lon1); 
@@ -510,6 +537,7 @@
               ; 
           var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
           var d = R * c; // Distance in km
+          d *= 0.621371; // for miles;
           return d;
         }
         
@@ -675,18 +703,7 @@
         
         <div class="sidebar">
           <div class="details">
-            <div class="school">The Neighborhood Academy</div>
-            <div class="wiki"><a href="#">Wikipedia</a>, <a href="#">Website</a></div>
-            <div class="district">District 4</div>
-            <div class="piaa-district">PIAA District #7</div>
-            <label>Details</label>
-            <div class="type">Private School</div>
-            <div class="enrollment">50</div>
             
-            <label>Address</label>
-            <div class="address">709 North Aiken Ave.<br/>Pittsburgh PA 15206</div>
-            <label>Athletic Director</label>
-            <div class="ad">Darrell Schmitt<br/><a href="#">darrell.schmitt@theneighborhoodacademy.org</a></div>
           </div>
           <table id="sports">
             <thead>
@@ -699,9 +716,34 @@
           </table>
           
           
-          
         </div>
       </div>
     </div>
+    <script id="mustacheTemplate" type="text/html">
+      <div class='detailsTemplate'>
+        <div class='school'>{{school}}</div>
+      <div class='wiki'><a href='#'>Wikipedia</a>, <a href='#'>Website</a></div>
+      <div class='district'>{{district}} school district </div>
+      <div class='piaa-district'>PIAA District #{{piaa-district}}</div>
+      <div class='type'>{{type}}, {{total}} students</div>
+      
+      <label>Address</label>
+      <div class='address'>{{address}}<br/>{{city}} PA {{zip}}<br/>{{county}} County</div>
+      <label>Athletic Director</label>
+      <div class='ad'>{{athletic-name}}, <a href='MAILTO:{{athletic-email}}'>{{athletic-email}}</a></div>
+      
+      {{#facilityData}}
+      <label>Nearest Facility</label>
+      <div class="address">
+        {{facility}}<br/>
+        {{city}}, 
+         {{/facilityData}}
+        {{displayDistance}} miles away
+      </div>
+     
+    </div>
+    </script>
+    
   </body>
 </html>
+
