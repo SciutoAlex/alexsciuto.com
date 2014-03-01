@@ -43,6 +43,9 @@
         
         new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
         
+        map.on('drag', function(e) {
+          console.log(map.getCenter() + " - " + map.getZoom());
+        });
         
         var labelGroup = new L.layerGroup().addTo(map);
         
@@ -483,6 +486,13 @@
         });
         
         
+        $('.region-zoom').on("click", function(e) {
+          e.preventDefault();
+          var lat = $(this).attr('data-lat');
+          var lon = $(this).attr('data-lon');
+          var zoom = $(this).attr('data-zoom');
+          map.setView([lat, lon], zoom);
+        });
         
         //MISC Function//////////////////
         
@@ -649,6 +659,15 @@
             </div>
             <button id="reset-zoom" type="button" class="btn btn-warning">Reset Zoom</button>
           </div>
+          <button class="region-zoom" data-lat="40.44486" data-lon="-79.9791" data-zoom="10">Allegheny</button>
+          <button class="region-zoom" data-lat="40.79822" data-lon="-80.33752" data-zoom="10">Beaver/Lawrence</button>
+          <button class="region-zoom" data-lat="40.12009" data-lon="-79.31923" data-zoom="10">Sommerset/Westmoreland</button>
+          <button class="region-zoom" data-lat="40.23341" data-lon="-80.16174" data-zoom="10">Washington</button>
+          <button class="region-zoom" data-lat="41.03068" data-lon="-79.64813" data-zoom="10">Butler/Clarion</button>
+          <button class="region-zoom" data-lat="39.93607" data-lon="-79.90219" data-zoom="10">Greene/Fayette</button>
+          <button class="region-zoom" data-lat="40.74622" data-lon="-79.22104" data-zoom="10">Armstrong/Indiana</button>
+          <button class="region-zoom" data-lat="42.04623" data-lon="-80.05463" data-zoom="10">Erie</button>
+          <button class="region-zoom" data-lat="41.51166" data-lon="-79.96399" data-zoom="10">Mercer/Crawford/Warren</button>
         </form>
         
         <div class="sidebar">
