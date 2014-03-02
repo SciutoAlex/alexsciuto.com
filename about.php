@@ -14,25 +14,47 @@
   <div class="col4 last"><p>Welcome! I'm Alex Sciuto. I'm an inveterate learner, and I get very excited about whatever I'm doing. Right now I'm getting really into the phenomenology of Martin Heidegger, Backbone.js, and visualizing people's social information.</p></div>
   <div class="clear"></div>
 </div>
-<div class="section border-bottom">
-<div class="steps quote" >
+
+<div class="section">
+  <div class="steps quote" >
+    
+    
     <div class="step">
-      <strong></strong>
-      <p>Credibility vanishes in clouds of chartjunk; who would trust a chart that looks like a video game?</p>
-        <strong>&mdash;Edward Tufte</strong>
+      <p>People on a design team must be as happy to be wrong as right. If their ideas hold up under strong (but fair) criticism, then great, they can proceed with confidence. If their ideas are rejected with good rationale, then they have learned something.</p>
+      <strong>&mdash;Bill Buxton</strong>
     </div>
-   
     <div class="step">
       <p>The "micro" in "microinteractions" implies it is about the small things. Small? Yes. Unimportant? Absolutely not! Microinteractions is about those critical details that make the difference between a friendly experience and traumatic anxiety.</p>
-        <strong>&mdash;Don Norman</strong>
+      <strong>&mdash;Don Norman</strong>
     </div>
-   <div class="step">
-      <p>The operating <em>moral</em> premise of information design should be that our readers are alert and caring; they maybe be busy, eager to get on twith it, but they are no stupid.</p>
+     <div class="step">
+      <p>The operating <em>moral</em> premise of information design should be that our readers are alert and caring; they maybe be busy, eager to get on twith it, but they are not stupid.</p>
       <strong>&mdash;Edward Tufte</strong>
     </div>
+   
     <div class="clear"></div>
   </div>
 </div>
+<div class="section border-bottom">
+  <div class="steps quote" >
+    <div class="step">
+      <strong></strong>
+      <p>Credibility vanishes in clouds of chartjunk; who would trust a chart that looks like a video game?</p>
+      <strong>&mdash;Edward Tufte</strong>
+    </div>
+     <div class="step">
+      <strong></strong>
+      <p>Obstinacy, not talent, saved my life. It was also my good luck that happiness didn't matter to me and I had no compassion for myself.</p>
+      <strong>&mdash;Philip Roth</strong>
+    </div>
+    
+   
+   
+    <div class="clear"></div>
+  </div>
+</div>
+
+
 <div class="resume">
   <div class="col-l">
     <div class="section">

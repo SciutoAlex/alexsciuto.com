@@ -62,7 +62,7 @@
         var schoolsArray = [];
         var facilitiesArray = [];
         
-        var resetButton = $('#reset-zoom');
+        var resetButton = $('#reset-zoom button');
         
         var polyline = L.polyline([], {color: 'red'}).bindLabel("" + " miles", {noHide : true}).addTo(map);
         
@@ -436,9 +436,13 @@
         
         resetButton.click(resetZoom);
         
-        map.on('movestart', function() {
-          resetButton.fadeIn();
-        });
+        
+        
+        var addResetButton = function() {
+          $('#reset-zoom button').fadeIn();
+        };
+        
+        map.on('movestart', addResetButton);
         
         var resetColors = function() {
           schoolsArray.map(function(obj) { obj.resetColors(); });
@@ -552,11 +556,79 @@
       body { margin:0; padding:0; height:100%;}
       .row {height:100%; overflow:hidden;}
       .row > div {height:100%;}
-      .container-liquid {height:100%; padding-left:15px;}
-      #map { position:absolute; top:0; left:0; width:100%; height:100%; }
-      form { position:absolute; top: 10; left:10; z-index:99;}
+      .container-liquid {height:100%;}
+      #map { position:absolute; top: 10; left:10; width:100%; height:100%; }
       
-      #reset-zoom {display:none;}
+      
+      #reset-zoom {
+        min-width:125px;
+      }
+      
+      
+      #reset-zoom button {
+        padding:20px 0;
+        display:none;
+        color: #fff;
+        background-color: #f0ad4e;
+        border-color: #EEA21F;
+        margin: 23px 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.428571429;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+      }
+      
+      .header .navbar-form {
+        margin:0;
+        padding:0;
+      }
+      
+      .header .navbar-form input{
+        margin:23px 0;
+
+      }
+      
+      .header {
+        position:absolute;
+        background:#77a610;
+        top:0;
+        height:80px;
+        width:100%;
+      }
+      
+      .header section {
+        float:left;
+        border-left:1px #516b2b solid;
+        padding:00px 10px 00px 10px;
+        
+      }
+      .zooms {
+        
+      }
+      
+      .header .region-zoom {
+        cursor:pointer;
+        display:block;
+        background:#77a610;
+        border:0px;
+        text-align:left;
+        padding:10px 0;
+        height:80px;
+        text-decoration:none;
+        color:#eeffc9;
+        font-size:14px;
+      }
       
       
       /*Sidebar Styles*/
@@ -654,32 +726,6 @@
         margin-left:0;
       }
       
-      .zooms {
-    position:absolute;
-    top:60px;
-    width:200px;
-    background:red;
-    left:-10px;
-    padding:0 0px;
-    border-radius:10px;
-        color:white;
-}
-      
-      .zooms h2 {
-        font-size:15px;
-        padding:4px 10%;
-      }
-
-.zooms button {
-    border:0px;
-    text-align:left;
-    width:100%;
-    border-bottom:1px white solid;
-    background:red;
-    padding:4px 10%;
-    color:white;
-    font-size:12px;
-}
       
       
       
@@ -710,30 +756,54 @@
     <div class="container-liquid">
       <div class="row">
         <div class="col-md-12">
-          
           <div id="map"></div>
-          <form class="navbar-form navbar-left" role="search">
-            <div class="form-inline" >
-              <div class="form-group">
-                <input type="text" class="typeahead form-control" placeholder="Search">
-              </div>
-              <button id="reset-zoom" type="button" class="btn btn-warning">Reset Zoom</button>
+          <div class="header">
+            
+            <div class="form-container">
+              <form class="navbar-form navbar-left" role="search">
+                <div class="form-inline" >
+                  <section>
+                    <input type="text" class="typeahead form-control" placeholder="Search">
+                  </section>
+                  <section id="reset-zoom">
+                    <button type="button" class="btn btn-warning">Reset Zoom</button>
+                  </section>
+                </div>
+                
+              </form>
             </div>
             
-          </form>
-          
-          <div class="zooms">
-            <h2>County Zoom</h2>
-          <button class="region-zoom" data-lat="40.44486" data-lon="-79.9791" data-zoom="10">Allegheny</button>
-            <button class="region-zoom" data-lat="40.79822" data-lon="-80.33752" data-zoom="10">Beaver/Lawrence</button>
-            <button class="region-zoom" data-lat="40.12009" data-lon="-79.31923" data-zoom="10">Sommerset/Westmoreland</button>
-            <button class="region-zoom" data-lat="40.23341" data-lon="-80.16174" data-zoom="10">Washington</button>
-            <button class="region-zoom" data-lat="41.03068" data-lon="-79.64813" data-zoom="10">Butler/Clarion</button>
-            <button class="region-zoom" data-lat="39.93607" data-lon="-79.90219" data-zoom="10">Greene/Fayette</button>
-            <button class="region-zoom" data-lat="40.74622" data-lon="-79.22104" data-zoom="10">Armstrong/Indiana</button>
-            <button class="region-zoom" data-lat="42.04623" data-lon="-80.05463" data-zoom="10">Erie</button>
-            <button class="region-zoom" data-lat="41.51166" data-lon="-79.96399" data-zoom="10">Mercer/Crawford/Warren</button>
+            
+            <section>
+              <a class="region-zoom" data-lat="40.44486" data-lon="-79.9791" data-zoom="10">Allegheny</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="40.79822" data-lon="-80.33752" data-zoom="10">Beaver<br/>Lawrence</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="40.12009" data-lon="-79.31923" data-zoom="10">Sommerset <br/>Westmoreland</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="40.23341" data-lon="-80.16174" data-zoom="10">Washington</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="41.03068" data-lon="-79.64813" data-zoom="10">Butler<br/> Clarion</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="39.93607" data-lon="-79.90219" data-zoom="10">Greene <br/>Fayette</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="40.74622" data-lon="-79.22104" data-zoom="10">Armstrong <br/>Indiana</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="42.04623" data-lon="-80.05463" data-zoom="10">Erie</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="41.51166" data-lon="-79.96399" data-zoom="10">Mercer<br/> Crawford <br/>Warren</a>
+            </section>
+            
           </div>
+          
           
           <div class="sidebar">
             <div class="details">
