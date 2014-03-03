@@ -234,7 +234,7 @@
           this.marker = L.marker([parseFloat(point.lat), parseFloat(point.lon)], {
             icon : hospitalIcon 
           })
-            .bindPopup(d.facility, {closeButton:false})
+            .bindPopup(d.label, {closeButton:false})
             //.on('click', thisSchoolSelected)
             .on('mouseover', function(e) {
               this.openPopup();
@@ -309,10 +309,10 @@
             smoothFactor: 1
           };
           
-          if (point.distance > 50) {
+    
             lineStyle.opacity = 0; 
             this.marker.setIcon(grayIcon);
-          }
+          
           
           this.line = new L.Polyline(pointList, lineStyle).addTo(map);
           
@@ -325,11 +325,9 @@
           
           this.resetColors = function() {
             this.line.setStyle(lineStyle);
-            if (point.distance > 50) {
+      
               this.marker.setIcon(grayIcon);
-            } else {
-              this.marker.setIcon(greenIcon);
-            }
+            
           };
           
           this.grayColors = function() {
@@ -396,17 +394,21 @@
             case (x < 9):
               zoomlevel = 13;
               break;
-                case (x < 20):
+                case (x < 15):
               zoomlevel = 12;
               break;
-                case (x < 50):
+                case (x < 30):
               zoomlevel = 11;
               break;
-                case (x < 100):
+                case (x < 90):
               zoomlevel = 10;
               break;
-                default:
+                 case (x < 150):
               zoomlevel = 9;
+              break;
+          
+                default:
+              zoomlevel = 8;
               break;
                 }
           
@@ -874,7 +876,7 @@
         {{#facilityData}}
         <label>Nearest Facility</label>
         <div class="address">
-          {{facility}}<br/>
+          {{label}}<br/>
           {{city}}, 
           {{/facilityData}}
           {{displayDistance}} miles away

@@ -1,18 +1,18 @@
-facility,address,city,zip,services,lat,lon,
-AHN Human Motion Rehabilitation - Sports Medicine Services,5375 Route 8,Gibsonia,15044,PT ,40.6185064,-79.9452023,
-AHN Human Motion Rehabilitation - Sports Medicine Services,59 Fort Couch Road,Pittsburgh,15241,PT/OT,40.337513,-80.051717,
-AHN Human Motion Center,"1307 Federal Street, 2nd FL",Pittsburgh,15212,PT/OT ,40.4828051,-80.03672589999996,
-AHN Human Motion Center,"20215 Route 19, Suite 101",Cranberry Township,16066,PT/OT,40.686112,-80.102553,
-AHN Ortho & Rehab Institute (Med Mall),160 Gallery Drive,McMurray,15317,PT/OT,40.2902491,-80.11358559999996,
-AHN Bellevue Surburban Campus,100 South Jackson Avenue,Pittsburgh,15202,PT/OT,40.494134,-80.060205,
-AHN Human Motion Center,"500 Blazier Drive, Suite 100",Wexford,15090,PT/OT,40.587367,-80.02989300000002,
-AHN Human Motion Rehabilitation,"2027 Lebanon Church Road, 2nd FL",West Mifflin,15122,PT,40.3509675,-79.91367309999998,
-AHN Human Motion Rehabilitation,"2550 Mosside Blvd., Suite 415",Monroeville,15146,PT,40.427046,-79.75252699999999,
-AHN Human Motion Center,133 Church Hill Road,Robinson Township,15136,PT/OT,40.4425799,-80.14885749999996,
-AHN Human Motion Rehabilitation,5140 Libery Avenue,Pittsburgh,15224,PT,40.457823,-79.942429,
-Allegheny Valley Hospital Outpatient Rehabilitation Center,"Heights Plaza Shopping Center, 1620 Pacific Avenue",Natrona Heights,15065,PT/OT,40.623642,-79.724243,
-Jefferson RMC Physical & Aquatic Therapy Center,550 Coal Valley Road,Jefferson Hills,15025,PT/AQT,40.322785,-79.93180749999999,
-Jefferson RMC Bethel Park Campus,1010 Higbee Drive,Bethel Park,15102,PT/AQT,40.336555,-80.02126369999996,
-Jefferson RMC Brentwood Professional Plaza,"3722 Brownsville Road, 3rd FL",Pittsburgh,15227,PT,40.3760655,-79.96962769999999,
-Jefferson Regional Outpatient Services Center,"140 Curry Hollow Road, Suite 1",Pittsburgh,15236,"PT, OT, ST, HC",40.33928,-79.96863300000001,
-Saint Vincent Sports Medicine,4671 West Lake Road,Erie,16505,Physician Office Only,42.0815609,-80.1870381,
+facility,address,city,zip,services,lat,lon,label
+AHN Human Motion Rehabilitation - Sports Medicine Services,5375 Route 8,Gibsonia,15044,PT ,40.6185064,-79.9452023,Human Motion Ctr - Gibsonia
+AHN Human Motion Rehabilitation - Sports Medicine Services,59 Fort Couch Road,Pittsburgh,15241,PT/OT,40.337513,-80.051717,Human Motion Ctr - Ft. Couch Road
+AHN Human Motion Center,"1307 Federal Street, 2nd FL",Pittsburgh,15212,PT/OT ,40.4828051,-80.03672589999996,Human Motion Ctr - Federal North
+AHN Human Motion Center,"20215 Route 19, Suite 101",Cranberry Township,16066,PT/OT,40.686112,-80.102553,Human Motion Ctr - Cranberry
+AHN Ortho & Rehab Institute (Med Mall),160 Gallery Drive,McMurray,15317,PT/OT,40.2902491,-80.11358559999996,AHN Ortho/Rehab - Peters Township
+AHN Bellevue Surburban Campus,100 South Jackson Avenue,Pittsburgh,15202,PT/OT,40.494134,-80.060205,AGH Surburban Campus
+AHN Human Motion Center,"500 Blazier Drive, Suite 100",Wexford,15090,PT/OT,40.587367,-80.02989300000002,Human Motion Ctr - Wexford
+AHN Human Motion Rehabilitation,"2027 Lebanon Church Road, 2nd FL",West Mifflin,15122,PT,40.3509675,-79.91367309999998,Human Motion Ctr - West Mifflin
+AHN Human Motion Rehabilitation,"2550 Mosside Blvd., Suite 415",Monroeville,15146,PT,40.427046,-79.75252699999999,Human Motion Ctr - Monroeville
+AHN Human Motion Center,133 Church Hill Road,Robinson Township,15136,PT/OT,40.4425799,-80.14885749999996,Human Motion Ctr - Robinson Twnship
+AHN Human Motion Rehabilitation,5140 Libery Avenue,Pittsburgh,15224,PT,40.457823,-79.942429,Human Motion Rehab - Bloomfield
+Allegheny Valley Hospital Outpatient Rehabilitation Center,"Heights Plaza Shopping Center, 1620 Pacific Avenue",Natrona Heights,15065,PT/OT,40.623642,-79.724243,Allegheny Valley - Natrona Heights
+Jefferson RMC Physical & Aquatic Therapy Center,550 Coal Valley Road,Jefferson Hills,15025,PT/AQT,40.322785,-79.93180749999999,Jefferson - Physical & Aquatic Ctr
+Jefferson RMC Bethel Park Campus,1010 Higbee Drive,Bethel Park,15102,PT/AQT,40.336555,-80.02126369999996,Jefferson - Bethel Park Campus
+Jefferson RMC Brentwood Professional Plaza,"3722 Brownsville Road, 3rd FL",Pittsburgh,15227,PT,40.3760655,-79.96962769999999,Jefferson - Brownsville Road
+Jefferson Regional Outpatient Services Center,"140 Curry Hollow Road, Suite 1",Pittsburgh,15236,"PT, OT, ST, HC",40.33928,-79.96863300000001,Jefferson - Curry Hollow Road
+Saint Vincent Sports Medicine,4671 West Lake Road,Erie,16505,Physician Office Only,42.0815609,-80.1870381,Saint Vincent Sports Med
