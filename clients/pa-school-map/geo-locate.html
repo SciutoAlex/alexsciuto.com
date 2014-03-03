@@ -13,26 +13,28 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript">
       
+
       var geocoder;
       var finalData = [];
       var totalLength = 3074;
-      var count = 0;
+      var count = 1165;
       var errorCount = 0;
       
       function initialize() {
         geocoder = new google.maps.Geocoder();
         
         
-        d3.csv('js/facilities.csv', function(d) {
-          
+        d3.csv('js/school-data-no-geocode.csv', function(d) {
+           /* for addresses.csv
           return {
             address: d["STREET ADDRESS"] + " " + d["CITY"] + " " + d["PA ZIP"] 
           }
-          
-          /* for addresses.csv return {
-            address : d.address + " " + d.city + " " + "PA " + d.zip
-        }*/
+           }*/
+          return {
+            address : d.address + ", " + d.city + " " + "PA " + d.zip
+       
             
+            }
             }, function(data) {
               
               
@@ -52,7 +54,7 @@
                       
                       newParagraph = document.createElement('p');
                       // Create some text
-                      newText = document.createTextNode(JSON.stringify(results[0].geometry.location.d) + "," + JSON.stringify(results[0].geometry.location.e) + "," + JSON.stringify(results[0].formatted_address));
+                      newText = document.createTextNode(JSON.stringify(results[0].geometry.location.d) + "," + JSON.stringify(results[0].geometry.location.e) + "," + JSON.stringify(results[0].formatted_address) + " " + addr);
                       // Put the text in the new paragraph element
                       newParagraph.appendChild(newText);
                       // Append the new paragraph to the update Div
@@ -65,21 +67,12 @@
                       console.log("Geocode was not successful for the following reason: " + status + ". " + addr);
                       
                       
-                      errorCount++;
-                      
-                      if (errorCount % 20) {
+                     
                         setTimeout(function() {
                           codeAddress(data[count].address);
                           errorCount = 0;
                         }, 20000);
-                      } else {
-                        codeAddress(data[count].address);
-                        errorCount++;
-                      }
-                      
-                      if (status == "") {
-                        count++;
-                      }
+                    
                     }
                     
                     

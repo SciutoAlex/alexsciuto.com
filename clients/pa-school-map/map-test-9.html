@@ -50,7 +50,7 @@
           console.log(map.getCenter() + " - " + map.getZoom());
         });
         
-        var labelGroup = new L.layerGroup().addTo(map);
+        var hospitalGroup = new L.layerGroup();
         
         var opacityScale = d3.scale.linear()
             .range([.2,.8]);
@@ -78,6 +78,7 @@
         
         var grayIcon = L.icon({
           iconUrl: 'img/school-dot-unselected.png',
+          iconRetinaUrl: 'img/school-dot-unselected-ret.png',
           iconSize:     [10, 10], // size of the icon
           shadowSize:   [50, 64], // size of the shadow
           iconAnchor:   [5, 5], // point of the icon which will correspond to marker's location
@@ -87,6 +88,7 @@
         
         var greenIcon = L.icon({
           iconUrl: 'img/school-dot.png',
+          iconRetinaUrl: 'img/school-dot-ret.png',
           iconSize:     [10, 10], // size of the icon
           shadowSize:   [50, 64], // size of the shadow
           iconAnchor:   [5, 5], // point of the icon which will correspond to marker's location
@@ -96,9 +98,10 @@
         
         var hospitalIcon = L.icon({
           iconUrl: 'img/hospital.png',
-          iconSize:     [40, 40], // size of the icon
+          iconRetinaUrl: 'img/hospital-ret.png',
+          iconSize:     [20, 20], // size of the icon
           shadowSize:   [50, 64], // size of the shadow
-          iconAnchor:   [20, 35], // point of the icon which will correspond to marker's location
+          iconAnchor:   [10, 16], // point of the icon which will correspond to marker's location
           shadowAnchor: [4, 62],  // the same for the shadow
           popupAnchor:  [0, -10] // point from which the popup should open relative to the iconAnchor
         });
@@ -192,7 +195,12 @@
             colorScale.domain(d3.extent(distanceArray));
             
             
-            
+             for (var i = 0; i < schools.length; i++){
+              
+              var x = new schoolObject(schools[i]);
+              schoolsArray.push(x);
+              
+            }
             for (var i = 0; i < facilities.length; i++){
               
               var x = new facilityObject(facilities[i]);
@@ -200,12 +208,8 @@
               
             }
             
-            for (var i = 0; i < schools.length; i++){
-              
-              var x = new schoolObject(schools[i]);
-              schoolsArray.push(x);
-              
-            }
+            hospitalGroup.addTo(map);
+           
             
             
             //Autocomplete///////////////
@@ -230,7 +234,6 @@
           this.marker = L.marker([parseFloat(point.lat), parseFloat(point.lon)], {
             icon : hospitalIcon 
           })
-            .addTo(map)
             .bindPopup(d.facility, {closeButton:false})
             //.on('click', thisSchoolSelected)
             .on('mouseover', function(e) {
@@ -239,6 +242,8 @@
             .on('mouseout', function(e) {
               this.closePopup();
             });
+          
+          hospitalGroup.addLayer(this.marker);
           
           
           
@@ -257,7 +262,7 @@
           this.name = d.school;
           
           
-          console.log(this.point.displayDistance);
+          
           
           this.point.facilityData.distance = this.point.displayDistance;
           //
@@ -369,7 +374,7 @@
         
         
         var SchoolSelected = function(schoolObj) {
-          console.log(schoolObj);
+  
           grayColors();
           schoolObj.line.setStyle({color:"#115903"});
           schoolObj.marker.setIcon(greenIcon);
@@ -413,7 +418,6 @@
           map.setView([latcenter, loncenter], zoomlevel);
           distanceMarker.setLatLng([latcenter, loncenter]).setContent(schoolObj.point.displayDistance + " miles");
           resetButton.fadeIn();
-          console.log(distanceMarker);
           
           
           
@@ -464,7 +468,7 @@
           {"name":"Football","girlid" : null,"boyid" : "boy-fb"},
           {"name":"Golf","girlid" : "girl-golf","boyid" : "boy-golf"},
           {"name":"Gymnastics","girlid" : "girl-gymnastics","boyid" : null},
-          {"name":"Indoor Track & Field","girlid" : "girl-track","boyid" : "boy-track"},
+          {"name":"Indoor Track & Field","girlid" : "girl-indoortrack","boyid" : "boy-indoortrack"},
           {"name":"Lacrosse","girlid" : "girl-lax","boyid" : "boy-lax"},
           {"name":"Rifle","girlid" : "girl-rifle","boyid" : "boy-rifle"},
           {"name":"Soccer","girlid" : null,"boyid" : "boy-soccer"},
@@ -553,7 +557,7 @@
     </script>
     <style>
       html { height:100%; }
-      body { margin:0; padding:0; height:100%;}
+      body { margin:0; padding:0; height:100%; min-width:1050px;}
       .row {height:100%; overflow:hidden;}
       .row > div {height:100%;}
       .container-liquid {height:100%;}
@@ -562,6 +566,7 @@
       
       #reset-zoom {
         min-width:125px;
+        border:0px solid transparent;
       }
       
       
@@ -571,7 +576,7 @@
         color: #fff;
         background-color: #f0ad4e;
         border-color: #EEA21F;
-        margin: 23px 0;
+        margin: 23px 10px;
         font-weight: 400;
         text-align: center;
         vertical-align: middle;
@@ -590,8 +595,8 @@
       }
       
       .header .navbar-form {
+        padding:0 0 0 10px;
         margin:0;
-        padding:0;
       }
       
       .header .navbar-form input{
@@ -610,27 +615,50 @@
       .header section {
         float:left;
         border-left:1px #516b2b solid;
-        padding:00px 10px 00px 10px;
+        padding:0;
         
       }
       .zooms {
         
       }
       
-      .header .region-zoom {
+      .header a {
+        cursor:pointer;
+      }
+      
+      .header section > a {
         cursor:pointer;
         display:block;
         background:#77a610;
         border:0px;
         text-align:left;
-        padding:10px 0;
+        padding:10px 10px;
         height:80px;
         text-decoration:none;
         color:#eeffc9;
-        font-size:14px;
+        font-size:11px;
       }
       
+      .header section > a:hover {
+        background-color:#689403;
+      }
       
+      .allegheny {
+        text-decoration:none;
+        color:#eeffc9;
+        height:80px;
+        padding:10px 10px; 
+      }
+      
+      .allegheny p {
+        margin:0px;
+      }
+      
+      .allegheny a {
+        font-size:11px;
+         text-decoration:none;
+        color:#eeffc9;
+      }
       /*Sidebar Styles*/
       
       .sidebar {
@@ -775,7 +803,13 @@
             
             
             <section>
-              <a class="region-zoom" data-lat="40.44486" data-lon="-79.9791" data-zoom="10">Allegheny</a>
+              <div class="allegheny">
+                <p>Allegheny County</p>
+              <a class="region-zoom" data-lat="40.60744" data-lon="-80.1075" data-zoom="11">Northwest</a> | 
+                <a class="region-zoom" data-lat="40.57719" data-lon="-79.72778" data-zoom="11">Northeast</a> | 
+                <a class="region-zoom" data-lat="40.3714" data-lon="-79.89807" data-zoom="11">Southwest</a> | 
+                <a class="region-zoom" data-lat="40.40225" data-lon="-80.1329" data-zoom="11">Southeast</a>
+              </div>
             </section>
             <section>
               <a class="region-zoom" data-lat="40.79822" data-lon="-80.33752" data-zoom="10">Beaver<br/>Lawrence</a>
