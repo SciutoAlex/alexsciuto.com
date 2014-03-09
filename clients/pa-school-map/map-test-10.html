@@ -521,6 +521,7 @@
           
           var mustacheData = {
             "school" : schoolObj.point["school"],
+            "city" :schoolObj.point["city"],
             "wiki-link" : schoolObj.point["wiki-link"] ,
             "website" : schoolObj.point["website"],
             "district" : schoolObj.point["district"],
@@ -735,6 +736,14 @@
         transition:500ms cubic-bezier(.64,.02,.39,1) all;
       }
       
+      .address {
+        font-size:10px;
+      }
+      
+      .ad {
+        font-size:10px;
+      }
+      
       
       
       .details {
@@ -922,18 +931,19 @@
         <div class='district'>{{district}} school district </div>
         <div class='piaa-district'>PIAA District #{{piaa-district}}</div>
         <div class='type'>{{type}}, {{total}} students</div>
+         <div class='address'>Zip Codes in School District<br/>{{zipcodes-in-school-district}}</div>
         
         <label>Address</label>
-        <div class='address'>{{address}}<br/>{{city}} PA {{zip}}<br/>{{county}} County</div>
-        <div class='address'>Zip Codes in School District<br/>{{zipcodes-in-school-district}}</div>
+        <div class='address'>{{address}}, {{city}} PA {{zip}}<br/>{{county}} County</div>
+       
         <label>ATC Contract</label><div class="address">{{services}}</div>
         
         
         
         <label>Staff</label>
-        <div class='ad'>Athletic Director<br/>{{athletic-name}}, <a href='MAILTO:{{athletic-email}}'>{{athletic-email}}</a></div>
-        <div class='ad'>Principal<br/>{{principal-name}}, <a href='MAILTO:{{principal-email}}'>{{principal-email}}</a></div>
-        <div class='ad'>Superindentent<br/>{{super-name}}, <a href='MAILTO:{{super-email}}'>{{super-email}}</a></div>
+        <div class='ad'>Athletic Director: {{athletic-name}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>
+        <div class='ad'>Principal: {{principal-name}} <a href='MAILTO:{{principal-email}}'>(email)</a></div>
+        <div class='ad'>Superindentent: {{super-name}} <a href='MAILTO:{{super-email}}'>(email)</a></div>
         
 
         <label>Nearest Facility</label>
