@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?sensor=false">
+    </script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript">
+      
+      $(function() {
+        d3.csv('js/school-data.csv', function(d) {
+          for (var i = 0; i < d.length; i++){
+            var thisSchool = d[i];
+            for (var j = 0; j < d.length; j++){
+              var otherSchool = d[j];
+              if(i!=j) {
+                if((thisSchool.lat == otherSchool.lat) && (thisSchool.lon == otherSchool.lon)) {
+                  $('body').append(thisSchool.school + "<br>"); 
+                }
+              }
+            }
+          }
+        });
+      })
+        
+        
+        
+    </script>
+  </head>
+  <body>
+    <div id="output"></div>
+  </body>
+</html>
