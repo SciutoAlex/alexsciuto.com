@@ -157,6 +157,7 @@
         
         
         d3.csv("js/school-data-coded.csv", function(schools) {
+          console.log(schools);
           d3.csv("js/facilities.csv", function(facilities) {
             
             var distanceArray = [];
@@ -400,10 +401,10 @@
                 case (x < 30):
               zoomlevel = 11;
               break;
-                case (x < 90):
+                case (x < 80):
               zoomlevel = 10;
               break;
-                case (x < 150):
+                case (x < 130):
               zoomlevel = 9;
               break;
                 
@@ -496,17 +497,17 @@
           }
           
           var servicesDict = {              
-              "atc-ahm" : "AHN", 
-              "atc-upmc" : "UPMC", 
-              "ahm-nova" : "NovaCare", 
-              "ahm-excela" : "Excela"
-            };
+            "atc-ahm" : "AHN", 
+            "atc-upmc" : "UPMC", 
+            "ahm-nova" : "NovaCare", 
+            "ahm-excela" : "Excela"
+          };
           
           var serviceString = "";
           for (service in servicesDict) {
-           
+            
             if(schoolObj.point[service]) {
-             serviceString += servicesDict[service] + ", ";
+              serviceString += servicesDict[service] + ", ";
             } 
           }
           
@@ -514,9 +515,9 @@
           console.log('service string: ' + serviceString);
           
           if(!serviceString) {
-           serviceString = "no ATC contract"; 
+            serviceString = "no ATC contract"; 
           }
-      
+          
           
           
           var mustacheData = {
@@ -553,7 +554,9 @@
           sportTable.html('');
           
           $.each(sports, function(sport) {
-            var row = $('<tr>');
+            
+            if(schoolObj.point[sports[sport].girlid] || schoolObj.point[sports[sport].boyid]){
+               var row = $('<tr>');
             
             
             
@@ -570,8 +573,8 @@
               $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender men-true');
             }
             row.appendTo(sportTable); 
-            
-          });
+          }
+                 });
           
         }
             
@@ -748,7 +751,7 @@
       
       .details {
         font-size:12px;
-        margin-bottom:20px;
+        margin-bottom:0px;
       }
       
       .details label {
@@ -782,9 +785,13 @@
       
       td div {
         color:white;
-        height:15px;
+        height:13px;
         margin:2px;
         background:#f0f0f0;
+      }
+      
+      td div .glyphicon {
+        font-size:9px;
       }
       
       
@@ -800,6 +807,7 @@
       
       #sports .name {
         padding: 0px 5px;
+        width:100px;
       }
       
       .women div{
@@ -880,7 +888,7 @@
               <a class="region-zoom" data-lat="40.79822" data-lon="-80.33752" data-zoom="10">Beaver<br/>Lawrence</a>
             </section>
             <section>
-              <a class="region-zoom" data-lat="40.12009" data-lon="-79.31923" data-zoom="10">Sommerset <br/>Westmoreland</a>
+              <a class="region-zoom" data-lat="40.12009" data-lon="-79.31923" data-zoom="10">Somerset <br/>Westmoreland</a>
             </section>
             <section>
               <a class="region-zoom" data-lat="40.23341" data-lon="-80.16174" data-zoom="10">Washington</a>
@@ -926,16 +934,16 @@
     <script id="mustacheTemplate" type="text/html">
       <div class='detailsTemplate'>
         <div class='school'>{{school}}</div>
-        <div class='wiki'><a href='{{wiki-link}}'>Wikipedia</a>, <a href='{{website}}'>Website</a>, USA.com links: {{#USAlinks}}<a href={{str}}>{{index}}</a> {{/USAlinks}}</div>
-       
-        <div class='district'>{{district}} school district </div>
-        <div class='piaa-district'>PIAA District #{{piaa-district}}</div>
-        <div class='type'>{{type}}, {{total}} students</div>
-         <div class='address'>Zip Codes in School District<br/>{{zipcodes-in-school-district}}</div>
+        <div class='address'><a href='{{wiki-link}}'>Wikipedia</a>, <a href='{{website}}'>Website</a>, USA.com links: {{#USAlinks}}<a href={{str}}>{{index}}</a> {{/USAlinks}}</div>
+        
+        <div class='address'>{{district}} school district </div>
+        <div class='address'>PIAA District #{{piaa-district}}</div>
+        <div class='address'>{{type}}, {{total}} students</div>
+        <div class='address'>Zip Codes in School District<br/>{{zipcodes-in-school-district}}</div>
         
         <label>Address</label>
         <div class='address'>{{address}}, {{city}} PA {{zip}}<br/>{{county}} County</div>
-       
+        
         <label>ATC Contract</label><div class="address">{{services}}</div>
         
         
@@ -945,15 +953,15 @@
         <div class='ad'>Principal: {{principal-name}} <a href='MAILTO:{{principal-email}}'>(email)</a></div>
         <div class='ad'>Superindentent: {{super-name}} <a href='MAILTO:{{super-email}}'>(email)</a></div>
         
-
+        
         <label>Nearest Facility</label>
         <div class="address">
           {{facilitylabel}}<br/>
           {{facilitycity}}, 
           {{displayDistance}} miles away <br/>
-       
+          
         </div>
-        
+        <label>Sports Played</label>
       </div>
     </script>
     
