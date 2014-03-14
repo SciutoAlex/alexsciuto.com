@@ -57,8 +57,9 @@
       <div id="top-info-mobile">
       <h1 class="logo">
                 <a href="/">
-                  <img src="<?=ROOT_URL;?>/img/alex-logo.jpg"><br/>
-                  <span>&nbsp; Interaction Design and Prototyping</span></a></h1>
+                  <img class="tablet" src="<?=ROOT_URL;?>/img/alex-logo.jpg">
+                   <img class="mobile" src="<?=ROOT_URL;?>/img/alex-logo-mobile.png">
+                  <span>&nbsp; Interaction Design and Data Visualization</span></a></h1>
       </div>
         <div id="top-info-container">
         <div id="top-info">
@@ -67,7 +68,7 @@
               
               <h1 class="logo">
                 <a href="/">
-                  <span>&nbsp; Interaction Design and Prototyping</span><img src="<?=ROOT_URL;?>/img/alex-logo.jpg" width="90"></a></h1>
+                  <span>&nbsp; Interaction Design  and Data Visualization</span><img src="<?=ROOT_URL;?>/img/alex-logo.jpg" width="90"></a></h1>
             </div>
             
             <div class="fright">
