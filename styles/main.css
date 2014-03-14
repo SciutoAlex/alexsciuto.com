@@ -105,8 +105,8 @@ font-style: italic;
   float:left;
   margin-right:.7%;
   position:relative;
-  margin-bottom:45px;
-  min-height:260px;
+  margin-bottom:30px;
+  min-height:230px;
 }
 
 .title {
@@ -447,6 +447,16 @@ body {
   width:100%;
 }
 
+.col4-1 {
+  float:left;
+ width: 23.5%;
+ margin-right:2%; 
+}
+
+.col4-1 img {
+  max-width:100%;
+}
+
 .half {
   width:48%;
   margin-right:3%;
@@ -760,7 +770,7 @@ cursor:none;
   float:none;
 }
 
-.col1, .col2, .col3, .col4, .col5, .resume .col-r, .resume .col-l, .col3-1, .col2-1, .steps .step {
+.col1, .col2, .col3, .col4, .col5, .resume .col-r, .resume .col-l, .col3-1, .col2-1, .steps .step, .col4-1 {
   float:none;
   width:100%;
   margin:0;

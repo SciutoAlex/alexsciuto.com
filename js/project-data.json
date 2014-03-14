@@ -3,7 +3,7 @@
         "onImage": "img/garden-on.png",
         "offImage": "img/garden-off.png",
         "title": "GardenPot Ubicomp System",
-        "category": "interaction design",
+        "category": "interaction design [process]",
         "medium": "Video Sketch",
         "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
         "date": "December 2013<br/>Carnegie Mellon University",
@@ -13,7 +13,7 @@
         "onImage": "img/chomp-on.jpg",
         "offImage": "img/chomp-off.jpg",
         "title": "Reinventing Mobile Work",
-        "category": "interaction design",
+        "category": "interaction design [process]",
         "medium": "Mobile Application",
         "description": "Experiments in creating visuals using JavaScript to draw shapes on the HTML canvas object.",
         "date": "October 2013<br/>Carnegie Mellon University",
@@ -53,7 +53,7 @@
         "onImage": "img/microwaveon.jpg",
         "offImage": "img/microwaveoff.jpg",
         "title": "A Better Microwave Control",
-        "category": "interaction design",
+        "category": "interaction design [process]",
         "medium": "Concept Poster",
         "description": "In order to learn more and xml and how PHP parses that data, and in order to never have to go on weather.com again, I made a weather forecasting Website.",
         "date": "September 2013<br/>Carnegie Mellon University",
@@ -102,19 +102,19 @@
     "afganistan": {
         "onImage": "img/afganon.jpg",
         "offImage": "img/afganoff.jpg",
-        "title": "Boots on the Ground:<br/> Troop Levels in Afganistan",
+        "title": "Various News Graphics",
         "category": "data visualization",
-        "medium": "Published Book",
+        "medium": "charts and images",
         "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
-        "date": "April 2011",
-        "url": "projects/afgan"
+        "date": "2011-2014",
+        "url": "projects/static-graphs"
     },
     "pghneighborhood": {
         "onImage": "img/pghneighbor-on.jpg",
         "offImage": "img/pghneighbor-off.jpg",
         "title": "Pittsburgh Residence Guide",
         "category": "information design",
-        "medium": "Informational Poster",
+        "medium": "Informational Poster [process]",
         "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
         "date": "September 2013<br/>Carnegie Mellon University",
         "url": "cmu/portfolio/pgh-neighborhoods"
@@ -134,10 +134,40 @@
         "offImage": "img/voyageroff.jpg",
         "title": "The Path of Voyager 1",
         "category": "information design",
-        "medium": "Video Animation",
+        "medium": "Video Animation [process]",
         "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
         "date": "November 2013<br/>Carnegie Mellon University",
         "url": "cmu/portfolio/voyager"
+    },
+      "personal-movement": {
+        "onImage": "img/movement-on.png",
+        "offImage": "img/movement-off.png",
+        "title": "The Path of Voyager 1",
+        "category": "information design",
+        "medium": "Video Animation [process]",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "March 2014",
+        "url": "projects/personal-movement/index.php"
+    },
+      "neighborhood-data": {
+        "onImage": "img/recipe-on.png",
+        "offImage": "img/recipe-off.png",
+         "title": "Microsoft: A Billion Sensors",
+        "category": "interaction design",
+        "medium": "coming soon",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "March 2014<br/>Carnegie Mellon University",
+        "url": "#"
+    },
+      "pa-school-data": {
+        "onImage": "img/pa-school-on.png",
+        "offImage": "img/pa-school-off.png",
+         "title": "Pennsylvania School Data",
+        "category": "data visualization",
+        "medium": "interactive map",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "March 2014",
+        "url": "clients/pa-school-map/map-test-10.html"
     }
     
 }

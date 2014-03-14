@@ -35,12 +35,15 @@
       "webThings",
       "voyager",
       "microwave",
-      
+      "afganistan",
       "scienceBooks",
       "timeKeepr",
-      
+      "stateSize",
       "hexPlay",
-      "historicalSentate"
+      "historicalSentate",
+      "personal-movement",
+      "neighborhood-data",
+      "pa-school-data"
       
     ];
     
