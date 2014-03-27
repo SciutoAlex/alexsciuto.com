@@ -125,10 +125,10 @@
           var leafletCounties = L.geoJson(subunits, {
             "style" : function(feature) {
               return {                fillColor:listOfCountyColor[listOfCountyNames.indexOf(feature.properties.name)],
-                                      weight: 3,
-                                      opacity: .2,
-                                      color: '#572900',
-                                      fillOpacity: .1,
+                                      weight: 2,
+                                      opacity: .5,
+                                      color: '#f8a988',
+                                      fillOpacity: '0',
                                       lineCap: "round"
                                      }
                 },
@@ -208,6 +208,7 @@
 
             for (var i = 0; i < facilities.length; i++) {
               facilities[i].bbox = [-200,-200,200,200]; //T/R/B/L
+              facilities[i].totalSchools = facilities[i].listOfSchools.length;
               if(!facilities[i].listOfSchools) {
                 facilities[i].listOfSchools = [];
               }
@@ -1096,7 +1097,7 @@
         <div class="address"><label>ATC Contract</label> {{services}}</div>
 
         {{#if dist-link}}
-        <label>School District Info (<a href="{{{dist-link}}}">link</a>)</label>
+        <label>School District Info (<a href="{{{dist-link}}}" target="_blank">link</a>)</label>
         <div class="address">Population: {{dist-pop}}</div>
         <div class="address">Income per Capita: {{dist-per-capita-income}}</div>
         <div class="address">Income per Household: {{dist-house-income}}</div>
@@ -1126,7 +1127,8 @@
         <label>Address</label>
         <div class="address">{{address}}, {{city}}</div>
         <label>Services Offered</label>
-        <div class="address">{{services}}</div>
+        <div class="address">{{services}}</div>totalSchools
+        <label style="font-size:17px;">This AHN Facility is closest for <span style="color:red;">{{totalSchools}}</span> High Schools</label>
       </div>
     </script>
   </body>
