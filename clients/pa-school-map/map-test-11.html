@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="d3.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+
+    <script src="js/leaflet-label.js"></script>
+    <link rel="stylesheet" href="css/leaflet-label.css">
+    <script src="js/handlebars.js"></script>
+
+
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/typeahead.js"></script>
+    <link rel="stylesheet" href="css/auto-complete.css">
+
+
+    <script>
+      $(function(){
+
+
+
+        ///Global Variables //////////////////////////
+
+        var map = L.mapbox.map('map', "sciutoalex.h75l2dei", { zoomControl: false, maxZoom :12, minZoom : 8 })
+            .setView([40.94492899999999,-78.96997899999997], 8);
+
+        new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
+
+        var dynamicHTML = document.getElementById('mustacheTemplate').innerHTML;
+        var handleBarsTemplate = Handlebars.compile(dynamicHTML);
+
+        var dynamicHTMLFacility = document.getElementById('mustacheTemplateFacility').innerHTML;
+        var handleBarsTemplateFacility = Handlebars.compile(dynamicHTMLFacility);
+
+
+
+
+        var hospitalGroup = new L.layerGroup();
+
+        var opacityScale = d3.scale.linear()
+            .range([.2,.8]);
+
+        var colorScale = d3.scale.linear()
+            .range(["#fff","#ddd"]);
+
+        var autoCompleteArray = [];
+        var schoolsArray = [];
+        var facilitiesArray = [];
+
+        var resetButton = $('#reset-zoom button');
+
+        var polyline = L.polyline([], {color: 'red'}).bindLabel("" + " miles", {noHide : true}).addTo(map);
+
+        var distanceMarker = L.popup({
+          autoPan : false,
+          closeButton : false
+        })
+            .setLatLng([0,0])
+            .setContent('')
+            .addTo(map);
+
+        var sidebar = $('.sidebar');
+
+        var grayIcon = L.icon({
+          iconUrl: 'img/school-dot-unselected.png',
+          iconRetinaUrl: 'img/school-dot-unselected-ret.png',
+          iconSize:     [10, 10], // size of the icon
+          shadowSize:   [50, 64], // size of the shadow
+          iconAnchor:   [5, 5], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62],  // the same for the shadow
+          popupAnchor:  [0, -10] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var greenIcon = L.icon({
+          iconUrl: 'img/school-dot.png',
+          iconRetinaUrl: 'img/school-dot-ret.png',
+          iconSize:     [10, 10], // size of the icon
+          shadowSize:   [50, 64], // size of the shadow
+          iconAnchor:   [5, 5], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62],  // the same for the shadow
+          popupAnchor:  [0, -10] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var hospitalIcon = L.icon({
+          iconUrl: 'img/hospital.png',
+          iconRetinaUrl: 'img/hospital-ret.png',
+          iconSize:     [20, 20], // size of the icon
+          shadowSize:   [50, 64], // size of the shadow
+          iconAnchor:   [10, 16], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62],  // the same for the shadow
+          popupAnchor:  [0, -10] // point from which the popup should open relative to the iconAnchor
+        });
+
+
+
+        ///Access the County Shapes //////////////////////////
+
+        var listOfCountyColor = ["DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Green","GreenYellow","HoneyDew",
+        "IndianRed ","Indigo ","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta",
+        "Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen"];
+        var listOfCountyNames = ["Clarion","Blair","Elk","Greene","Westmoreland","Mercer","Butler","Washington","Beaver","Lawrence","Allegheny","Bedford","Erie","Centre","Jefferson","Cambria","Franklin","Indiana","Potter","Forest","Clearfield","Crawford","Huntingdon",
+        "McKean","Venango","Fulton","Armstrong","Fayette","Somerset","Cameron","Warren"];
+
+        var leafletCounties;
+        d3.json("pa-counties-select.topojson", function(error, us) {
+          var subunits = topojson.feature(us, us.objects['counties-pa']);
+          var leafletCounties = L.geoJson(subunits, {
+            "style" : function(feature) {
+              return {                fillColor:listOfCountyColor[listOfCountyNames.indexOf(feature.properties.name)],
+                                      weight: 3,
+                                      opacity: .2,
+                                      color: '#572900',
+                                      fillOpacity: .1,
+                                      lineCap: "round"
+                                     }
+                },
+            onEachFeature : function(feature, layer) {
+
+
+              var countyLabel = L.divIcon({
+                html : "<div class='countyname'>" + feature.properties.name + "<\/div>",
+                iconSize : 0
+              });
+
+              var thislayer = L.marker(layer.getBounds().getCenter(), {icon: countyLabel, iconSize: 0});
+
+              //labelGroup.addLayer(thislayer);
+
+
+
+            }
+
+
+          }).addTo(map);
+
+
+
+        });
+
+
+
+
+
+        ///Access the School geocodes //////////////////////////
+
+
+        d3.csv("js/school-data-coded.csv", function(schools) {
+          d3.csv("js/facilities.csv", function(facilities) {
+
+            var distanceArray = [];
+            //preprocess and find out the different lengths
+            for (var i = 0; i < schools.length; i++){
+              var schoolPoint = schools[i];
+
+              schools[i].distance = 999999;
+
+              schoolPoint.lat = parseFloat(schoolPoint.lat);
+              schoolPoint.lon = parseFloat(schoolPoint.lon);
+              schoolPoint.index = i;
+
+              for (var j = 0; j < facilities.length; j++){
+                facilities[j].index = j;
+                if(i != j) {
+                  var currentClosestSchoolIndex = 0;
+                  var otherpoint = facilities[j];
+                  var distancebetweenpoints = getDistanceFromLatLonInMi(schoolPoint.lat,schoolPoint.lon,parseFloat(otherpoint.lat),parseFloat(otherpoint.lon));
+                  if (distancebetweenpoints < schoolPoint.distance) {
+                    schoolPoint.distance = distancebetweenpoints;
+                    schoolPoint.facilityLat = parseFloat(otherpoint.lat);
+                    schoolPoint.facilityLon = parseFloat(otherpoint.lon);
+                    schoolPoint.deltaLat = Math.abs(schoolPoint.facilityLat - schoolPoint.lat);
+                    schoolPoint.deltaLon = Math.abs(schoolPoint.facilityLon - schoolPoint.lon);
+                    schoolPoint.displayDistance = parseInt(schoolPoint.distance*100)/100;
+                    schoolPoint.facilityData = otherpoint;
+                    schoolPoint.facilityIndex = j;
+                    }
+                }
+              }
+
+              if (!facilities[schoolPoint.facilityIndex].listOfSchools) {
+                facilities[schoolPoint.facilityIndex].listOfSchools = [];
+              }
+              facilities[schoolPoint.facilityIndex].listOfSchools.push(schoolPoint.index);
+              distanceArray.push(schoolPoint.distance);
+
+            }
+
+            // Calculated Bounding Boxes for Facilities's schools
+            // --------
+
+            for (var i = 0; i < facilities.length; i++) {
+              facilities[i].bbox = [-200,-200,200,200]; //T/R/B/L
+              if(!facilities[i].listOfSchools) {
+                facilities[i].listOfSchools = [];
+              }
+              for (var j = 0; j < facilities[i].listOfSchools.length; j++) {
+                var thisSchoolIndex = facilities[i].listOfSchools[j];
+
+                var thisSchoolLat = schools[thisSchoolIndex].lat;
+                var thisSchoolLon = schools[thisSchoolIndex].lon;
+                if(thisSchoolLat > facilities[i].bbox[0]) {
+                  facilities[i].bbox[0] = thisSchoolLat
+                }
+                if(thisSchoolLat < facilities[i].bbox[2]) {
+                  facilities[i].bbox[2] = thisSchoolLat
+                }
+                if(thisSchoolLon > facilities[i].bbox[1]) {
+                  facilities[i].bbox[1] = thisSchoolLon
+                }
+                if(thisSchoolLon < facilities[i].bbox[3]) {
+                  facilities[i].bbox[3] = thisSchoolLon
+                }
+              }
+              console.log(facilities[i].bbox)
+
+            }
+
+
+
+
+            opacityScale.domain(d3.extent(distanceArray));
+            colorScale.domain(d3.extent(distanceArray));
+
+
+            for (var i = 0; i < schools.length; i++){
+
+              var x = new schoolObject(schools[i]);
+              schoolsArray.push(x);
+
+            }
+            for (var i = 0; i < facilities.length; i++){
+
+              var x = new facilityObject(facilities[i]);
+              facilitiesArray.push(x);
+
+            }
+
+            hospitalGroup.addTo(map);
+
+
+
+            //Autocomplete///////////////
+            afterLoadingObjects();
+
+          });
+        });
+
+
+
+
+        ///Facilities objects //////////////////////////
+        var facilityObject = function(d) {
+          var thisObject = this;
+
+          var point = d;
+          this.point = d;
+          this.name = d.name;
+
+          var thisFacilitySelected = function() {
+
+            return facilitySelected(thisObject);
+
+          };
+
+          this.marker = L.marker([parseFloat(point.lat), parseFloat(point.lon)], {
+            icon : hospitalIcon
+          })
+            .bindPopup(d.label, {closeButton:false})
+            //.on('click', thisSchoolSelected)
+            .on('mouseover', function(e) {
+              this.openPopup();
+            })
+            .on('mouseout', function(e) {
+              this.closePopup();
+            })
+            .on('click', thisFacilitySelected);
+
+          hospitalGroup.addLayer(this.marker);
+
+
+
+        };
+
+        ///School objects //////////////////////////
+
+        var schoolObject = function(d) {
+
+          var thisObject = this;
+
+
+
+          var point = d;
+          this.point = d;
+          this.name = d.school;
+
+
+
+
+          this.point.facilityData.distance = this.point.displayDistance;
+          //
+
+          var thisSchoolSelected = function() {
+
+            return SchoolSelected(thisObject);
+
+          };
+
+          this.marker = L.marker([parseFloat(point.lat), parseFloat(point.lon)], {
+            icon : greenIcon
+          })
+            .addTo(map)
+            .bindPopup(this.name, {closeButton:false})
+            .on('click', thisSchoolSelected)
+            .on('mouseover', function(e) {
+              this.openPopup();
+            })
+            .on('mouseout', function(e) {
+              this.closePopup();
+            });
+
+
+
+
+
+
+          this.markerColor = '#b0d194';
+          this.fillColor = colorScale(point.distance);
+          this.fillOpacity = opacityScale(point.distance);
+
+
+
+          var pointA = new L.LatLng(point.lat, point.lon);
+          var pointB = new L.LatLng(point.facilityLat, point.facilityLon);
+          var pointList = [pointA, pointB];
+
+
+          var lineStyle = {
+            color: "#115903",
+            weight: 2,
+            opacity: opacityScale(point.distance),
+            smoothFactor: 1
+          };
+
+
+          lineStyle.opacity = 0;
+          this.marker.setIcon(grayIcon);
+
+
+          this.line = new L.Polyline(pointList, lineStyle).addTo(map);
+
+
+
+
+
+          autoCompleteArray.push(this);
+
+
+          this.resetColors = function() {
+            this.line.setStyle(lineStyle);
+
+            this.marker.setIcon(grayIcon);
+
+          };
+
+          this.grayColors = function() {
+            this.line.setStyle(lineStyle);
+            this.marker.setIcon(grayIcon);
+            this.line.setStyle({
+              color: "gray"
+            });
+          };
+
+          this.highlightShapes = function(params) {
+            this.line.setStyle({color:"#115903"});
+            this.marker.setIcon(greenIcon);
+            this.line.setStyle({
+              weight:3,
+              opacity:params.opacity
+            }).bringToFront();
+
+          }
+
+            };
+
+
+        var afterLoadingObjects = function(){
+
+
+          var numbers = new Bloodhound({
+            datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.point.school); },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: autoCompleteArray
+          });
+
+          // initialize the bloodhound suggestion engine
+          numbers.initialize();
+
+          // instantiate the typeahead UI
+          var myTypeahead = $('.typeahead').typeahead( {
+            "hint" : false
+          }, {
+            displayKey: 'name',
+            source: numbers.ttAdapter()
+          });
+
+          myTypeahead.on('typeahead:selected',function(evt,data){
+
+            SchoolSelected(data); //selected datum object
+
+          });
+
+        };
+
+
+
+        var SchoolSelected = function(schoolObj) {
+
+          grayColors();
+          schoolObj.highlightShapes({opacity:1});
+
+          loadTable(schoolObj);
+          setTimeout(function() {
+            sidebar.addClass('sidebar-active');
+          }, 500);
+
+
+
+          var zoomlevel = 0;
+          var x = schoolObj.point.distance;
+          switch (true) {
+
+            case (x < 9):
+              zoomlevel = 13;
+              break;
+                case (x < 15):
+              zoomlevel = 12;
+              break;
+                case (x < 30):
+              zoomlevel = 11;
+              break;
+                case (x < 80):
+              zoomlevel = 10;
+              break;
+                case (x < 130):
+              zoomlevel = 9;
+              break;
+
+                default:
+              zoomlevel = 8;
+              break;
+                }
+
+
+          var latcenter = (schoolObj.point.lat + schoolObj.point.facilityLat)/2;
+          var loncenter = (schoolObj.point.lon + schoolObj.point.facilityLon)/2;
+
+
+          map.setView([latcenter, loncenter], zoomlevel);
+          distanceMarker.setLatLng([latcenter, loncenter]).setContent(schoolObj.point.displayDistance + " miles");
+          resetButton.fadeIn();
+        };
+
+        var facilitySelected = function(facilityObj) {
+
+          grayColors();
+
+          loadTableFacility(facilityObj);
+          setTimeout(function() {
+            sidebar.addClass('sidebar-active');
+          }, 500);
+
+          facilityObj.point.listOfSchools.map(function(i){
+            schoolsArray[i].highlightShapes({opacity:.2});
+          });
+
+          var zoomMiles = 0;
+          var latMiles = getDistanceFromLatLonInMi(facilityObj.point.bbox[0],facilityObj.point.bbox[1],facilityObj.point.bbox[0],facilityObj.point.bbox[3]);
+          var lonMiles = getDistanceFromLatLonInMi(facilityObj.point.bbox[2],facilityObj.point.bbox[3],facilityObj.point.bbox[2],facilityObj.point.bbox[1]);
+          var latcenter = (facilityObj.point.bbox[0]-facilityObj.point.bbox[2])/2 + facilityObj.point.bbox[2];
+          var loncenter = (facilityObj.point.bbox[3]-facilityObj.point.bbox[1])/2 + facilityObj.point.bbox[1];
+          if (latMiles > lonMiles) {
+            zoomMiles = latMiles;
+          } else {
+            zoomMiles = lonMiles;
+
+          }
+
+          console.log(zoomMiles)
+
+          var zoomlevel = 0;
+          var x = zoomMiles;
+
+          switch (true) {
+
+            case (x < 9):
+              zoomlevel = 13;
+              break;
+                case (x < 15):
+              zoomlevel = 12;
+              break;
+                case (x < 30):
+              zoomlevel = 11;
+              break;
+                case (x < 80):
+              zoomlevel = 10;
+              break;
+                case (x < 130):
+              zoomlevel = 9;
+              break;
+
+                default:
+              zoomlevel = 8;
+              break;
+                }
+
+
+
+
+
+
+
+
+          map.setView([latcenter, loncenter], zoomlevel);
+          distanceMarker.setLatLng([70,70]);
+          resetButton.fadeIn();
+        };
+
+        var resetZoom = function() {
+          sidebar.removeClass('sidebar-active');
+          polyline.setLatLngs([]);
+          resetColors();
+          map.setView([40.94492899999999,-78.96997899999997], 8);
+          resetButton.fadeOut();
+
+          distanceMarker.setLatLng([0,0]);
+        };
+
+        resetButton.click(resetZoom);
+
+
+
+        var addResetButton = function() {
+          $('#reset-zoom button').fadeIn();
+        };
+
+        map.on('movestart', addResetButton);
+
+        var resetColors = function() {
+          schoolsArray.map(function(obj) { obj.resetColors(); });
+        };
+
+        var grayColors = function() {
+          schoolsArray.map(function(obj) { obj.grayColors(); });
+        };
+
+
+
+        //Sidebar action///////////////////////
+        var sports = [
+          {"name":"Basketball","girlid" : null,"boyid" : "boy-baseball"},
+          {"name":"Bowling","girlid" : "girl-bowling","boyid" : "boy-bowling"},
+          {"name":"Cheer","girlid" : "girl-cheer","boyid" : null},
+          {"name":"Cross Country","girlid" : "girl-xcountry","boyid" : "boy-xcountry"},
+          {"name":"Field Hockey","girlid" : "girl-hockey","boyid" : null},
+          {"name":"Football","girlid" : null,"boyid" : "boy-fb"},
+          {"name":"Golf","girlid" : "girl-golf","boyid" : "boy-golf"},
+          {"name":"Gymnastics","girlid" : "girl-gymnastics","boyid" : null},
+          {"name":"Indoor Track & Field","girlid" : "girl-indoortrack","boyid" : "boy-indoortrack"},
+          {"name":"Lacrosse","girlid" : "girl-lax","boyid" : "boy-lax"},
+          {"name":"Rifle","girlid" : "girl-rifle","boyid" : "boy-rifle"},
+          {"name":"Soccer","girlid" : null,"boyid" : "boy-soccer"},
+          {"name":"Soccer (Fall)","girlid" : "girl-fallsoccer","boyid" : null},
+          {"name":"Soccer (Spring)","girlid" : "girl-springsoccer","boyid" : null},
+          {"name":"Softball","girlid" : "girl-softball","boyid" : null},
+          {"name":"Swimming & Diving","girlid" : "girl-swimming","boyid" : "boy-swimming"},
+          {"name":"Tennis","girlid" : "girl-tennis","boyid" : "boy-tennis"},
+          {"name":"Track & Field","girlid" : "girl-outdoortrack","boyid" : "boy-outdoortrack"},
+          {"name":"Volleyball","girlid" : "girl-volleyball","boyid" : "boy-volleyball"},
+          {"name":"Water Polo","girlid" : "girl-waterpolo","boyid" : "boy-waterpolo"},
+          {"name":"Wrestling","girlid" : null,"boyid" : "boy-wrestling"},
+          {"name":"Hockey","girlid" : "girl-hockey","boyid" : "boy-hockey"}
+        ];
+
+
+        var loadTableFacility = function(facilityObj) {
+          var renderedHTML = handleBarsTemplateFacility(facilityObj.point);
+          $('table').hide();
+          $('.details').html(renderedHTML);
+        }
+
+
+        var loadTable = function(schoolObj) {
+
+          var USAlinksArray = schoolObj.point['usadotcom-link'].split('; ');
+          var USAlinksFormatted = [];
+          for (idx in USAlinksArray) {
+            USAlinksFormatted.push ({'index': parseInt(idx+1), 'str': USAlinksArray[idx]});
+          }
+
+          var servicesDict = {
+            "atc-ahm" : "AHN",
+            "atc-upmc" : "UPMC",
+            "ahm-nova" : "NovaCare",
+            "ahm-excela" : "Excela"
+          };
+
+          var serviceString = "";
+          for (service in servicesDict) {
+
+            if(schoolObj.point[service]) {
+              serviceString += servicesDict[service] + ", ";
+            }
+          }
+
+          serviceString = serviceString.substring(0, serviceString.length - 2);
+          console.log('service string: ' + serviceString);
+
+          if(!serviceString) {
+            serviceString = "no ATC contract";
+          }
+
+          var linkArray = [];
+
+          if (schoolObj.point["wiki-link"]) {
+            linkArray.push({"url" : schoolObj.point["wiki-link"], "title" : "Wikipedia"})
+          }
+
+          if (USAlinksFormatted[0]) {
+            linkArray.push({"url" : USAlinksFormatted[0].str, "title" : "USA.com"})
+          }
+
+          if (schoolObj.point["website"]) {
+            linkArray.push({"url" : schoolObj.point["website"], "title" : "Website"})
+          }
+
+
+
+
+
+          var mustacheData = {
+            "school" : schoolObj.point["school"],
+            "city" :schoolObj.point["city"],
+            "links" : linkArray,
+            "district" : schoolObj.point["district"],
+            "type" : schoolObj.point["type"],
+            "total" : schoolObj.point["total"],
+            "piaa-district" : schoolObj.point["piaa-district"],
+            "address" : schoolObj.point["address"],
+            "zip" : schoolObj.point["zip"],
+            "county" : schoolObj.point["county"],
+            "zipcodes-in-school-district" : schoolObj.point["zipcodes-in-school-district"],
+            "athletic-email" : schoolObj.point["athletic-email"],
+            "athletic-name" : schoolObj.point["athletic-name"],
+            "super-email" : schoolObj.point["super-email"],
+            "super-name" : schoolObj.point["super-name"],
+            "principal-email" : schoolObj.point["principal-email"],
+            "principal-name" : schoolObj.point["principal-name"],
+            "facilitylabel" : schoolObj.point.facilityData.label,
+            "facilitycity" : schoolObj.point.facilityData.city,
+            "services" : serviceString,
+            "displayDistance" :schoolObj.point["principal-name"],
+            "dist-link" :schoolObj.point["dist-link"],
+            "dist-pop" :commaSeparateNumber(schoolObj.point["dist-pop"]),
+            "dist-per-capita-income" :"$" + commaSeparateNumber(schoolObj.point["dist-per-capita-income"]),
+            "dist-house-income" :"$" + commaSeparateNumber(schoolObj.point["dist-house-income"])
+          };
+
+
+          var renderedHTML = handleBarsTemplate(mustacheData);
+          $('.details').html(renderedHTML);
+
+          var sportTable = $('#sports');
+          sportTable.html('');
+
+          $('table').show();
+          $.each(sports, function(sport) {
+
+            if(schoolObj.point[sports[sport].girlid] || schoolObj.point[sports[sport].boyid]){
+               var row = $('<tr>');
+
+
+
+            if (schoolObj.point[sports[sport].girlid] == "X") {
+              $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender women-true');
+            } else {
+              $('<td><div><\/div>').appendTo(row).addClass('gender women');
+            }
+            $('<td><div><\/div>').appendTo(row).html(sports[sport].name).addClass('name');
+
+            if (schoolObj.point[sports[sport].boyid] != "X") {
+              $('<td><div><\/div>').appendTo(row).addClass('gender men');
+            } else {
+              $('<td><div><span class="glyphicon glyphicon-ok"></span><\/div>').appendTo(row).addClass('gender men-true');
+            }
+            row.appendTo(sportTable);
+          }
+                 });
+
+        }
+
+
+
+            $('.region-zoom').on("click", function(e) {
+              e.preventDefault();
+              var lat = $(this).attr('data-lat');
+              var lon = $(this).attr('data-lon');
+              var zoom = $(this).attr('data-zoom');
+              map.setView([lat, lon], zoom);
+            });
+
+        //MISC Function//////////////////
+
+        function getDistanceFromLatLonInMi(lat1,lon1,lat2,lon2) {
+          var R = 6371; // Radius of the earth in km
+          var dLat = deg2rad(lat2-lat1);  // deg2rad below
+          var dLon = deg2rad(lon2-lon1);
+          var a =
+              Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+              Math.sin(dLon/2) * Math.sin(dLon/2)
+              ;
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          var d = R * c; // Distance in km
+          d *= 0.621371; // for miles;
+          return d;
+        }
+
+        function deg2rad(deg) {
+          return deg * (Math.PI/180)
+            }
+
+            function commaSeparateNumber(val){
+    while (/(\d+)(\d{3})/.test(val.toString())){
+      val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+    }
+    return val;
+  }
+
+      });
+    </script>
+    <style>
+      html { height:100%; }
+      body { margin:0; padding:0; height:100%; min-width:1050px;}
+      .row {height:100%; overflow:hidden;}
+      .row > div {height:100%;}
+      .container-liquid {height:100%;}
+      #map { position:absolute; top: 10; left:10; width:100%; height:100%; }
+
+
+      #reset-zoom {
+        min-width:125px;
+        border:0px solid transparent;
+      }
+
+
+      #reset-zoom button {
+        padding:20px 0;
+        display:none;
+        color: #fff;
+        background-color: #f0ad4e;
+        border-color: #EEA21F;
+        margin: 14px 10px;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.428571429;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+      }
+
+      .header .navbar-form {
+        padding:0 0 0 10px;
+        margin:0;
+      }
+
+      .header .navbar-form input{
+        margin:14px 0;
+
+      }
+
+      .header {
+        position:absolute;
+        background:#77a610;
+        top:0;
+        height:63px;
+        width:100%;
+      }
+
+      .header section {
+        float:left;
+        border-left:1px #516b2b solid;
+        padding:0;
+
+      }
+
+      .header section:first {
+        border-left:0px solid white;
+      }
+      .zooms {
+
+      }
+
+      .header a {
+        cursor:pointer;
+      }
+
+      .header section > a {
+        cursor:pointer;
+        display:block;
+        background:#77a610;
+        border:0px;
+        text-align:left;
+        padding:10px 10px;
+        height:63px;
+        text-decoration:none;
+        color:#eeffc9;
+        font-size:11px;
+      }
+
+      .header section > a:hover {
+        background-color:#689403;
+      }
+
+      .allegheny {
+        text-decoration:none;
+        color:#eeffc9;
+        height:63px;
+        padding:10px 10px;
+      }
+
+      .allegheny p {
+        margin:0px;
+      }
+
+      .allegheny a {
+        font-size:11px;
+        text-decoration:none;
+        color:#eeffc9;
+      }
+      /*Sidebar Styles*/
+
+      .sidebar {
+        background:white;
+        width:250px;
+        margin:0px;
+        padding:10px;
+        position:absolute;
+        right:-270px;
+        box-shadow:0 0 5px 4px rgba(0,0,0,.2);
+        height:100%;
+        z-index:99;
+        transition:500ms cubic-bezier(.64,.02,.39,1) all;
+      }
+
+      .sidebar-active {
+        right:40px;
+        transition:500ms cubic-bezier(.64,.02,.39,1) all;
+      }
+
+      .address {
+        font-size:10px;
+      }
+
+      .ad {
+        font-size:10px;
+      }
+
+
+
+      .details {
+        font-size:12px;
+        margin-bottom:0px;
+      }
+
+      .details label {
+        margin-top:10px;
+        margin-bottom:0px;
+      }
+
+
+
+      .details .school {
+        font-size:16px;
+      }
+
+
+      #sports {
+        text-align:center;
+        line-height:12px;
+        font-size:10px;
+
+      }
+
+      #sports thead {
+        background:#dedede;
+        font-weight:bold;
+
+      }
+
+      #sports thead td {
+        padding:3px;
+      }
+
+      td div {
+        color:white;
+        height:13px;
+        margin:2px;
+        background:#f0f0f0;
+      }
+
+      td div .glyphicon {
+        font-size:9px;
+      }
+
+
+
+      .gender {
+        width:70px;
+
+      }
+
+      #sports tr {
+        border-top:1px solid #d1d1d1;
+      }
+
+      #sports .name {
+        padding: 0px 5px;
+        width:100px;
+      }
+
+      .women div{
+        margin-left:0;
+      }
+
+      .men div{
+        margin-right:0;
+      }
+      .men-true div {
+        background:#286bad;
+        margin-right:0;
+      }
+
+      .women-true div {
+        background: #f7a8bb;
+        margin-left:0;
+      }
+
+
+
+
+      /* Leaflet Hacks */
+      .leaflet-popup-content {
+        padding: 0 10px 0;
+        font-weight:bold;
+      }
+
+      .leaflet-popup-content .marker-description{
+        font-size:10px;
+        font-weight:normal;
+      }
+
+      .countyname {
+        color:gray;
+        background:rgba(255,255,255,.5);
+        margin:1px;
+      }
+
+      .leaflet-div-icon {
+        border:0px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container-liquid">
+      <div class="row">
+        <div class="col-md-12">
+          <div id="map"></div>
+          <div class="header">
+
+            <div class="form-container">
+              <form class="navbar-form navbar-left" role="search">
+                <div class="form-inline" >
+                  <section>
+                    <input type="text" class="typeahead form-control" placeholder="Search">
+                  </section>
+                  <section id="reset-zoom">
+                    <button type="button" class="btn btn-warning">Reset Zoom</button>
+                  </section>
+                </div>
+
+              </form>
+            </div>
+
+
+            <section>
+              <div class="allegheny">
+                <p>Allegheny County</p>
+                <a class="region-zoom" data-lat="40.60744" data-lon="-80.1075" data-zoom="11">NW</a> |
+                <a class="region-zoom" data-lat="40.57719" data-lon="-79.72778" data-zoom="11">NE</a> |
+                <a class="region-zoom" data-lat="40.3714" data-lon="-79.89807" data-zoom="11">SW</a> |
+                <a class="region-zoom" data-lat="40.40225" data-lon="-80.1329" data-zoom="11">SE</a>
+              </div>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="40.79822" data-lon="-80.33752" data-zoom="10">Beaver<br/>Lawrence</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="40.12009" data-lon="-79.31923" data-zoom="10">Somerset <br/>Westmoreland</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="40.23341" data-lon="-80.16174" data-zoom="10">Washington</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="41.03068" data-lon="-79.64813" data-zoom="10">Butler<br/> Clarion</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="39.93607" data-lon="-79.90219" data-zoom="10">Greene <br/>Fayette</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="40.74622" data-lon="-79.22104" data-zoom="10">Armstrong <br/>Indiana</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="42.04623" data-lon="-80.05463" data-zoom="10">Erie</a>
+            </section>
+            <section>
+              <a class="region-zoom" data-lat="41.51166" data-lon="-79.96399" data-zoom="10">Mercer<br/> Crawford <br/>Warren</a>
+            </section>
+
+          </div>
+
+
+          <div class="sidebar">
+            <div class="details">
+
+            </div>
+            <table id="sports">
+              <thead>
+                <tr>
+                  <td>Women</td>
+                  <td>Sport</td>
+                  <td>Men</td>
+                </tr>
+              </thead>
+            </table>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <script id="mustacheTemplate" type="text/html">
+      <div class='detailsTemplate'>
+        <div class='school'>{{school}}</div>
+        <div class='address'>
+          {{#each links}}
+            <a href="{{url}}" target="_blank">{{title}}</a>,
+          {{/each}}
+
+        <div class='address'>{{district}} school district, PIAA District #{{piaa-district}} </div>
+        <div class='address'>{{type}}, {{total}} students</div>
+        <div class='address'>Zip Codes in School District<br/>{{zipcodes-in-school-district}}</div>
+
+        <label>Address</label>
+        <div class='address'>{{address}}, {{city}}<br/>{{county}} County</div>
+
+        <div class="address"><label>ATC Contract</label> {{services}}</div>
+
+        {{#if dist-link}}
+        <label>School District Info (<a href="{{{dist-link}}}">link</a>)</label>
+        <div class="address">Population: {{dist-pop}}</div>
+        <div class="address">Income per Capita: {{dist-per-capita-income}}</div>
+        <div class="address">Income per Household: {{dist-house-income}}</div>
+        {{/if}}
+
+
+
+        <label>Staff</label>
+        <div class='ad'>Athletic Director: {{athletic-name}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>
+        <div class='ad'>Principal: {{principal-name}} <a href='MAILTO:{{principal-email}}'>(email)</a></div>
+        <div class='ad'>Superindentent: {{super-name}} <a href='MAILTO:{{super-email}}'>(email)</a></div>
+
+
+        <label>Nearest Facility</label>
+        <div class="address">
+          {{facilitylabel}}<br/>
+          {{facilitycity}},
+          {{displayDistance}} miles away <br/>
+
+        </div>
+        <label>Sports Played</label>
+      </div>
+    </script>
+    <script id="mustacheTemplateFacility" type="text/html">
+      <div class='detailsTemplate'>
+        <div class='school'>{{label}}</div>
+        <label>Address</label>
+        <div class="address">{{address}}, {{city}}</div>
+        <label>Services Offered</label>
+        <div class="address">{{services}}</div>
+      </div>
+    </script>
+  </body>
+</html>
