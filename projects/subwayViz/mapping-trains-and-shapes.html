@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <script src="libs/d3.js" charset="utf-8"></script>
+    <script src="libs/jquery.js"></script>
+
+
+    <style>
+
+      svg {
+        border:1px solid black;
+        background: #f2f9ff;
+      }
+      .line {
+        fill-opacity:0;
+        stroke:green;
+        stroke-width:1px;
+      }
+
+      .boroughs {
+        drop-shadow:10px 10px 10px 10px black;
+      }
+
+
+    </style>
+  </head>
+
+  <body>
+
+    <script type="text/javascript" charset="utf-8">
+      var viz = {};
+
+      var width = 800,
+          height = 800;
+
+
+
+      var projection = d3.geo.mercator()
+          .center([-73.93, 40.74])
+          .scale(100000)
+          .translate([(width) / 2, (height)/2]);
+
+      var path = d3.geo.path()
+          .projection(projection);
+
+      var timeFormat = d3.time.format('%H:%M:%S');
+
+
+      viz.init = function(d) {
+        var viz = d3.select('body').append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .append('g');
+
+
+        var lineObject = function(linedata) {
+          if(linedata.shape && linedata.rides) {
+            var routePath = viz.append("path")
+                .data([linedata.shape])
+                .attr('class', 'line')
+                .attr("d", d3.svg.line()
+                      .y(function(d) { return projection([d[1],d[0]])[1];})
+                      .x(function(d) { return projection([d[1],d[0]])[0];})
+                );
+
+            var trainArray = [];
+
+            for (var i = 0; i < linedata.rides.length; i++) {
+              trainArray.push(trainObject(linedata.rides[i], routePath, linedata.shape[0]));
+            }
+
+            }
+        };
+
+        var linesArray = [];
+
+        var trainObject = function(traindata, routePath, startPosition) {
+
+
+          var startTime = convertToSeconds(traindata.startTime);
+
+          var endTime = convertToSeconds(traindata.endTime);
+
+          var trainCircle = viz.append("circle")
+              .attr("r", 4)
+              .attr("transform", "translate(" + projection(startPosition) + ")");
+
+          this.returnTime = function(currentTime) {
+            currentTime = convertToSeconds(currentTime);
+            var percentFinished = (currentTime - startTime)/(endTime - starTime);
+            trainCircle.attr('transform', translateAlong(routePath, percentFinished));
+          }
+        };
+
+
+
+
+
+        d3.json('data/boroughs.json', function(boroughs) {
+          d3.json('data/subwayLines.json',function(lines) {
+            d3.csv('data/routes.csv',function(routes) {
+              d3.csv('data/stops.csv',function(stops) {
+                d3.json('data/boroughs.json', function(d) {
+                  d3.json('data/shapes-and-trains-and-times.json', function(traintimes) {
+                    console.log('loaded')
+                    for (var line in traintimes) {
+                      var thisLine = traintimes[line];
+                      linesArray.push(lineObject(thisLine));
+                    }
+                  });
+                });
+              });
+            });
+          });
+        });
+
+        function translateAlong(path,loc) {
+          newTime = loc;
+          var l = path.getTotalLength();
+          return function(d, i, a) {
+            return function(t) {
+              var p = path.getPointAtLength(l*t);
+              return "translate(" + p.x + "," + p.y + ")";
+            };
+          };
+        }
+
+        function convertToSeconds(dateObject) {
+          dateObject = dateObject.split('"');
+          return dateObject[0] * 3600 + dateObject[1] * 60 + dateObject[2];
+        }
+      }
+
+
+        var chart = viz.init();
+
+        viz.setTime(3600*50);
+
+    </script>
+  </body>
+</html>

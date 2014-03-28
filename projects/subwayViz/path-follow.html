@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <script src="libs/d3.js" charset="utf-8"></script>
+    <script src="libs/jquery.js"></script>
+    
+    
+    <style>
+      
+      svg {
+        border:1px solid black;
+       
+      }
+      .line {
+        fill-opacity:0;
+        stroke:green;
+        stroke-width:1px;
+      }
+      
+      .boroughs {
+        drop-shadow:10px 10px 10px 10px black;
+      }
+      
+      
+    </style>
+  </head>
+  
+  <body>
+    
+    <script type="text/javascript" charset="utf-8">
+      var viz = {};
+      
+      var width = 800,
+          height = 800;
+      
+      
+      
+      var projection = d3.geo.mercator()
+          .center([-73.93, 40.74])
+          .scale(100000)
+          .translate([(width) / 2, (height)/2]); 
+      
+      var path = d3.geo.path()
+          .projection(projection);
+      
+      
+      
+      viz.init = function(d) {
+        var viz = d3.select('body').append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .append('g');
+        
+        viz.append('rect')
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', width)
+          .attr('height', height)
+          .style('fill', "#f2f9ff");
+        
+        
+        
+        
+        
+        d3.json('data/boroughs.json', function(boroughs) {
+          d3.json('data/subwayLines.json',function(lines) {
+            d3.csv('data/routes.csv',function(routes) {
+              d3.csv('data/stops.csv',function(stops) {
+                d3.json('data/boroughs.json', function(d) {
+                  viz.append("path")
+                    .datum({type: "FeatureCollection", features: d.features})
+                    .attr("d", path)
+                    
+                    .style("stroke" , function(d) { return "#999"; })
+                    .style("stroke-width", 1)
+                    .style("fill", "#fff")
+                    .attr('class', 'boroughs');
+                  
+                  
+                  var routeCoords = [];
+                  var routeSections = lines.features.filter(function(element) {
+                    return element.properties.route_id === '3';
+                    
+                  });
+                  
+                  var routeOrder = [4,2,1,0,3];
+                  
+                  for(var i = 0; i < routeOrder.length; i++) {
+                    routeCoords = routeCoords.concat(routeSections[routeOrder[i]].geometry.coordinates); 
+                  }
+                  
+                  var test = {'hi' : 'there'};
+                  
+                  console.log(test);
+                  
+                  var routePath = viz.append("path")
+                      .data([routeCoords])
+                      .attr('class', 'line')
+                      .attr("d", d3.svg.line()
+                            .x(function(d) { return projection([d[0],d[1]])[0];})
+                            .y(function(d) { return projection([d[0],d[1]])[1];})
+                           );
+                  
+                  var circle = viz.append("circle")
+                      .attr("r", 4)
+                      .attr("transform", "translate(" + projection(routeCoords[0]) + ")");
+                  
+                  transition();
+                  
+                  function transition(loc) {
+                    circle.transition()
+                      .duration(1000)
+                      .attrTween("transform", translateAlong(routePath.node(),loc));
+                  }
+                  
+                  
+                  // Returns an attrTween for translating along the specified path element.
+                  function translateAlong(path,percentToGoTo) {
+                    var l = path.getTotalLength();
+                    return function(d, i, a) {
+                      return function(t) {
+                        var p = path.getPointAtLength(t * l *percentToGoTo /400);
+                        return "translate(" + p.x + "," + p.y + ")";
+                      };
+                    };
+                  }
+                  
+                  viz.selectAll('.stops').data(stops)
+                    .enter()
+                    .append('circle')
+                    .attr('class', 'stops')
+                    .attr('r', 1)
+                    .attr('cx', function(d) { return projection([d.stop_lon, d.stop_lat])[0]; })
+                    .attr('cy', function(d) { return projection([d.stop_lon, d.stop_lat])[1]; })
+                    .attr('fill', function(d) { return "#" + "555"; })
+                    
+                    viz.on('mousemove', function() {
+                      console.log(d3.mouse(this));
+                      transition(d3.mouse(this)[0]);
+                      
+                    });
+                    
+                    
+                    
+                    
+                    
+                    
+                    });
+                
+              });  
+            });
+          });
+        });
+        
+        
+        
+        
+        
+        
+        
+      }
+        
+        var chart = viz.init(); 
+      
+      
+      
+    </script>
+  </body>
+</html>

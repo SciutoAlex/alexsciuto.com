@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <script src="libs/d3.js" charset="utf-8"></script>
+    <script src="libs/jquery.js"></script>
+    
+    
+    <style>
+      
+      svg {
+        border:1px solid black;
+        
+      }
+      .line {
+        fill-opacity:0;
+        stroke:green;
+        stroke-width:1px;
+      }
+      
+      .boroughs {
+        drop-shadow:10px 10px 10px 10px black;
+      }
+      
+      
+    </style>
+  </head>
+  
+  <body>
+    
+    <script type="text/javascript" charset="utf-8">
+      var viz = {};
+      
+      var width = 800,
+          height = 800;
+      
+      
+      
+      var projection = d3.geo.mercator()
+          .center([-73.93, 40.74])
+          .scale(100000)
+          .translate([(width) / 2, (height)/2]); 
+      
+      var path = d3.geo.path()
+          .projection(projection);
+      
+      
+      
+      viz.init = function(d) {
+        var viz = d3.select('body').append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .append('g');
+        
+        viz.append('rect')
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', width)
+          .attr('height', height)
+          .style('fill', "#f2f9ff");
+        
+        
+        
+        var output = {};
+        
+        
+        d3.json('data/subways-sections.json', function(shapes) {
+          
+    
+          for(var i in shapes) {
+            output[i] = {};
+            output[i].shape = shapes[i];
+         
+          }
+        
+          
+          
+          d3.csv('data/trips.csv', function(trips) {
+            for (var i = 0; i < trips.length; i++){
+              var thisTrip = trips[i];
+              if(thisTrip.shape_id != "") {
+                if(!output[thisTrip.shape_id].rides) {
+                  output[thisTrip.shape_id].rides = []
+                    }
+                output[thisTrip.shape_id].rides = output[thisTrip.shape_id].rides.concat({
+                  "trip_id" : thisTrip.trip_id,
+                  "direction" : thisTrip.direction_id
+                });
+                
+              } else {
+                if(!output[thisTrip.trip_id.substr(thisTrip.trip_id.length-7, 7)]) {
+                  output[thisTrip.trip_id.substr(thisTrip.trip_id.length-7, 7)] = {};
+                  output[thisTrip.trip_id.substr(thisTrip.trip_id.length-7, 7)].rides = [];
+                }
+                output[thisTrip.trip_id.substr(thisTrip.trip_id.length-7, 7)].rides = output[thisTrip.trip_id.substr(thisTrip.trip_id.length-7,7)].rides.concat({
+                  "trip_id" : thisTrip.trip_id,
+                  "direction" : thisTrip.direction
+                });
+              }
+            }
+            
+            
+              
+            $('body').html('').append(JSON.stringify(output));
+            });    
+          });
+          
+          
+          
+          
+          
+          
+        }
+                
+                var chart = viz.init(); 
+        
+        
+        
+    </script>
+  </body>
+</html>

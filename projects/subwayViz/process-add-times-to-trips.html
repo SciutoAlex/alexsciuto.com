@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <script src="libs/d3.js" charset="utf-8"></script>
+    <script src="libs/jquery.js"></script>
+
+
+    <style>
+
+      svg {
+        border:1px solid black;
+
+      }
+      .line {
+        fill-opacity:0;
+        stroke:green;
+        stroke-width:1px;
+      }
+
+      .boroughs {
+        drop-shadow:10px 10px 10px 10px black;
+      }
+
+
+    </style>
+  </head>
+
+  <body>
+
+    <script type="text/javascript" charset="utf-8">
+      var viz = {};
+
+      var width = 800,
+          height = 800;
+
+
+
+      var projection = d3.geo.mercator()
+          .center([-73.93, 40.74])
+          .scale(100000)
+          .translate([(width) / 2, (height)/2]);
+
+      var path = d3.geo.path()
+          .projection(projection);
+
+
+
+      viz.init = function(d) {
+        var viz = d3.select('body').append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .append('g');
+
+        viz.append('rect')
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', width)
+          .attr('height', height)
+          .style('fill', "#f2f9ff");
+
+
+
+        var output = {};
+        var totalRides = 0;
+
+        d3.json('data/subway-sections-and-trips.json', function(shapes) {
+          d3.csv('data/stop_times.csv', function(stops) {
+            for (var i in shapes){
+              var thisShape = shapes[i];
+
+              if(thisShape.rides) {
+                totalRides += thisShape.rides.length;
+                for (var j = 0; j < thisShape.rides.length; j++){
+                  var thisRide = thisShape.rides[j];
+                  thisRide.startTime = new Date();
+                  thisRide.endTime = new Date();
+                  thisRide.station = 0;
+
+                  for (var stopNumber = 0; stopNumber < stops.length; stopNumber++){
+                    //var thisStop = stops[stopNumber];
+                    if(stops[stopNumber].trip_id === thisRide.trip_id) {
+                      if(stops[stopNumber].stop_sequence == 1) {
+                       thisRide.startTime = stops[stopNumber].arrival_time;
+                     } else {
+                            thisRide.endTime = stops[stopNumber].arrival_time;
+break;
+                     }
+
+
+
+                    }
+
+                  }
+
+                }
+                console.log('done with one shape')
+
+              }
+            }
+            console.log(totalRides);
+            console.log(stops);
+            console.log(JSON.stringify(shapes));
+            $('body').html('').append(JSON.stringify(shapes));
+
+
+
+
+          });
+
+        });
+
+
+
+
+
+
+      }
+
+        var chart = viz.init();
+
+
+
+    </script>
+  </body>
+</html>
