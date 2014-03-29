@@ -6,8 +6,8 @@
     <script src="d3.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
-  	<link href="css/smoothness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
-  	<script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <link href="css/smoothness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
 
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
@@ -222,7 +222,7 @@
 
             for (var i = 0; i < facilities.length; i++) {
               facilities[i].bbox = [-200,-200,200,200]; //T/R/B/L
-              facilities[i].totalSchools = facilities[i].listOfSchools.length+1;
+              facilities[i].totalSchools = facilities[i].listOfSchools.length;
               if(!facilities[i].listOfSchools) {
                 facilities[i].listOfSchools = [];
               }
@@ -660,6 +660,7 @@
           slider.on('slide', function(event, ui){
             facilitiesInRange = [];
             rangeSelected = ui.value*1000; //kilometers
+
             var schoolsListEl = $('.nearSchools').html('');
             $('<div>',{text : "darker colors show larger schools"}).appendTo(schoolsListEl)
             facilityObj.resizeCircle(rangeSelected);
@@ -673,13 +674,23 @@
               if(d < rangeSelected) {
 
                 facilitiesInRange.push(schoolsArray[i]);
-                schoolsArray[i].highlightShapes({opacity:.2});
-                schoolsArray[i].setFacilityLocation([facilityObj.point.lat, facilityObj.point.lon]);
-
-                $('<p>',{text : schoolsArray[i].name}).appendTo(schoolsListEl).on('click', schoolsArray[i].thisSchoolSelected).css('background', schoolSizeRange(schoolsArray[i].point.total))
 
               };
+            });
+
+            facilitiesInRange.sort(function(a,b) {
+              return a.name > b.name;
             })
+
+            facilitiesInRange.map(function(el) {
+                el.highlightShapes({opacity:.2});
+                el.setFacilityLocation([facilityObj.point.lat, facilityObj.point.lon]);
+
+                $('<p>',{text : el.name}).appendTo(schoolsListEl).on('click', el.thisSchoolSelected).css('background', schoolSizeRange(el.point.total))
+
+            })
+
+            $('#schoolStats').eq(0).html(facilitiesInRange.length + " schools within " + parseInt(10*rangeSelected)/10 + " miles");
 
 
 
@@ -742,6 +753,7 @@
             "district" : schoolObj.point["district"],
             "type" : schoolObj.point["type"],
             "total" : schoolObj.point["total"],
+            "phone" : schoolObj.point["phone"],
             "piaa-district" : schoolObj.point["piaa-district"],
             "address" : schoolObj.point["address"],
             "zip" : schoolObj.point["zip"],
@@ -957,6 +969,12 @@
         font-size: 14px;
         font-weight: bold;
         padding-bottom: 5px;
+      }
+
+      #schoolStats {
+        text-align: center;
+        font-size: 14px;
+        padding-top: 10px;
       }
 
       .nearSchools div {
@@ -1208,6 +1226,7 @@
       <div class='detailsTemplate'>
         <div class='school'>{{school}}</div>
         <div class='address'>
+        {{phone}} &mdash;
           {{#each links}}
             <a href="{{url}}" target="_blank">{{title}}</a>,
           {{/each}}
@@ -1220,7 +1239,7 @@
         <div class='address'>{{address}}, {{city}}<br/>{{county}} County</div>
 
         <label>ATC Contract</label>
-        <div class='address'>{{services}} County</div>
+        <div class='address'>{{services}}</div>
 
 
         {{#if dist-link}}
@@ -1259,8 +1278,10 @@
         <div class="address">{{services}}</div>
         <div class="closestSchoolSentence">This AHN Facility is closest for <span style="color:white;">{{totalSchools}}</span> High Schools</div>
         <div class="schoolList">
+
           <div id="sliderTitle">Slide To See Nearby Schools</div>
           <div id="slider"></div>
+          <div id="schoolStats"></div>
           <div class="nearSchools"></div>
         </div>
       </div>
