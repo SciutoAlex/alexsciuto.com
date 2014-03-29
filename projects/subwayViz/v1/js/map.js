@@ -87,13 +87,13 @@ function Map(el) {
   // }, 2000);
   setInterval(function() {
     updateTime(time);
-    time+=10;
+    time+=300;
     errorOut.html(time);
     //console.log(time);
     if(time > 86000) {
       time = 0;
     }
-  },1)
+  },2000)
 
 
 

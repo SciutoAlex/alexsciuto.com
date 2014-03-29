@@ -32,46 +32,88 @@ function loadData(callback) {
   function getTimeTable(cb) {
     d3.json("data/shapes-and-trains-and-times.json", function(data){
       var finalData = []; //converting object to array
-      var counter = 0;
+      var counter = 0, countershape = 0, counterride = 0;
       for(var i in data) {
-        if(!data[i].shape) {
-          data[i].shape = [[3,4]];
-        }
 
-        if(!data[i].rides) {
-          data[i].rides = [];
-        }
+        // Convert to array for d3
+        // -------
+        finalData.push(data[i]);
 
-        data[i].index = counter;
-        data[i].label = i;
+        //for testing purposes, only load subset
+        // if(finalData.length < 2) {
+        //   finalData.push(data[i]);
+        // }
+
+
+        var thisData = finalData[finalData.length-1];
+
+
+        // add metadata
+        // --------
+
+        thisData.index = counter;
+        thisData.label = i;
         var lineNumber = i.substring(0,1);
 
         if(lineNumber == "S") {
           lineNumber = i.substring(0,2);
         }
 
+        // Fill in empty and disconnected cells
+        // -------
+
+        if(!thisData.shape) {
+          $('<p>', {'html' : thisData.label}).appendTo('body');
+          //console.log(countershape); countershape++;
+          thisData.shape = [[40.723598,-74.1],[40.87243,-74]];
+        }
+
+        if(!thisData.rides) {
+          //$('<p>', {'html' : thisData.label}).appendTo('body');
+          //console.log(thisData)
+          //console.log(counterride); counterride++;
+          thisData.rides = [];
+        }
+
+        //filter out weekend rides
+        thisData.rides = thisData.rides.filter(function(e){
+          return e.trip_id.substr(9,3) == "SAT";
+        })
+
+
+
         routeMetaData.map(function(element) {
           if(lineNumber == element.route_id) {
-            data[i].routeMetaData = element;
+            thisData.routeMetaData = element;
           }
 
         })
 
         counter++;
 
-        for (var j = 0; j < data[i].rides.length; j++) {
-          var thisRide = data[i].rides[j];
-          data[i].rides[j].index = j;
-          data[i].rides[j].endTime = convertToSeconds(thisRide.endTime);
-          data[i].rides[j].startTime = convertToSeconds(thisRide.startTime);
+
+
+        for (var j = 0; j < thisData.rides.length; j++) {
+
+          var thisRide = thisData.rides[j];
+          thisData.rides[j].index = j;
+          thisData.rides[j].endTime = convertToSeconds(thisRide.endTime);
+          thisData.rides[j].startTime = convertToSeconds(thisRide.startTime);
+          thisData.rides[j].currentPercent = 0;
+          thisData.rides[j].nextPercent = 0;
         }
+
+
+        //filter out weekend rides
+
+
         //for testing purposes, only load subset
         // if(finalData.length < 1) {
         //   finalData.push(data[i]);
         // }
 
         //for production
-        finalData.push(data[i]);
+
 
       }
 

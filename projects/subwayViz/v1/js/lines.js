@@ -83,7 +83,7 @@ function lineObject(linedata) {
 
       if((trainTime.startTime < simTime) && (trainTime.endTime > simTime)) {
           returnArray.push(trainTime);
-          console.log(trainTime.index)
+
 
       }
     });
@@ -98,6 +98,10 @@ function lineObject(linedata) {
     var p = path.getPointAtLength(percentToGoTo*l);
     return "translate(" + p.x + "," + p.y + ")";
   }
+
+  // Make at attrTween for path--alternative to above function
+  // ---------
+  
 
   // Take a time and return the percent finished
   // -------------------
