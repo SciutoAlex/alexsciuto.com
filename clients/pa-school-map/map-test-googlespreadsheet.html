@@ -33,14 +33,106 @@
 
     <script src="js/bootstrap.min.js"></script>
     <script src="js/typeahead.js"></script>
-    <link rel="stylesheet" href="css/auto-complete.css">
+    <link rel="stylesheet" href="css/auto-complete.css"></link>
+
+
 
 
     <script>
-      $(function(){
+
+      var schools, facilities;
 
 
 
+      var dataFunc = function() {
+        var totalItemsToLoad = 2;
+
+        var totalItemsLoaded = 0;
+
+        this.loaded = function() {
+
+          totalItemsLoaded++;
+          check();
+        }
+
+        function check() {
+          if (totalItemsLoaded == totalItemsToLoad) {
+            map();
+          }
+        }
+      }
+
+      dataFunc = new dataFunc();
+
+      function loadSchools(data) {
+        schools = data.feed.entry;
+
+        var newSchools = [];
+
+        for (var i = 0; i < schools.length; i++) {
+
+          var thisSchool = schools[i];
+
+          var thisFormattedSchool = {};
+          for (var j in thisSchool) {
+              if(j.substr(0,4) == "gsx$" || j == "e"){
+              var newKey = j.substr(4);
+              var newVal = thisSchool[j]['$t'];
+
+              if(newKey == "e") {
+                newKey = "school";
+              }
+
+              thisFormattedSchool[newKey] = newVal;
+            }
+          }
+
+
+
+          newSchools.push(thisFormattedSchool);
+        }
+
+
+        schools = newSchools;
+
+        dataFunc.loaded();
+      }
+
+      function loadFacilities(data) {
+        facilities = data.feed.entry;
+
+        var newFacilities = [];
+
+        for (var i = 0; i < facilities.length; i++) {
+
+          var thisFacility = facilities[i];
+
+          var thisFormattedFacility = {};
+          for (var j in thisFacility) {
+              if(j.substr(0,4) == "gsx$" || j == "e"){
+              var newKey = j.substr(4);
+              var newVal = thisFacility[j]['$t'];
+
+              if(newKey == "e") {
+                newKey = "facility";
+              }
+
+              thisFormattedFacility[newKey] = newVal;
+            }
+          }
+
+
+
+          newFacilities.push(thisFormattedFacility);
+        }
+
+        facilities = newFacilities;
+        dataFunc.loaded();
+      }
+
+
+      function map() {
+        $(function() {
         ///Global Variables //////////////////////////
 
         var map = L.mapbox.map('map', "sciutoalex.h75l2dei", { zoomControl: false, maxZoom :12, minZoom : 1 })
@@ -162,14 +254,16 @@
         });
 
 
+        ///Process The Google Spreadsheet Data ///////
+        console.log(schools)
+        console.log(facilities);
+
+
 
 
 
         ///Access the School geocodes //////////////////////////
 
-
-        d3.csv("js/school-data-coded.csv", function(schools) {
-          d3.csv("js/facilities.csv", function(facilities) {
 
 
             var minMaxSchoolSize = d3.extent(schools, function(el) { return el.total });
@@ -189,11 +283,13 @@
                 facilities[j].index = j;
                 var currentClosestSchoolIndex = 0;
                 var otherpoint = facilities[j];
-                var distancebetweenpoints = getDistanceFromLatLonInMi(schoolPoint.lat,schoolPoint.lon,parseFloat(otherpoint.lat),parseFloat(otherpoint.lon));
 
+                var distancebetweenpoints = getDistanceFromLatLonInMi(parseFloat(schoolPoint.lat),parseFloat(schoolPoint.lon),parseFloat(otherpoint.lat),parseFloat(schoolPoint.lon));
                 if(!facilities[j].schooldistList) {
                   facilities[j].schooldistList = [];
                 }
+
+
 
                 facilities[j].schooldistList.push(distancebetweenpoints)
 
@@ -201,8 +297,8 @@
                   schoolPoint.distance = distancebetweenpoints;
                   schoolPoint.facilityLat = parseFloat(otherpoint.lat);
                   schoolPoint.facilityLon = parseFloat(otherpoint.lon);
-                  schoolPoint.deltaLat = Math.abs(schoolPoint.facilityLat - schoolPoint.lat);
-                  schoolPoint.deltaLon = Math.abs(schoolPoint.facilityLon - schoolPoint.lon);
+                  schoolPoint.deltaLat = Math.abs(schoolPoint.facilityLat - parseFloat(schoolPoint.lat));
+                  schoolPoint.deltaLon = Math.abs(schoolPoint.facilityLon - parseFloat(schoolPoint.lon));
                   schoolPoint.displayDistance = parseInt(schoolPoint.distance*100)/100;
                   schoolPoint.facilityData = otherpoint;
                   schoolPoint.facilityIndex = j;
@@ -222,7 +318,7 @@
             // --------
 
             for (var i = 0; i < facilities.length; i++) {
-              console.log(facilities[i])
+              
               facilities[i].bbox = [-200,-200,200,200]; //T/R/B/L
 
               if(!facilities[i].listOfSchools) {
@@ -262,6 +358,7 @@
             colorScale.domain(d3.extent(distanceArray));
 
 
+
             for (var i = 0; i < schools.length; i++){
 
               var x = new schoolObject(schools[i]);
@@ -282,14 +379,13 @@
             //Autocomplete///////////////
             afterLoadingObjects();
 
-          });
-        });
+
 
 
 
 
         ///Facilities objects //////////////////////////
-        var facilityObject = function(d) {
+        function facilityObject(d) {
           var thisObject = this;
 
           var point = d;
@@ -337,7 +433,7 @@
 
         ///School objects //////////////////////////
 
-        var schoolObject = function(d) {
+        function schoolObject(d) {
 
           var thisObject = this;
 
@@ -448,7 +544,7 @@
             };
 
 
-        var afterLoadingObjects = function(){
+        function afterLoadingObjects(){
 
 
           var numbers = new Bloodhound({
@@ -592,7 +688,6 @@
         };
 
         var resetZoom = function() {
-          $('input[type="text"]').val('');
           sidebar.removeClass('sidebar-active');
           removeCircles();
           polyline.setLatLngs([]);
@@ -737,7 +832,7 @@
               } else if(provider == "provider-upmc") {
                 serviceString = "UPMC"
               } else if(provider == "provider-other") {
-                serviceString = schoolObj.point[provider];
+                serviceString = "Other Provider";
               } else if(provider == "provider-school") {
                 serviceString = "School Provided ATC";
               } else if(provider == "provider-unknown") {
@@ -772,7 +867,7 @@
           }
 
           var typeBinary = false;
-          if((schoolObj.point["type"].toLowerCase() == "private") || (schoolObj.point["type"].toLowerCase() == "charter")) {
+          if((schoolObj.point["type"] == "private") || (schoolObj.point["type"] == "charter")) {
             typeBinary = true;
           }
 
@@ -796,7 +891,7 @@
             "zipcodes-in-school-district" : schoolObj.point["zipcodes-in-school-district"],
             "athletic-email" : schoolObj.point["athletic-email"],
             "athletic-name" : schoolObj.point["athletic-name"],
-            "athletic-phone" : schoolObj.point["athletic-phone"],
+            "athletic-name" : schoolObj.point["athletic-phone"],
             "super-email" : schoolObj.point["super-email"],
             "super-name" : schoolObj.point["super-name"],
             "super-phone" : schoolObj.point["super-phone"],
@@ -891,9 +986,15 @@
     }
     return val;
   }
+});
+      }
 
-      });
+
     </script>
+
+    <script type="text/javascript" charset="utf-8" src="http://spreadsheets.google.com/feeds/list/1VmaiEBicP9c56-sMcimViJFoQYn4Pl6w7oASy7eBduw/961714628/public/values?alt=json-in-script&callback=loadSchools"></script>
+    <script type="text/javascript" charset="utf-8" src="http://spreadsheets.google.com/feeds/list/1qvJrKDt5mjy9JGtRgx9Cc5nKBy94U_EdnGrYms2Ox9c/1674912750/public/values?alt=json-in-script&callback=loadFacilities"></script>
+
     <style>
       html { height:100%; }
       body { margin:0; padding:0; height:100%; min-width:1050px;}
@@ -1285,9 +1386,9 @@
         <div class='address'>{{address}}, {{city}}<br/>{{county}} County</div>
 
         <label>Staff</label>
-        {{#if athletic-name}}<div class='address'>Athletic Director: {{athletic-name}} {{#if athletic-phone}}({{athletic-phone}}){{/if}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>{{/if}}
-        {{#if principal-name}}<div class='address'>Principal: {{principal-name}} {{#if principal-phone}}({{principal-phone}}){{/if}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>{{/if}}
-        {{#if super-name}}<div class='address'>Superindentent: {{super-name}} {{#if super-phone}}({{super-phone}}){{/if}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>{{/if}}
+        <div class='address'>Athletic Director: {{athletic-name}} <a href='MAILTO:{{athletic-email}}'>(email)</a> {{#if athletic-phone}}({{athletic-phone}}){{/if}}</div>
+        <div class='address'>Principal: {{principal-name}} <a href='MAILTO:{{principal-email}}'>(email)</a> {{#if principal-phone}}({{principal-phone}}){{/if}}</div>
+        <div class='address'>Superindentent: {{super-name}} <a href='MAILTO:{{super-email}}'>(email)</a> {{#if super-phone}}({{super-phone}}){{/if}}</div>
 
         {{#if dist-link}}
         <label>School District Info (<a href="{{{dist-link}}}" target="_blank">link</a>)</label>
