@@ -1285,9 +1285,9 @@
         <div class='address'>{{address}}, {{city}}<br/>{{county}} County</div>
 
         <label>Staff</label>
-        {{#if athletic-name}}<div class='address'>Athletic Director: {{athletic-name}} {{#if athletic-phone}}({{athletic-phone}}){{/if}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>{{/if}}
-        {{#if principal-name}}<div class='address'>Principal: {{principal-name}} {{#if principal-phone}}({{principal-phone}}){{/if}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>{{/if}}
-        {{#if super-name}}<div class='address'>Superindentent: {{super-name}} {{#if super-phone}}({{super-phone}}){{/if}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>{{/if}}
+        {{#if athletic-name}}<div class='address'>Athletic Director: {{athletic-name}} {{#if athletic-phone}}({{athletic-phone}}){{/if}} {{#if athletic-email}}<a href='MAILTO:{{athletic-email}}'>(email)</a>{{/if}}</div>{{/if}}
+        {{#if principal-name}}<div class='address'>Principal: {{principal-name}} {{#if principal-phone}}({{principal-phone}}){{/if}} {{#if principal-email}}<a href='MAILTO:{{principal-email}}'>(email)</a>{{/if}}</div>{{/if}}
+        {{#if super-name}}<div class='address'>Superindentent: {{super-name}} {{#if super-phone}}({{super-phone}}){{/if}} {{#if super-email}}<a href='MAILTO:{{super-email}}'>(email)</a>{{/if}}</div>{{/if}}
 
         {{#unless type-binary}}
         {{#if dist-link}}
