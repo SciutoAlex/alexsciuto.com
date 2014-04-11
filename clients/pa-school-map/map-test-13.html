@@ -1289,12 +1289,14 @@
         {{#if principal-name}}<div class='address'>Principal: {{principal-name}} {{#if principal-phone}}({{principal-phone}}){{/if}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>{{/if}}
         {{#if super-name}}<div class='address'>Superindentent: {{super-name}} {{#if super-phone}}({{super-phone}}){{/if}} <a href='MAILTO:{{athletic-email}}'>(email)</a></div>{{/if}}
 
+        {{#unless type-binary}}
         {{#if dist-link}}
         <label>School District Info (<a href="{{{dist-link}}}" target="_blank">link</a>)</label>
         <div class="address">Population: {{#if type-binary}}N/A{{else}}{{dist-pop}}{{/if}}</div>
         <div class="address">Income per Capita: {{#if type-binary}}N/A{{else}} {{dist-per-capita-income}}{{/if}}</div>
         <div class="address">Income per Household: {{#if type-binary}}N/A{{else}}{{dist-house-income}}{{/if}}</div>
         {{/if}}
+        {{/unless}}
 
         <label>ATC Contract</label>
         <div class='address'>{{services}}</div>
