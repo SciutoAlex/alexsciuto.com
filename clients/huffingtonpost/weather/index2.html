@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <title></title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="../d3.js"></script>
-    <link rel="stylesheet" href="../reset.css">
+    <script src="d3.js"></script>
+    <link rel="stylesheet" href="reset.css">
     <script>
       $(function(){
         
@@ -14,7 +14,7 @@
             width = 900,
             height = 700;
         
-        d3.json("../data.json", function(json) {
+        d3.json("data.json", function(json) {
           for(var i in json) {
             var state = json[i].state;
             className = state.toLowerCase().replace(/ /g, '-'); 
