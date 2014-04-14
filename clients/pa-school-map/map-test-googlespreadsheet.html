@@ -284,7 +284,8 @@
                 var currentClosestSchoolIndex = 0;
                 var otherpoint = facilities[j];
 
-                var distancebetweenpoints = getDistanceFromLatLonInMi(parseFloat(schoolPoint.lat),parseFloat(schoolPoint.lon),parseFloat(otherpoint.lat),parseFloat(schoolPoint.lon));
+                var distancebetweenpoints = getDistanceFromLatLonInMi(schoolPoint.lat,schoolPoint.lon,parseFloat(otherpoint.lat),parseFloat(otherpoint.lon));
+
                 if(!facilities[j].schooldistList) {
                   facilities[j].schooldistList = [];
                 }
@@ -318,7 +319,7 @@
             // --------
 
             for (var i = 0; i < facilities.length; i++) {
-              
+
               facilities[i].bbox = [-200,-200,200,200]; //T/R/B/L
 
               if(!facilities[i].listOfSchools) {
@@ -688,6 +689,7 @@
         };
 
         var resetZoom = function() {
+          $('input[type="text"]').val('');
           sidebar.removeClass('sidebar-active');
           removeCircles();
           polyline.setLatLngs([]);
@@ -826,22 +828,23 @@
 
           var serviceString = "";
           for(var provider in servicesDict) {
-            if(schoolObj.point[provider] != "") {
-              if(provider == "provider-ahn") {
+            console.log(provider)
+            if((schoolObj.point[provider].trim() == "1") && (provider == "provider-ahn")) {
                 serviceString = "AHN"
-              } else if(provider == "provider-upmc") {
+              } else if((schoolObj.point[provider].trim() == "1") && (provider == "provider-upmc")) {
                 serviceString = "UPMC"
-              } else if(provider == "provider-other") {
-                serviceString = "Other Provider";
-              } else if(provider == "provider-school") {
+              } else if((schoolObj.point[provider].trim() != "") && (provider == "provider-other")) {
+                serviceString = schoolObj.point[provider];
+              } else if((schoolObj.point[provider].trim() == "1") && (provider == "provider-school")) {
                 serviceString = "School Provided ATC";
-              } else if(provider == "provider-unknown") {
-                serviceString = "unknown";
-              } else if(provider == "provider-none") {
+              } else if((schoolObj.point[provider].trim() == "1") && (provider == "provider-none")) {
                 serviceString = "none";
               }
             }
-          }
+            if(!serviceString) {
+              serviceString = "unknown";
+            }
+
 
 
 
@@ -867,7 +870,7 @@
           }
 
           var typeBinary = false;
-          if((schoolObj.point["type"] == "private") || (schoolObj.point["type"] == "charter")) {
+          if((schoolObj.point["type"].toLowerCase() == "private") || (schoolObj.point["type"].toLowerCase() == "charter")) {
             typeBinary = true;
           }
 
@@ -891,7 +894,7 @@
             "zipcodes-in-school-district" : schoolObj.point["zipcodes-in-school-district"],
             "athletic-email" : schoolObj.point["athletic-email"],
             "athletic-name" : schoolObj.point["athletic-name"],
-            "athletic-name" : schoolObj.point["athletic-phone"],
+            "athletic-phone" : schoolObj.point["athletic-phone"],
             "super-email" : schoolObj.point["super-email"],
             "super-name" : schoolObj.point["super-name"],
             "super-phone" : schoolObj.point["super-phone"],
@@ -1386,16 +1389,18 @@
         <div class='address'>{{address}}, {{city}}<br/>{{county}} County</div>
 
         <label>Staff</label>
-        <div class='address'>Athletic Director: {{athletic-name}} <a href='MAILTO:{{athletic-email}}'>(email)</a> {{#if athletic-phone}}({{athletic-phone}}){{/if}}</div>
-        <div class='address'>Principal: {{principal-name}} <a href='MAILTO:{{principal-email}}'>(email)</a> {{#if principal-phone}}({{principal-phone}}){{/if}}</div>
-        <div class='address'>Superindentent: {{super-name}} <a href='MAILTO:{{super-email}}'>(email)</a> {{#if super-phone}}({{super-phone}}){{/if}}</div>
+        {{#if athletic-name}}<div class='address'>Athletic Director: {{athletic-name}} {{#if athletic-phone}}({{athletic-phone}}){{/if}} {{#if athletic-email}}<a href='MAILTO:{{athletic-email}}'>(email)</a>{{/if}}</div>{{/if}}
+        {{#if principal-name}}<div class='address'>Principal: {{principal-name}} {{#if principal-phone}}({{principal-phone}}){{/if}} {{#if principal-email}}<a href='MAILTO:{{principal-email}}'>(email)</a>{{/if}}</div>{{/if}}
+        {{#if super-name}}<div class='address'>Superindentent: {{super-name}} {{#if super-phone}}({{super-phone}}){{/if}} {{#if super-email}}<a href='MAILTO:{{super-email}}'>(email)</a>{{/if}}</div>{{/if}}
 
+        {{#unless type-binary}}
         {{#if dist-link}}
         <label>School District Info (<a href="{{{dist-link}}}" target="_blank">link</a>)</label>
         <div class="address">Population: {{#if type-binary}}N/A{{else}}{{dist-pop}}{{/if}}</div>
         <div class="address">Income per Capita: {{#if type-binary}}N/A{{else}} {{dist-per-capita-income}}{{/if}}</div>
         <div class="address">Income per Household: {{#if type-binary}}N/A{{else}}{{dist-house-income}}{{/if}}</div>
         {{/if}}
+        {{/unless}}
 
         <label>ATC Contract</label>
         <div class='address'>{{services}}</div>
