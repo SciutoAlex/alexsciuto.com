@@ -1,3 +1,7 @@
+html {
+  font-size:10px;
+}
+
 
 p, h1, h2, h3 {
   margin:0px;
@@ -24,7 +28,7 @@ body {
   font-size:14px;
   font-family:"museo-sans", san-serif;
   background:#fff;
-}  
+}
 
 h1, h2, h3, .slab {
   font-family:"museo-slab";
@@ -68,7 +72,7 @@ font-style: italic;
 }
 
 .nav li {
-  
+
   float:left;
   margin-right:20px;
 }
@@ -83,7 +87,7 @@ font-style: italic;
   line-height:18px;
   text-decoration:none;
   color:#aaa;
-  
+
 }
 
 .nav p {
@@ -130,9 +134,9 @@ line-height: 16px;
   font-size:10px;
 }
 
-.body {  
+.body {
   font-family:Tahoma, Helvetica, Arial;
-  
+
   font-size:11px;
 }
 
@@ -144,7 +148,7 @@ line-height: 16px;
   position:absolute;
   top:0px;
   left:0px;
-}  
+}
 
 .fleft {
   float:left;
@@ -169,7 +173,7 @@ line-height: 16px;
   background-color:white;
   width:650px;
   padding:60px;
-  
+
 }
 
 #about .col-l {
@@ -191,7 +195,7 @@ line-height: 16px;
   font-size:12px;
   padding-bottom:5px;
   margin-bottom:5px;
-  
+
 }
 
 #about .col-r {
@@ -210,7 +214,7 @@ line-height: 16px;
 }
 
 #about .col-r ul li a {
-  text-decoration:none;    
+  text-decoration:none;
 }
 
 #about p {
@@ -273,12 +277,12 @@ label {
   border-top:1px solid black;
   border-bottom:1px solid black;
   height:40px;
-  position:relative; 
+  position:relative;
   margin-top:20px;
 }
 
 .inst {
-  position:absolute; 
+  position:absolute;
 }
 
 .inst img {
@@ -305,7 +309,7 @@ label {
 
 #project-page img {
   margin-bottom:20px;
-  
+
 }
 
 #project-page .big {
@@ -356,7 +360,7 @@ label {
 .clone {
   max-width:1030px;
   z-index:99;
-  
+
 }
 
 .clone .logo {
@@ -368,7 +372,7 @@ label {
 }
 
 #top-info-container{
-  height:130px; 
+  height:130px;
   margin-top:50px;
 }
 
@@ -450,7 +454,7 @@ body {
 .col4-1 {
   float:left;
  width: 23.5%;
- margin-right:2%; 
+ margin-right:2%;
 }
 
 .col4-1 img {
@@ -508,7 +512,7 @@ h6 {
 }
 
 .red{
-  color:#f92e63; 
+  color:#f92e63;
 }
 
 .thin {
@@ -533,13 +537,13 @@ h6 {
 
 .brief h1 {
   font-size:41px;
-  font-weight:100; 
+  font-weight:100;
   margin-bottom:20px;
   line-height:31px;
 }
 
 .brief .deliverables {
-  font-size:12px; 
+  font-size:12px;
   color:#aaa;
   margin-top:20px;
 }
@@ -550,13 +554,13 @@ h6 {
 }
 
 .text-section p {
-  font-size:12px; 
+  font-size:12px;
   margin-bottom:8px;
   line-height:17px;
 }
 
 .text-section li {
-    font-size:12px; 
+    font-size:12px;
   margin-bottom:10px;
 }
 
@@ -578,8 +582,8 @@ h6 {
 
 .zoomcaption {
   text-align:center;
-  font-style:italic; 
-  
+  font-style:italic;
+
 }
 
 ol {
@@ -604,7 +608,7 @@ margin-bottom: 3px;
 }
 
 .brief .small {
-  
+
   font-size:12px;
 }
 
@@ -620,7 +624,7 @@ margin-bottom: 3px;
 
 strong {
   font-weight:1000;
-  
+
 }
 
 .col1 img, .col2 img, .col3 img, .col4 img, .col5 img {
@@ -634,13 +638,13 @@ strong {
     width:55%;
     float:left;
   }
-  
+
   .resume .col-r {
     width:30%;
     float:left;
     margin-left:14%;
   }
-  
+
   .resume h2 {
      border:0px;
     font-weight:100;
@@ -648,18 +652,18 @@ strong {
     color:#aaa;
     font-size:30px;
     line-height:30px;
-    
+
   }
-  
+
   .resume .col-r h2 {
     font-size:20px;
   }
-  
+
   .resume .col-r ul li{
     font-size:11px;
     margin-bottom:4px;
   }
-  
+
   .resume h3 {
     color:#EC494F;
     font-size:16px;
@@ -676,26 +680,26 @@ strong {
 
   .resume .entry {
     margin-bottom:20px;
-    
+
   }
-  
+
   .resume .section {
     border:0px;
     margin-bottom:40px;
     padding:0;
   }
-  
+
   .intro {
     font-size:30px;
     line-height:50px;
     font-weight:100;
-    margin-bottom:40px; 
+    margin-bottom:40px;
   }
 
 
 .intro p {
 
-    margin-left:40px; 
+    margin-left:40px;
   }
 
 .launch {
@@ -791,7 +795,7 @@ body {
 }
 
 #top-info-mobile {
- background:#fe3f4e; 
+ background:#fe3f4e;
   padding:10px;
   margin-bottom:10px;
 
@@ -811,7 +815,7 @@ body {
   display:none;
 }
 
-#top-info-mobile .logo{ 
+#top-info-mobile .logo{
   margin-bottom:10px;
 }
 
