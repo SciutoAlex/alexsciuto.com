@@ -1,0 +1,96 @@
+#thesis {
+  position: relative;
+  max-width: 850px;
+  margin: 0px auto; }
+  #thesis img {
+    max-width: 100%; }
+  #thesis figcaption {
+    font-size: 1rem;
+    margin-top: 1rem; }
+  #thesis .img {
+    width: 50%;
+    float: left;
+    clear: left;
+    margin: 0px 20px 0 0; }
+  #thesis h3 {
+    clear: both; }
+  #thesis .figure {
+    margin: 20px 5% 20px 20%;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 18px;
+    clear: both; }
+  #thesis blockquote {
+    margin-left: 30%;
+    margin-right: 25%;
+    line-height: 2.3rem;
+    font-style: italic; }
+  #thesis p, #thesis h3, #thesis h2, #thesis h4 {
+    padding-left: 25%;
+    padding-right: 10%;
+    margin-bottom: 10px; }
+  #thesis p {
+    font-size: 1.4rem;
+    line-height: 2.4rem; }
+  #thesis h3 {
+    font-size: 2rem; }
+  #thesis h2 {
+    border: 0;
+    font-size: 4rem;
+    font-style: italic; }
+  #thesis ul {
+    padding-left: 30%;
+    padding-right: 10%; }
+    #thesis ul li {
+      margin-bottom: 10px; }
+      #thesis ul li div {
+        color: #aaa; }
+  #thesis .references {
+    padding-left: 25%; }
+  #thesis .intro {
+    font-size: 1.9rem;
+    line-height: 2.3rem; }
+  #thesis .citation-container {
+    display: inline; }
+  #thesis aside.citation {
+    position: absolute;
+    left: 91%;
+    width: 15%;
+    font-size: 1rem;
+    border-left: 1px solid gray;
+    padding-left: 1%; }
+    #thesis aside.citation div {
+      margin-bottom: 10px; }
+    #thesis aside.citation div:last-child {
+      margin: 0; }
+  #thesis #exampleTable {
+    border-collapse: separate;
+    border-spacing: .3rem; }
+    #thesis #exampleTable .exampleTitle {
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-align: right;
+      padding-right: 2%; }
+      #thesis #exampleTable .exampleTitle span {
+        text-transform: lowercase;
+        font-size: 1rem;
+        max-width: 10%;
+        font-weight: 300;
+        color: #999; }
+      #thesis #exampleTable .exampleTitle a {
+        color: #999; }
+    #thesis #exampleTable td {
+      vertical-align: top;
+      padding-bottom: 5px; }
+    #thesis #exampleTable thead {
+      font-weight: 700; }
+      #thesis #exampleTable thead .data {
+        background: #fff;
+        text-align: center; }
+    #thesis #exampleTable .data {
+      width: 11%;
+      text-align: center;
+      background: #f5f5f5;
+      vertical-align: middle; }
+    #thesis #exampleTable .true {
+      background: #edf8bc; }

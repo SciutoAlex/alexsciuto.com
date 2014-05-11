@@ -5,6 +5,7 @@
 
 
 <div id="list"></div>
+<div id="styled"></div>
 
 
 <script>
@@ -14,7 +15,9 @@
   app.init = function() {
 
     var mustacheTemplateText = document.getElementById("rowTemplate").innerHTML;
+    var mustacheBibliographyTemplate = document.getElementById("biblioTemplate").innerHTML;
     var listEl = document.getElementById("list");
+    var biblioEl = document.getElementById("styled");
 
 
     var data = {
@@ -53,13 +56,47 @@
                "notes" : "Article includes numerous graphics. Nice background info."
             },
             {
-              "year" : "2004",
-              "title" : "Computational Information Design",
-              "author" : "Fry, Ben",
-              "url" : "http://benfry.com/phd/",
-              "read" : "read",
-              "notes" : "</p>Really great overview explaining the process of creating data visualzations.<p>Aquire - Parse - Filter - Mine - Represent - Refine - Interact</p><p>The one thing I think that would be interesting to add would be to look at this framework within the context of modern web browsers."
+               "title" : "Computational information design",
+               "author" : "Fry, Benjamin Jotham",
+               "year" : "2004",
+               "school" : "Massachusetts Institute of Technology",
+               "read" : "read",
+               "url" : "http://benfry.com/phd/",
+               "notes" : "",
+               "dateAdded" : "Thu Apr 24 2014 09:28:39 GMT-0400 (EDT)",
+               "notes" : "</p>Really great overview explaining the process of creating data visualzations.<p>Aquire - Parse - Filter - Mine - Represent - Refine - Interact</p><p>The one thing I think that would be interesting to add would be to look at this framework within the context of modern web browsers."
             },
+            {
+              "url" : "http://www.nytimes.com/2014/01/14/health/a-busy-doctors-right-hand-ever-ready-to-type.html?ref=health&_r=0",
+              "title" : "A Busy Doctor’s Right Hand, Ever Ready to Type",
+              "read" : "read",
+              "dateAdded" : 'Sat Apr 20 2014 13:57:41 GMT-0400 (EDT)',
+            },
+            {
+              "url" : "file:///Users/alex/Google%20Drive/CMU/Thesis/Resources/medical/ModernHealthcare.pdf",
+              "title" : "Modern Healthcare: The Transparency Revolution",
+              "read" : "read",
+              "dateAdded" : 'Sat Apr 20 2014 13:57:41 GMT-0400 (EDT)',
+            },
+            {
+              "url" : "http://www.nytimes.com/2014/01/14/health/a-busy-doctors-right-hand-ever-ready-to-type.html?ref=health&_r=0",
+              "title" : "A Busy Doctor’s Right Hand, Ever Ready to Type",
+              "read" : "read",
+              "dateAdded" : 'Sat Apr 20 2014 13:57:41 GMT-0400 (EDT)',
+            },
+            {
+              "url" : "file:///Users/alex/Google%20Drive/CMU/Thesis/Resources/medical/14pricetransparency.pdf",
+              "title" : "AHA: Hospital Price Transparency",
+              "read" : "read",
+              "dateAdded" : 'Sat Apr 20 2014 13:57:41 GMT-0400 (EDT)'
+            },
+            {
+              "url" : "http://www.nytimes.com/2014/04/10/business/eye-doctors-say-their-profits-are-smaller-than-medicare-data-makes-them-look.html",
+              "title" : "Eye Doctors Say Their Profits Are Smaller Than Data Makes Them Look",
+              "dateAdded" : 'Sat Apr 20 2014 13:57:41 GMT-0400 (EDT)',
+              "read" : "read"
+            },
+
             {
                "title" : "A tour through the visualization zoo.",
                "author" : "Heer, Jeffrey and Bostock, Michael and Ogievetsky, Vadim",
@@ -168,7 +205,43 @@
                "doi" : "10.1109/TVCG.2007.70541",
                "read" : "read",
                "notes" : "Important piece. Introduces the concept of casual infovis.<br/>Casual Vis exists at the margins of the infovis underlying metaphor. Traditional infovis assumes rational-processor humans. CasualVis wants to think holistically about people.<br/>'The systems can be thought of as positioned near the boundary between infovis and other domains including ubiquitous computing, design, and art.<br/>New edge areas: Ambient (what is the minimum level of data required to still be infovis?), Social, Artistic (This system is intentionally ambiguous, open to interpretation by members of the home (and their guests). This is obviously different from core infovis systems, which most often have a single “correct” reading of the visual output), less active: infovis tools, personal infovis, persuasive vis'"
-
+            },
+            {
+               "title" : "Design considerations for collaborative visual analytics",
+               "author" : "Heer, Jeffrey and Agrawala, Maneesh",
+               "journal" : "Information visualization",
+               "volume" : "7",
+               "number" : "1",
+               "pages" : "49--62",
+               "year" : "2008",
+               "publisher" : "SAGE Publications",
+               "read" : "unread",
+               "notes" : "",
+               "dateAdded" : "Wed Apr 16 2014 11:45:07 GMT-0400 (EDT)",
+            },
+            {
+                "title" : "Show Me: New ways of visualising data",
+                "url" : "http://www.economist.com/node/15557455",
+                "journal" : "The Economist",
+                "year" : "2010"
+            },
+            {
+                "title" : "To Make Hospitals Less Deadly, a Dose of Data",
+                "url" : "http://opinionator.blogs.nytimes.com/2013/12/04/to-make-hospitals-less-deadly-a-dose-of-data/",
+                "dateAdded" : "Sat Apr 19 2014 11:46:22 GMT-0400 (EDT)",
+            },
+            {
+               "title" : "Narrative visualization: Telling stories with data",
+               "author" : "Segel, Edward and Heer, Jeffrey",
+               "journal" : "Visualization and Computer Graphics, IEEE Transactions on",
+               "volume" : "16",
+               "number" : "6",
+               "pages" : "1139--1148",
+               "year" : "2010",
+               "publisher" : "IEEE",
+               "read" : "unread",
+               "notes" : "Our analysis identifies salient dimensions of visual story- telling, including how graphical techniques and interactivity can en- force various levels of structure and narrative flow. We describe seven genres of narrative visualization: magazine style, annotated chart, par- titioned poster, flow chart, comic strip, slide show, and video. These genres can be combined with interactivity and messaging to produce varying balances of author-driven and reader-driven experiences.",
+               "dateAdded" : "Wed Apr 16 2014 11:46:22 GMT-0400 (EDT)",
             },
             {
               "author" : "Jeffrey Hear",
@@ -178,6 +251,19 @@
               "year" : "2009",
               "notes" : "survey of history of infovis</br>              150AD Ptolemy's Map. Earliest map. Scholars added to it 'proto-wikipedia if you will'</br>              Science drives visualizations - record scientific measurement - Scheiner, math problems</br>              Golden Age (rise of capitalism and rise of bureaucracy):</br>              William Playfair, Florence Nightingale</br>              Nightingale is interesting - visual rhetoric graphically evocative to get British bureacracy to act</br>              'were not enough to engage the public or effect decision making amongst the royalty'</br>              'to affect through the eyes which we fail to affect through their ears' -Nightingale</br>              Charles Menard - Coordiante visualization. Showing charts in concert.</br>              Late 1800s Explosion of atlases</br>              1900s - 1950s the death of visualizations</br>              Why? Because of the rise of statistics. Visuals don't tell truth</br>              1950s - 1970s</br>              Jaque Bertin and Edward Tukey and the computer</br>              define the modern age</br>              Bertin Semiology of Graphics establishes the rigorous study of how to visually encode information</br>              Bill Clevealand, Bell Labs. Early experiements in interaction."
 
+            },
+            {
+               "title" : "An Economist's Guide to Visualizing Data",
+               "author" : "Schwabish, Jonathan A",
+               "journal" : "The Journal of Economic Perspectives",
+               "volume" : "28",
+               "number" : "1",
+               "pages" : "209--233",
+               "year" : "2014",
+               "publisher" : "American Economic Association",
+               "read" : "unread",
+               "notes" : "",
+               "dateAdded" : "Mon Apr 07 2014 09:04:31 GMT-0400 (EDT)",
             }
 
 
@@ -206,6 +292,7 @@
               "url" : "http://www.thefunctionalart.com/",
               "read" : "read",
               "year" : "2012",
+              "publisher" : "New Riders",
               "notes" : "Covers a lot of ground in news design. Includes interviews with practioners as well as many different examples."
             },
             {
@@ -223,6 +310,27 @@
               "url" : "http://www.visualcomplexity.com/vc/book/",
               "read" : "noaccess",
               "notes" : "on hold from CMU Libe"
+            },
+            {
+             "title" : "Semiology of Graphics: Diagrams, Networks, Maps",
+             "author" : "Bertin, J.",
+             "isbn" : "9781589482616",
+             "lccn" : "2010031657",
+             "url" : "http://books.google.com/books?id=X5caQwAACAAJ",
+             "year" : "1967",
+             "publisher" : "Economic \& Social Research Institute",
+             "read" : "read",
+             "notes" : "",
+             "dateAdded" : "Thu May 01 2014 14:21:59 GMT-0400 (EDT)",
+           },
+           {
+               "title" : "Quantitative Display of Visual Information",
+               "author" : "Tufte, Edward",
+               "year" : "1993",
+               "publisher" : "Graphics Press",
+               "read" : "unread",
+               "notes" : "",
+               "dateAdded" : "Thu May 01 2014 14:23:29 GMT-0400 (EDT)",
             },
             {
                "title" : "Visual Thinking: for Design",
@@ -254,6 +362,19 @@
                "publisher" : "Morgan Kaufmann",
                "read" : "noaccess",
                "notes" : "Requested from Hunt"
+            },
+            {
+               "title" : "Envisioning Information",
+               "author" : "Tufte, E.R.",
+               "number" : "v. 914",
+               "lccn" : "90166920",
+               "series" : "Envisioning Information",
+               "url" : "http://books.google.com/books?id=r21HAAAAMAAJ",
+               "year" : "1990",
+               "publisher" : "Graphics Press",
+               "read" : "unread",
+               "notes" : "",
+               "dateAdded" : "Fri May 02 2014 22:06:46 GMT-0400 (EDT)",
             }
           ]
         },
@@ -267,20 +388,42 @@
               "year" : "2014",
               "read" : "read",
               "notes" : "Detailed timeline of key milestones in infovis. Very detailed"
-
-            }
+            },
+            {
+              "url" : "http://www.ft.com/intl/cms/s/2/21a6e7d8-b479-11e3-a09a-00144feabdc0.html#ixzz2xYrFd3vv",
+              "title" : "Big data: are we making a big mistake?",
+              "author" : "Tim Harford",
+              "year" : "2014",
+              "read" : "unread",
+              "publisher" : "The Financial Times Magazine",
+              "notes" : "Detailed timeline of key milestones in infovis. Very detailed",
+              "dateAdded" : 'Mon Apr 07 2014 14:00:09 GMT-0400 (EDT)'
+            },
           ]
         }
       ]
     };
 
+
+
     for(var section in data.data) {
-console.log(data.data[section].items);
+
       data.data[section].items.sort(function(a,b) { return compare(a,b,'author'); })
+
+      for (var i = 0; i < data.data[section].items.length; i++) {
+
+        var biblioTemplate = Mustache.to_html(mustacheBibliographyTemplate, data.data[section].items[i]);
+
+        biblioEl.innerHTML += biblioTemplate;
+      }
+
     }
     var mustacheTemplate = Mustache.to_html(mustacheTemplateText, data);
 
     listEl.innerHTML = mustacheTemplate;
+
+
+
 
   };
 
@@ -327,6 +470,10 @@ console.log(data.data[section].items);
     </div>
     {{/data}}
   </div>
+</script>
+
+<script id="biblioTemplate" type="text/html">
+  <p>{{author}}. {{year}}. <em>{{title}}</em>. {{journal}} {{number}}({{volume}}). {{publisher}}. </p>
 </script>
 
 <style>
@@ -388,4 +535,4 @@ console.log(data.data[section].items);
   }
 </style>
 
-<?   page_footer(); ?>
+<?   page_bottom(); ?>

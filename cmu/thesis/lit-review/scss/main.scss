@@ -1,0 +1,158 @@
+#thesis {
+
+  position:relative;
+  max-width:850px;
+  margin:0px auto;
+
+  img {
+    max-width:100%;
+  }
+
+  figcaption {
+    font-size:1rem;
+    margin-top:1rem;
+  }
+
+  .img {
+    width:50%;
+    float:left;
+    clear:left;
+    margin:0px 20px 0 0;
+
+
+  }
+
+  h3 {
+    clear:both;
+  }
+  .figure {
+    margin: 20px 5% 20px 20%;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 18px;
+    clear:both;
+
+  }
+
+  blockquote {
+    margin-left: 30%;
+    margin-right: 25%;
+    line-height: 2.3rem;
+    font-style: italic;
+  }
+
+  p, h3, h2, h4 {
+    padding-left:25%;
+    padding-right:10%;
+    margin-bottom:10px;
+  }
+
+  p {
+    font-size:1.4rem;
+    line-height:2.4rem;
+  }
+
+  h3 {
+    font-size:2rem;
+  }
+
+  h2 {
+    border:0;
+    font-size:4rem;
+    font-style:italic;
+  }
+
+  ul {
+    padding-left:30%;
+    padding-right:10%;
+    li {
+      margin-bottom:10px;
+
+      div {
+        color:#aaa;
+      }
+
+
+    }
+  }
+
+  .references {
+    padding-left:25%;
+  }
+
+  .intro {
+    font-size:1.9rem;
+    line-height:2.3rem;
+  }
+
+  .citation-container {
+    display:inline;
+  }
+  aside.citation {
+    position: absolute;
+    left: 91%;
+    width: 15%;
+    font-size: 1rem;
+    border-left: 1px solid gray;
+    padding-left: 1%;
+
+    div {
+      margin-bottom:10px;
+    }
+
+    div:last-child {
+      margin:0;
+    }
+  }
+
+  #exampleTable {
+    border-collapse:separate;
+    border-spacing:.3rem;
+
+
+    .exampleTitle {
+      font-size:1.2rem;
+      font-weight:700;
+      text-align:right;
+      padding-right:2%;
+
+      span {
+        text-transform:lowercase;
+        font-size:1rem;
+        max-width:10%;
+        font-weight:300;
+        color:#999;
+      }
+      a {
+        color:#999;
+      }
+    }
+
+
+
+    td {
+      vertical-align:top;
+      padding-bottom:5px;
+    }
+
+
+    thead {
+      font-weight:700;
+      .data {
+        background:#fff;
+        text-align:center;
+      }
+    }
+    .data {
+      width:11%;
+      text-align:center;
+      background:#f5f5f5;
+      vertical-align:middle;
+    }
+    .true {
+      background:#edf8bc;
+    }
+
+
+  }
+}
