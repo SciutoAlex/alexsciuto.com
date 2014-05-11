@@ -2,16 +2,16 @@
 
   include_once "../../../page.php";
 
-  $params = [];
+  $params = array();
   $params['title'] = "Literature Review";
   $params['page_name'] = "topic page";
 
-  $params['js'] = [];
+  $params['js'] = array();
   array_push($params['js'], "http://d3js.org/d3.v3.min.js");
   array_push($params['js'], "js/handlebars.js");
   array_push($params['js'], "js/main.js");
 
-  $params['css'] = [];
+  $params['css']  = array();
   array_push($params['css'], "css/main.css");
 
   page_header($params);
