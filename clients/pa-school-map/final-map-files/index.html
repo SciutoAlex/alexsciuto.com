@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <title></title>
-
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -12,9 +11,9 @@
 
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+
     <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
-
     <script src="js/leaflet-label.js"></script>
     <link rel="stylesheet" href="css/leaflet-label.css">
     <script src="js/handlebars.js"></script>
@@ -219,7 +218,7 @@
         "McKean","Venango","Fulton","Armstrong","Fayette","Somerset","Cameron","Warren"];
 
         var leafletCounties;
-        d3.json("pa-counties-select.topojson", function(error, us) {
+        d3.json("js/pa-counties-select.topojson", function(error, us) {
           var subunits = topojson.feature(us, us.objects['counties-pa']);
           var leafletCounties = L.geoJson(subunits, {
             "style" : function(feature) {

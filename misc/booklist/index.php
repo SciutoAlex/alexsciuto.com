@@ -1,5 +1,5 @@
 <?php include_once "../../page.php";
-  
+
   page_header();
   ?>
 
@@ -7,16 +7,16 @@
 
 
 <script>
-  
-  
+
+
   var app = {};
-  
+
   app.init = function() {
-    
+
     var mustacheTemplateText = document.getElementById("rowTemplate").innerHTML;
     var listEl = document.getElementById("list");
-    
-    
+
+
     var data = {
       "data" : [
         {
@@ -63,7 +63,7 @@
               "url" : "http://www.amazon.com/Making-Breaking-Grid-Graphic-Workshop/dp/1592531253",
               "bought" : false
             }
-            
+
           ]
         },
         {
@@ -98,23 +98,23 @@
               "url" : "http://www.amazon.com/Envisioning-Information-Edward-R-Tufte/dp/0961392118",
               "bought" : true
             }
-            
+
           ]
         }
       ]
     };
-    
+
     for(var section in data.data) {
 console.log(data.data[section].items);
       data.data[section].items.sort(function(a,b) { return compare(a,b,'head'); })
     }
     var mustacheTemplate = Mustache.to_html(mustacheTemplateText, data);
-    
+
     listEl.innerHTML = mustacheTemplate;
-    
+
   };
-  
-  
+
+
   function compare(a,b, accessor) {
   if (a[accessor] < b[accessor])
      return -1;
@@ -122,24 +122,27 @@ console.log(data.data[section].items);
     return 1;
   return 0;
 }
-  
+
   window.onload = app.init;
-  
-  
+
+
 </script>
 
 <script id="rowTemplate" type="text/html">
-  
+
   <div class="list">
     {{#data}}
     <div class="cat">{{cat}}</div>
     <div class="rows">
       {{#items}}
       <div class="row">
-        <div class="check check-{{bought}}">
-          
+        <div class="check read-{{read}}">
+
         </div>
-        
+        <div class="check accessed-{{accessed}}">
+
+        </div>
+
         <div class="info">
           <div class="title">
             <a href="{{{url}}}">{{head}}</a>
@@ -157,50 +160,54 @@ console.log(data.data[section].items);
 </script>
 
 <style>
-  
+
   .row {
     margin-bottom:20px;
   }
-  
+
   .rows {
     margin-bottom:50px;
   }
-  .check-true {
+  .read-true {
     background: url('img/check-true.png') no-repeat;
-    
   }
-  
-  
-  .check-false {
+
+  .read-false {
     background: url('img/check-false.png') no-repeat;
-    
-    
   }
-  
+
+  .access-true {
+    background: url('img/check-true.png') no-repeat;
+  }
+
+  .access-false {
+    background: url('img/check-false.png') no-repeat;
+  }
+
   .check {
     width:40px;
     height:40px;
     background-size: 83%;
   }
-  
+
   .title {
     font-size:2em;
     line-height:1em;
   }
-  
+
   .title a {
     text-decoration:none;
   }
-  
+
   .info {
     margin:5px 0 0 5px;
     width:80%;
   }
-  
+
   .check, .info {
     float:left;
   }
-  
+
   .list .cat {
     font-size:1.1em;
     font-weight:bold;
