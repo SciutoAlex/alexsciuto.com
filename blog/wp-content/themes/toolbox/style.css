@@ -404,6 +404,7 @@ body {
 #page {
   padding:20px;
   font-family: "ff-tisa-web-pro";
+  font-family:"museo-sans";
 }
 
 #page {
@@ -447,7 +448,17 @@ h1 {
   line-height: 30px;
 }
 
+.home article {
+  padding-bottom:10px;
+  margin-bottom:10px;
+}
 
+.home article p {
+  margin:0;
+  color:#383838;
+  font-size:1.2em;
+  font-weight:100;
+}
 
 .col-2 {
     border-bottom:1px dotted #aaa;

@@ -321,8 +321,9 @@ function theme_typekit_inline() {
 }
 add_action( 'wp_head', 'theme_typekit_inline' );
 
+add_theme_support( 'post-thumbnails' );
+add_image_size( "front-thumb", 1600, 300);
 
 /**
  * This theme was built with PHP, Semantic HTML, CSS, love, and a Toolbox.
  */
-  
