@@ -2,7 +2,7 @@
   include_once "page.php";
   
   
-  page_header();
+  page_header($opts);
   ?>
 
 <style>
@@ -61,17 +61,17 @@
       <h2>Education</h2>
       <div class="entry">
         <h3>MDes in Interaction Design</h3>
-        <p class="institution">Carnegie Mellon University</p>
-        <p class="details">Expected graduation in 2015</p>  
+        <p class="institution">Carnegie Mellon University. 2015.</p>
+        <p class="details">Relevant courses: Basic Interaction Design; Graduate Design Studio; Gadgets, Sensors, and Human Activity; Introduction to Computer Science. Given Design Merit Award—awarded to one student per class for exemplary design work.</p>    
       </div>
       <div class="entry">
         <h3>Web Design and Development</h3>
-        <p class="institution">School of Visual Arts</p>
+        <p class="institution">School of Visual Arts. 2013.</p>
         <p class="details">Took continuing education classes in web developement technologies and practices.</p>  
       </div>
       <div class="entry">
         <h3>BA in International Relations</h3>
-        <p class="institution">Carleton College</p>
+        <p class="institution">Carleton College. 2009.</p>
         <p class="details">Graduated with honors and took extensive coursework in the the political economy of the European Union.</p>  
       </div>
     </div>
