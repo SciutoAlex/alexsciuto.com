@@ -1,6 +1,15 @@
 <?php include_once "../../page.php";
-  
-  page_header();
+
+
+
+          $params = array();
+          $params['title'] = "Infographic Books";
+          $params['page_name'] = "topic page";
+
+          $params["css"] = array();
+          $params["js"] = array();
+
+          page_header($params);
   ?>
 
 <img src="science-book-header.jpg">
@@ -19,9 +28,8 @@
   </div>
   <div class="clear"></div>
 </div>
-  
+
 
 
 <?php page_about();?>
 <?php page_bottom();?>
-

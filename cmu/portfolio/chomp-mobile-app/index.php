@@ -1,7 +1,22 @@
 <?php
-  
+
   include_once "../../../page.php";
-  page_header();
+
+
+    $params = array();
+    $params['title'] = "Chomp Mobile App";
+    $params['page_name'] = "topic page";
+
+    // $params['js'] = array();
+    // array_push($params['js'], "http://d3js.org/d3.v3.min.js");
+    // array_push($params['js'], "js/handlebars.js");
+    // array_push($params['js'], "js/main.js");
+    //
+    // $params['css']  = array();
+    // array_push($params['css'], "css/main.css");
+
+    page_header($params);
+
   ?>
 <div class="section border-bottom">
   <div class="col2">
@@ -16,7 +31,7 @@
         <br/>
         <span>deliverables</span>&nbsp;&nbsp;&nbsp;&nbsp;Pitch Presentation&nbsp;&nbsp;&nbsp;&nbsp;Designed Screens&nbsp;&nbsp;&nbsp;&nbsp;Personas &amp; Scenarios&nbsp;&nbsp;&nbsp;&nbsp;Design Spec Documents</div>
     </div>
-    
+
     <div class="text-section">
       <h5 class="red">Our Solution</h5>
       <h6>Unleash the enthusiasm of locals to cook and serve food (and earn money) to create dining out experiences not centered around restaurants.</h6>
@@ -25,7 +40,7 @@
     </div>
   </div>
   <div class="clear"></div>
-</div>  
+</div>
 
 <div class="section border-bottom">
   <h5 class="red">Design Process</h5>
@@ -44,8 +59,8 @@
     </div>
     <div class="clear"></div>
   </div>
-  
-  
+
+
   <div class="steps">
     <div class="step">
       <strong>4. Ideation</strong>
@@ -90,10 +105,10 @@
       <li class="selected">Amateur to Professional Chef</li>
       <li>Time Tracking for Caterers</li>
       <li>Inventory Tracking for Caterers</li>
-      
+
     </ul>
     <div class="clear"></div>
-  </div> 
+  </div>
   <div class="clear"></div>
 </div>
 
@@ -118,10 +133,10 @@
     <img src="img/chomp-sketch3.jpg" alt="">
     <p class="caption">Figuring out exactly what filters are necessary for the map, and what is the best way to show the filters.</p>
   </div>
-  
-  
-  
-  
+
+
+
+
   <div class="clear"></div>
 </div>
 
@@ -136,11 +151,11 @@
     <div class="col3 last">
       <img src="img/chomp-visual1.jpg" alt="">
     </div>
-    
+
     <div class="clear"></div>
   </div>
-  
-  
+
+
   <div class="clear"></div>
 </div>
 
@@ -162,22 +177,22 @@
         <p class="caption">A failed experiment in motion. We experimented with different ways of moving map markers to make them more meaningful as the app transitioned from lists and details pages to the primary map screen.</p>
       </div>
       <div class="clear"></div>
-      
+
     </div>
-      
+
       <div class="section border-bottom">
   <div class="col2 text-section">
     <h5 class="red">System Dashboard and Feedback</h5>
     <h6>Displaying the key variables to ensure the Chomp ecosystem stays health.</h6>
     <p>Creating a flexible marketplace for online eating would only be successful if the ecosystem of users and providers was well balanced and that each group had plenty of access to the other.</p>
     <p>In order to help the managers of Chomp keep track of this critical information, we created a dashboard for displaying these pieces of data. Because we were focused on the health of the entire ecosystem, the dashboard shows how many events eaters have access to and how many eaters event creators have access to. In order to support local versions of the app, we also have a map so we can see where the different users are located.</p>
-    
+
     </div>
       <div class="col3 last">
         <img src="img/chomp-dashboard.jpg" alt="">
       </div>
-      
+
       <div class="clear"></div>
-      
+
       <?php page_about();?>
       <?php page_bottom();?>

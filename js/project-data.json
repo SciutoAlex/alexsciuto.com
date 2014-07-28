@@ -3,8 +3,8 @@
         "onImage": "img/garden-on.png",
         "offImage": "img/garden-off.png",
         "title": "GardenPot Ubicomp System",
-        "category": "interaction design [process]",
-        "medium": "Video Sketch",
+        "category": "interaction design ",
+        "medium": "Product Design",
         "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
         "date": "December 2013<br/>Carnegie Mellon University",
         "url": "cmu/portfolio/garden-ubicomp"
@@ -13,7 +13,7 @@
         "onImage": "img/chomp-on.jpg",
         "offImage": "img/chomp-off.jpg",
         "title": "Reinventing Mobile Work",
-        "category": "interaction design [process]",
+        "category": "interaction design ",
         "medium": "Mobile Application",
         "description": "Experiments in creating visuals using JavaScript to draw shapes on the HTML canvas object.",
         "date": "October 2013<br/>Carnegie Mellon University",
@@ -53,7 +53,7 @@
         "onImage": "img/microwaveon.jpg",
         "offImage": "img/microwaveoff.jpg",
         "title": "A Better Microwave Control",
-        "category": "interaction design [process]",
+        "category": "interaction design ",
         "medium": "Concept Poster",
         "description": "In order to learn more and xml and how PHP parses that data, and in order to never have to go on weather.com again, I made a weather forecasting Website.",
         "date": "September 2013<br/>Carnegie Mellon University",
@@ -114,7 +114,7 @@
         "offImage": "img/pghneighbor-off.jpg",
         "title": "Pittsburgh Residence Guide",
         "category": "information design",
-        "medium": "Informational Poster [process]",
+        "medium": "Informational Poster ",
         "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
         "date": "September 2013<br/>Carnegie Mellon University",
         "url": "cmu/portfolio/pgh-neighborhoods"
@@ -134,7 +134,7 @@
         "offImage": "img/voyageroff.jpg",
         "title": "The Path of Voyager 1",
         "category": "information design",
-        "medium": "Video Animation [process]",
+        "medium": "Video Animation ",
         "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
         "date": "November 2013<br/>Carnegie Mellon University",
         "url": "cmu/portfolio/voyager"
@@ -149,15 +149,25 @@
         "date": "March 2014",
         "url": "projects/personal-movement/index.php"
     },
-      "neighborhood-data": {
-        "onImage": "img/recipe-on.png",
-        "offImage": "img/recipe-off.png",
-         "title": "Microsoft: A Billion Sensors",
-        "category": "interaction design",
-        "medium": "coming soon",
+      "gadgets": {
+        "onImage": "img/gadgetson.jpg",
+        "offImage": "img/gadgetsoff.jpg",
+        "title": "Room Sensor System",
+        "category": "information design and prototyping",
+        "medium": "poster graphic",
         "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
-        "date": "March 2014<br/>Carnegie Mellon University",
-        "url": "#"
+        "date": "March 2014",
+        "url": "cmu/portfolio/gadgets/index.php"
+    },
+      "neighborhood-data": {
+        "onImage": "img/grassrootson.jpg",
+        "offImage": "img/grassrootsoff.jpg",
+        "title": "GrassRoots [wip]",
+        "category": "interaction design",
+        "medium": "Product Design",
+        "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+        "date": "July 2014<br/>Microsoft/CMU",
+        "url": "cmu/portfolio/grassroots"
     },
       "pa-school-data": {
         "onImage": "img/pa-school-on.png",
@@ -169,5 +179,5 @@
         "date": "March 2014",
         "url": "clients/pa-school-map/map-test-10.html"
     }
-    
+
 }

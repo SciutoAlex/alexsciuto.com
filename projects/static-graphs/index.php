@@ -1,6 +1,15 @@
 <?php include_once "../../page.php";
-  
-  page_header();
+
+
+
+          $params = array();
+          $params['title'] = "Infographics";
+          $params['page_name'] = "topic page";
+
+          $params["css"] = array();
+          $params["js"] = array();
+
+          page_header($params);
   ?>
 <div class="section border-bottom">
   <div class="col3">
@@ -18,7 +27,7 @@
 <div class="section border-bottom">
   <div class="col3" class="section">
     <img src="img/weather-huffpo.png" alt="">
-    
+
   </div>
   <div class="col2 last">
     <h5 class="red">Huffington Post Experimental Graphics</h5>
@@ -70,7 +79,7 @@
 
 </div>
 <div class="col2 last">
-  
+
 </div>
 
 

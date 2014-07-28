@@ -39,9 +39,6 @@ function loadData(callback) {
         // -------
         finalData.push(data[i]);
 
-
-
-
         var thisData = finalData[finalData.length-1];
 
 
@@ -59,14 +56,16 @@ function loadData(callback) {
         // Fill in empty and disconnected cells
         // -------
 
+        $('<p>', {'html' : "No Shape!"}).appendTo('body');
         if(!thisData.shape) {
           $('<p>', {'html' : thisData.label}).appendTo('body');
           //console.log(countershape); countershape++;
           thisData.shape = [[40.723598,-74.1],[40.87243,-74]];
         }
 
+        $('<p>', {'html' : "No Rides!"}).appendTo('body');
         if(!thisData.rides) {
-          //$('<p>', {'html' : thisData.label}).appendTo('body');
+          $('<p>', {'html' : thisData.label}).appendTo('body');
           //console.log(thisData)
           //console.log(counterride); counterride++;
           thisData.rides = [];

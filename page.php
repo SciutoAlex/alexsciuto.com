@@ -14,7 +14,7 @@
   <head>
     <meta charset="utf-16"/>
     <?
-      if(!$opts['title']) {
+      if(!isset($opts['title'])) {
         $opts['title'] = "AlexSciuto.com";
       }
     ?>
@@ -26,13 +26,19 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="<?=ROOT_URL;?>/js/mustache.js"></script>
 
-    <? foreach($opts["css"] as $path) { ?>
-        <link rel="stylesheet" type="text/css" href="<?=$path;?>" />
-    <? } ?>
+    <?
+    if (isset($opts["css"])) {
+      foreach($opts["css"] as $path) { ?>
+          <link rel="stylesheet" type="text/css" href="<?=$path;?>" />
+      <? }
+    }?>
 
-    <? foreach($opts["js"] as $path) { ?>
+    <?
+    if (isset($opts["js"])) {
+      foreach($opts["js"] as $path) { ?>
         <script type"text/javascript" src="<?=$path;?>" /></script>
-    <? } ?>
+      <? }
+    } ?>
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -55,9 +61,10 @@
   </script>
   </head>
   <body>
+    <?php nav($opts); ?>
     <div id="container">
 
-      <?php nav($opts); ?>
+
 
 
 
@@ -75,42 +82,47 @@
                   <span>&nbsp; Interaction Design and Data Visualization</span></a></h1>
       </div>
         <div id="top-info-container">
-        <div id="top-info">
-          <div style="background-color:#fff; width:1030px;">
-            <div class="fleft">
+        <div id="top-info-center">
+          <div style="background:#fff;">
+          <div id="top-info" class="clone">
+            <div style="background-color:#fff; width:1030px;">
+              <div class="fleft">
 
-              <h1 class="logo">
-                <a href="/">
-                  <span>&nbsp; Interaction Design  and Data Visualization</span><img src="<?=ROOT_URL;?>/img/alex-logo.jpg" width="90"></a></h1>
+                <h1 class="logo">
+                  <a href="/">
+                    <span>&nbsp; Interaction Design  and Data Visualization</span><img src="<?=ROOT_URL;?>/img/alex-logo.jpg" width="90"></a></h1>
+              </div>
+
+              <div class="fright">
+                <ul class="nav">
+
+                  <li>
+                    <a href="http://www.dribbble.com/sciutoalex/"><img src="<?=ROOT_URL;?>/img/dribbble.jpg" alt="" width="23"/></a>
+                  </li>
+                   <li>
+                     <a href="http://www.twitter.com/sciutoalex/"><img src="<?=ROOT_URL;?>/img/twitter.jpg" alt="" width="29" /></a>
+                  </li>
+                  <li>
+                    <p class="small"><a href="<?=ROOT_URL;?>/blog">Blog</a></p>
+                  </li>
+                  <?php if( $opts['page_name'] != "index" ) { ?>
+                    <li>
+                      <p class="small"><a href="<?=ROOT_URL;?>/">Projects</a></p>
+                    </li>
+                  <? } ?>
+                  <li class="last">
+                    <p class="small"><a href="<?=ROOT_URL;?>/about.php">About/Resume</a></p>
+                  </li>
+                </ul>
+              </div>
+             <div class="clear"></div>
+
             </div>
 
-            <div class="fright">
-              <ul class="nav">
-
-                <li>
-                  <a href="http://www.dribbble.com/sciutoalex/"><img src="<?=ROOT_URL;?>/img/dribbble.jpg" alt="" width="23"/></a>
-                </li>
-                 <li>
-                   <a href="http://www.twitter.com/sciutoalex/"><img src="<?=ROOT_URL;?>/img/twitter.jpg" alt="" width="29" /></a>
-                </li>
-                <li>
-                  <p class="small"><a href="<?=ROOT_URL;?>/blog">Blog</a></p>
-                </li>
-                <?php if( $opts['page_name'] != "index" ) { ?>
-                <li>
-                  <p class="small"><a href="<?=ROOT_URL;?>/">Projects</a></p>
-                </li>
-                <? } ?>
-                <li class="last">
-                  <p class="small"><a href="<?=ROOT_URL;?>/about.php">About/Resume</a></p>
-                </li>
-              </ul>
-            </div>
-           <div class="clear"></div>
-
-          </div>
-          <div class="gradient" style="display:none; height:4px; width:1030px;"></div>
-         <div class="clear"></div>
+       </div>
+     </div>
+<div class="gradient" style="display:none; height:4px; width:100%"></div>
+<div class="clear"></div>
         </div>
 
       </div>
@@ -137,6 +149,7 @@
           var logoTransition = false;
           var clone;
           var $topInfo = $('#top-info').attr('class', 'clone');
+          var $center = $('#top-info-center');
           var $nav = $topInfo.find('.nav');
           var $logo = $topInfo.find('.logo');
           var $logoimg = $logo.find('img');
@@ -144,17 +157,17 @@
           var speed = 200;
 
           $(window).scroll(function() {
-            if(($(window).scrollTop() > 110) && logoTransition == false) {
+            // console.log($(window).scrollTop())
+            if(($(window).scrollTop() > 64) && logoTransition == false) {
               $('.gradient').fadeIn();
               logoTransition = true;
 
 
-              $topInfo.css('margin', 0);
+              $topInfo.css('margin', "0px auto");
               $logo.css('margin-top', 5);
-              $topInfo.css('position', 'fixed');
-              $topInfo.css('z-index', '9999');
-              $topInfo.css('top', 0);
-              $topInfo.css('margin', 0);
+              $center.css('position', 'fixed');
+              $center.css('z-index', '9999');
+              $center.css('top', 0);
               $topInfo.css('width', 1030);
               $logospan.fadeOut(speed, function() {
 
@@ -176,15 +189,15 @@
               }, speed);
 
 
-            } else if(($(window).scrollTop() < 110) && logoTransition == true) {
+            } else if(($(window).scrollTop() < 64) && logoTransition == true) {
 
               logoTransition = false;
               $('.gradient').fadeOut();
-              $topInfo.css('position', 'static');
-              $topInfo.css('z-index', '9999');
+              $center.css('position', 'static');
+              $center.css('z-index', '9999');
               $topInfo.css('top', 0);
-              $topInfo.css('margin', 0);
-              $topInfo.css('width', 1030);
+              $center.css('margin', "0px auto");
+
 
               $logospan.fadeOut(speed, function() {
 

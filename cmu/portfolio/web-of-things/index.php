@@ -1,6 +1,17 @@
 <?php include_once "../../../page.php";
-  
-  page_header();
+
+
+    include_once "../../../page.php";
+
+
+        $params = array();
+        $params['title'] = "Web of Things";
+        $params['page_name'] = "topic page";
+
+        $params["css"] = array();
+        $params["js"] = array();
+
+        page_header($params);
   ?>
 <div class="section">
   <div class="col3">
@@ -8,7 +19,7 @@
     <img src="img/sketch3.jpg" alt="">
       </div>
     <div>
-     
+
       <div width="1500" height="2400"><img class='zoom' src="img/web-poster.jpg" alt="">
       </div>
   </div>
@@ -18,7 +29,7 @@
     <p class="red slab">DESIGN BRIEF</p>
     <h1>Designing for Practices</h1>
     <p>Creative problem-solving and decision-making require reframing a problem in new ways. One novel frame interaction designers can use is to think about a person's groups of things, values, and skills&mdash;a practice. Find a way to visualize all your things and how they interact with your practices.</p>
- 
+
   </div>
     <div class="text-section" style="margin-top:40px;">
      <h6>Conceptual Development</h6>
@@ -42,7 +53,7 @@
   </div>
 
   <div class="clear"></div>
-</div>    
+</div>
 
   <div class="clear"></div>
 

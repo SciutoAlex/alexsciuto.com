@@ -1,7 +1,17 @@
 <?php
-  
-  include_once "../../../page.php";
-  page_header();
+
+
+    include_once "../../../page.php";
+
+
+        $params = array();
+        $params['title'] = "Garden Pot";
+        $params['page_name'] = "topic page";
+
+        $params["css"] = array();
+        $params["js"] = array();
+
+        page_header($params);
   ?>
 
 <div class="section border-bottom">
@@ -15,7 +25,7 @@
   </div>
   <div class="col2 last align-center">
     <img src="img/garden-front.png" alt="">
-    
+
   </div><!-- /col5 -->
   <div class="clear"></div>
 </div><!-- /section -->
@@ -28,7 +38,7 @@
   </div>
   <div class="col3 last align-center">
   <iframe src="//player.vimeo.com/video/81519152?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff" width="608" height="342" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-    
+
   </div><!-- /col5 -->
   <div class="clear"></div>
 </div><!-- /section -->
@@ -59,7 +69,7 @@
     <h6>Based on our preliminary research and interviews, we came up with design ideas then grouped them into common themes.</h6>
   </div><!-- /col2 -->
   <div class="col3 last">
-    
+
     <h6 class="align-center">Different possible concepts based on field research</h6>
       <ul class="half">
         <li>in-garden plant indicator to tell visitors about health</li>
@@ -78,10 +88,10 @@
       <li>garden divies up garden beds so that space is used efficiently</li>
       <li>garden bed sends emails to gardeners when it misses them</li>
       <li>smart g arden tools to enable visitors to share in garden experience</li>
-        
+
       </ul>
       <div class="clear"></div>
-    
+
   </div>
   <div class="clear"></div>
 </div><!-- /section -->
@@ -101,9 +111,9 @@
   <p>
       The results of speed-dating gave our design choices new specicifity, and made our idea gardener much more concrete. The speed dating sessions made it clear that our best chance for creating a useful innovation was in the following areas: Connecting gardeners to their fellow gardners, connecting gardeners with the wider neighborhood, and enabling gardeners to more easily share ripe food with one another.
     </p>
-      
-      
-   
+
+
+
     <a class="download" href="presentations/story-boards.pdf">Download our Storyboards</a>
   </div><!-- /col2 -->
   <div class="col3">
@@ -116,11 +126,11 @@
 
 
 <div class="section border-bottom">
-  
+
   <div class="col2 text-section">
     <h5 class="red">Three possible Directions</h5>
     <h6>We formulated three very provocative concepts and presented them to the class. Students were provoked. Our three concepts were:</h6>
-  
+
     <ul>
       <li>Garden Book: A book mechanically records all the activity in the garden. Visitors can leave notes in the book. At the end of the year, the book is closed and is physical embodiment of the growing season.</li>
       <li>Garden Connect: Provide information and data about the state of the garden to gardeners in their home.</li>
@@ -143,7 +153,7 @@
   <div class="col2 text-section">
     <h5 class="red">Focusing the Concept</h5>
     <h6>Based on feedback from the class, we chose to focus on providing in-home information, but we needed to play with the form</h6>
-    
+
     <p>Our interviews told us that gardeners didn't want obvious technology to enter into their garden experience. But we wanted to convey complex information about the garden in the gardeners' homes. We had to find a form that could convey the information we wanted to share while appearing natural.</p>
    <p> We were inspired by the simple terra cotta pot. Our "display" would take the form of a potted plant that would convey the information we wanted to share through physically changes to its form.</p>
   </div><!-- /col2 -->
@@ -170,19 +180,19 @@
 
 
 
-      
+
        <div class="section border-bottom">
         <div class="col2 text-section">
           <h5 class="red">Final Presentation</h5>
           <h6>We presented the final pitch to the class. We tried to succinctly layout the value of community gardens, the main problems we heard from gardeners, our system, and how it solves the needs laid out.</h6>
           <a href="presentations/final-presentation-pdf.pdf" class="download">Download Final Pitch</a>
-        
+
         </div><!-- /col2 -->
         <div class="col3 last">
           <img src="img/presentation.png" alt="">
         </div><!-- /col3 -->
         <div class="clear"></div>
       </div><!-- /section -->
-  
+
         <?php page_about();?>
         <?php page_bottom();?>

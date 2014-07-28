@@ -1,6 +1,17 @@
 <?php include_once "../../../page.php";
+
   
-  page_header();
+    include_once "../../../page.php";
+
+
+        $params = array();
+        $params['title'] = "Pittsburgh Neighborhoods Poster";
+        $params['page_name'] = "topic page";
+
+        $params["css"] = array();
+        $params["js"] = array();
+
+        page_header($params);
   ?>
 <div class="section border-bottom">
   <div class="col5">
@@ -16,7 +27,7 @@
     <img src="img/neighborhood-map.jpg" alt="">
   </div>
   <div class="clear"></div>
-</div>    
+</div>
 
 <div class="section border-bottom">
   <div class="col2 text-section">
@@ -29,9 +40,9 @@
   <div class="col3 last">
     <img src="img/neighborhood-diagram1.jpg" alt="">
   </div>
-  
+
   <div class="clear"></div>
-</div>    
+</div>
 
 <div class="section border-bottom">
   <div class="col2 text-section">
@@ -42,7 +53,7 @@
   </div>
   <div class="col3  last"><img src="img/neighborhood-diagram2.jpg" alt=""></div>
   <div class="clear"></div>
-</div>    
+</div>
 
 <div class="section border-bottom">
   <div class="col5"><img src="img/neighborhood-sketches.jpg" alt=""></div>
@@ -59,7 +70,7 @@ The greatest challenge for me was finding the right level of visual complexity t
     <p>The final guide invites viewers to read it but also provides a wealth of information the closer they get.</p>
   </div>
   <div class="clear"></div>
-</div>    
+</div>
 
 <div class="section border-bottom">
     <div class="col2 text-section">
@@ -75,7 +86,7 @@ The greatest challenge for me was finding the right level of visual complexity t
 
 
   <script>
-   
+
   </script>
   <div class="clear"></div>
 

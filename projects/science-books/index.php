@@ -1,6 +1,17 @@
 <?php include_once "../../page.php";
-  
-  page_header();
+
+
+
+
+
+        $params = array();
+        $params['title'] = "Infographic Books";
+        $params['page_name'] = "topic page";
+
+        $params["css"] = array();
+        $params["js"] = array();
+
+        page_header($params);
   ?>
 <div class="littlesection">
   <div class="col5">
@@ -11,15 +22,15 @@
 
 <div class="col3">
   <div class="littlesection">
-    
+
     <img src="science-books-combined.jpg" alt="">
-    
+
   </div>
-  
+
   <div class="littlesection">
-    
+
     <img src="science-books-mock.jpg" alt="">
-    
+
   </div>
 </div>
 <div class="col2 last">
@@ -44,4 +55,3 @@
 
 <?php page_about();?>
 <?php page_bottom();?>
-

@@ -2,6 +2,11 @@ html {
   font-size:10px;
 }
 
+body {
+  margin:0px 0 0 0;
+  padding:0;
+}
+
 
 p, h1, h2, h3 {
   margin:0px;
@@ -32,11 +37,12 @@ body {
 
 h1, h2, h3, .slab {
   font-family:"museo-slab";
+  font-weight:100;
 }
 
 h2 {
   margin-top:20px;
-  border-top:1px solid black;
+  font-size:30px
 }
 
 .logo {
@@ -94,6 +100,17 @@ font-style: italic;
   margin-top:3px;
 }
 
+#top-info {
+  margin:0px auto;
+  width:1030px;
+}
+
+#top-info-center {
+  margin-right:auto;
+  width:100%;
+
+}
+
 #top-info .small {
   font-weight:normal;
   font-size:14px;
@@ -144,7 +161,7 @@ line-height: 16px;
   margin-top:20px;
 }
 
-.box .off {
+.off {
   position:absolute;
   top:0px;
   left:0px;
@@ -349,8 +366,12 @@ label {
 
 .steps .step {
   float:left;
-  width:29%;
-  padding-right:4%;
+  width:30.5%;
+  margin-right:4%;
+}
+
+.step img {
+  max-width:100%;
 }
 
 .steps {
@@ -358,8 +379,7 @@ label {
 }
 
 .clone {
-  max-width:1030px;
-  z-index:99;
+
 
 }
 
@@ -369,6 +389,10 @@ label {
 
 .clone .nav {
   padding: 45px 00px 40px 00px;
+}
+
+.topImg {
+  margin-bottom:30px
 }
 
 #top-info-container{
@@ -449,6 +473,7 @@ body {
 
 .col2-1 img {
   width:100%;
+  max-width:100%;
 }
 
 .col4-1 {
@@ -595,7 +620,7 @@ ol li {
   margin-bottom:4px;
 }
 
-iframe {
+iframe, video {
   max-width:100%;
 }
 
@@ -729,6 +754,18 @@ box-shadow: 0 5px 17px #909798; /* drop shadow */
 cursor:none;
 }
 
+.offLeftContainer {
+  position:relative;
+  right:50%
+}
+.offLeftImg {
+  width:150%;
+}
+
+.height {
+  height:30px;
+}
+
 
 @media (max-width: 900px) {
 
@@ -772,9 +809,16 @@ cursor:none;
 
 
 
+
+
+
 }
 @media (max-width: 600px) {
 
+
+.mobile-hide {
+  display:none;
+}
 body {
   margin:0;
 }
