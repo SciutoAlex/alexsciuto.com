@@ -93,13 +93,36 @@
         border-image: url('img/bluedots.png') 27 round;
       }
 
+      .mobile {
+        display:none;
+      }
+
+      .desktop {
+        display:block;
+      }
+
       @media (max-width:600px) {
+
+        .mobile {
+          display:block;
+        }
+
+        .desktop {
+          display:none;
+        }
+
         .container {
           margin: 0 10px;
         }
 
         h1 {
           font-size:40px;
+          line-height:45px;
+        }
+
+        h1 span {
+          display:block;
+          font-size:50px;
         }
         h2 {
           font-size:25px;
@@ -119,7 +142,8 @@
   <body>
     <div class="container">
       <div class="bluebar"></div>
-      <h1>Hi. I'm <span>Evan Rowe</span>.</h1>
+      <h1 class="desktop">Hi. I'm <span>Evan Rowe</span>.</h1>
+      <h1 class="mobile">Hi. I'm <span>Evan Rowe</span></h1>
       <h2>I'm a <span class="blue">Minnesota native</span>, a student at <span class="red">HBS</span>, and a former <span class="green">Googler</span>.
       <div class="links">
         <h4>Some work I've done</h4>
