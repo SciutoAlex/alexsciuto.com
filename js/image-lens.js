@@ -53,12 +53,17 @@
             }
             var ele = $(this),
                 offset = ele.offset(),
-                p = ele.wrap('<span />').parent().css(parentCss),
-                dim = { width : p.width(), height : p.height() },
+                p = ele.wrap('<div />').parent().css(parentCss),
+                dim = { width : ele.width(), height : ele.height() },
                 lens = $('<div />').css(css).appendTo(p).hide().addClass('imagelens'),
                 imgDim = { width : 0, height : 0 },
                 img = new Image(),
                 VMLFillEle;
+
+            if (dim.width < 10 || dim.height < 10) {
+                console.log('fallback');
+                dim = { width : ele.attr('width'), height : ele.attr('height') };
+            }
             img.onload = function() {
                 imgDim.width = this.width;
                 imgDim.height = this.height;
@@ -70,7 +75,7 @@
                 g.setAttribute('coordsize', options.lensSize + ' ' + options.lensSize);
                 g.style.width = options.lensSize + 'px';
                 g.style.height = options.lensSize + 'px';
-                
+
                 var oval = document.createElement(VMLNS + ':oval');
                 oval.style.width = options.lensSize + 'px';
                 oval.style.height = options.lensSize + 'px';
@@ -98,20 +103,22 @@
             }).bind('mouseleave', function(e){
                 lens.hide();
             }).bind('mousemove', function(e) {
-                var mouse = { 
+                var mouse = {
                         x : e.pageX - offset.left,
                         y : e.pageY - offset.top
                     },
                     bg = { x : 0, y : 0 },
                     pos = { x : 0, y : 0 },
                     css;
+
+                console.log(dim);
                 if (mouse.x > dim.width || mouse.y > dim.height || mouse.x < 0 || mouse.y < 0) {
                     lens.hide();
                     return;
                 }
                 pos.x = mouse.x - (options.lensSize / 2);
                 pos.y = mouse.y - (options.lensSize / 2);
-                
+
                 bg.x = -(mouse.x * (imgDim.width / dim.width) - (options.lensSize / 2));
                 bg.y = -(mouse.y * (imgDim.height / dim.height) - (options.lensSize / 2));
                 css = {

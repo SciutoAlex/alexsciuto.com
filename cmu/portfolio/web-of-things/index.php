@@ -18,11 +18,9 @@
     <div class="littlesection">
     <img src="img/sketch3.jpg" alt="">
       </div>
-    <div>
-
-      <div width="1500" height="2400"><img class='zoom' src="img/web-poster.jpg" alt="">
-      </div>
-  </div>
+    <div class="zoom-wrapper">
+      <img class='zoom' src="img/web-poster.jpg" alt=""  width="610" height="994">
+    </div>
   </div>
   <div class="col2 last" >
     <div class="brief" >

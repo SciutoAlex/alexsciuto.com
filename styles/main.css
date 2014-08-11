@@ -766,6 +766,39 @@ cursor:none;
   height:30px;
 }
 
+.sensor-levels {
+  margin-top:50px;
+  margin-bottom:50px;
+  padding-bottom:50px;
+}
+
+
+.level {
+color:#979797;
+}
+
+
+.level h6 {
+  font-weight:100;
+}
+
+.neighborhood {
+  color:rgb(118,198,53);
+}
+
+.level img, .neighborhood img {
+  margin-bottom:10px;
+}
+
+.zoom-wrapper {
+  position:relative;
+}
+
+.lensCircle {
+  background:#fff;
+  box-shadow: 0 1px 2px 1px rgba(0,0,0,.3);
+}
+
 
 @media (max-width: 900px) {
 

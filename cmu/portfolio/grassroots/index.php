@@ -41,23 +41,47 @@
 </div>
 
 
-<div class="section border-bottom">
-  <div class="col1">&nbsp;</div>
-  <div class="col3 last">
-    <img src="img/levels-of-sensors.jpg">
-  </div>
-  <div class="clear"></div>
+<div class="">
   <div class="col5 last">
     <h2 class="align-center">Introducing Sensors for get you back to your Neighborhood</h3>
-      <div class="clear"></div>
-    </div>
-    <div class="col1">&nbsp;</div>
-    <div class="col3 last">
+  </div>
+  <div class="col1">&nbsp;</div>
+  <div class="col3 last">
     <p class="align-center">Sensors in 2014 are all about individuals&nbsp;what you weight, where you go, and how much you exercise. GrassRoots makes sensors a shared experience. You can use your neighbors sensors and everyone can get to know each other better.</p>
-    <div class="clear"></div>
   </div>
   <div class="clear"></div>
 </div>
+  <div class="sensor-levels border-bottom">
+    <div class="col4-1 level">
+      <img style="width:50%" src="img/person-icon.png">
+      <h6>Personal Body Sensors</h6>
+      <p>
+        Motion sensors in your smartphone, fitness sensors, health sensors.
+      </p>
+    </div>
+    <div class="col4-1 level">
+      <img style="width:50%"  src="img/home-icon.png">
+      <h6>Smart Home Sensors</h6>
+      <p>
+        The internet of things. Smart lights, smart refridgerators.
+      </p>
+    </div>
+    <div class="col4-1 neighborhood">
+      <img style="width:50%"  src="img/neighbor-icon.png">
+      <h6>Neighborhood Sensors</h6>
+      <p>
+        An opportunity space to bring together all the levels of sensors and introduce shareable sensors that bring neighbors together.
+      </p>
+      </div>
+    <div class="col4-1 last level">
+      <img style="width:50%"  src="img/city-icon.png">
+      <h6>Open City Sensors</h6>
+      <p>
+        Data collected and made available by cities and in the future, directly accessible city-wide sensor networks.
+      </p>
+    </div>
+    <div class="clear"></div>
+  </div>
 
 <div class="section border-bottom">
   <div class="col2-1">
@@ -81,7 +105,7 @@
   <h5 class="red">Design Process</h5>
   <div class="steps" >
     <div class="step">
-      <div><img class='zoom' src="img/territory-map.jpg" alt=""></div>
+      <div class="zoom-wrapper"><img class='zoom' src="img/territory-map.jpg" alt=""  width="314" height="327"></div>
       <strong>1. Define the Design Space</strong>
       <p>As long as it involed numerous sensors, we were given free reign to explore. In order to make sense of the terrain, my three teammates and I defined our individual interests, found common connections, then began to sketch out how neighborhoods could intersect with our interests.</p>
     </div>

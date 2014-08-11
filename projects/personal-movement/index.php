@@ -14,7 +14,7 @@
   <div>
 
 
-      <div width="1500" height="2400"><img class='zoom' src="img/move-poster-large.png" alt="">
+      <div class="zoom-wrapper"><img class='zoom' src="img/move-poster-large.png" alt=""  width="608" height="1051">
       </div>
   </div>
   </div>

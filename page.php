@@ -52,11 +52,10 @@
       })();
 
     </script>
-    <script src="<?=ROOT_URL;?>/js/image-lens.js"></script>
+    <script src="<?=ROOT_URL;?>/js/zoom.js"></script>
   <script>
-    $(function() {
-      $('.zoom').imageLens({ borderSize: 3, borderColor: "#1f0f13", lensSize:350 });
-      $('.imagelotoens').css('box-shadow', '');
+    $(document).ready(function() {
+      $('.zoom').mlens({ borderSize: 3, borderColor: "#1f0f13", lensSize:350, lensShape: "circle", lensCss: "lensCircle" });
     });
   </script>
   </head>
