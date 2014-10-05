@@ -1,12 +1,21 @@
-<?php 
+<?php
   include_once "page.php";
-  
-  
-  page_header($opts);
+
+  $params = array();
+  $params['title'] = "About Alex";
+  $params['page_name'] = "topic page";
+
+  $params['js'] = array();
+
+  $params['css']  = array();
+  array_push($params['css'], "css/main.css");
+
+  page_header($params);
+
   ?>
 
 <style>
-  
+
 </style>
 
 <div class="section intro border-bottom">
@@ -15,45 +24,34 @@
   <div class="clear"></div>
 </div>
 
-<div class="section">
-  <div class="steps quote" >
-    
-    
-    <div class="step">
-      <p>People on a design team must be as happy to be wrong as right. If their ideas hold up under strong (but fair) criticism, then great, they can proceed with confidence. If their ideas are rejected with good rationale, then they have learned something.</p>
-      <strong>&mdash;Bill Buxton</strong>
-    </div>
-    <div class="step">
-      <p>The "micro" in "microinteractions" implies it is about the small things. Small? Yes. Unimportant? Absolutely not! Microinteractions is about those critical details that make the difference between a friendly experience and traumatic anxiety.</p>
-      <strong>&mdash;Don Norman</strong>
-    </div>
-     <div class="step">
-      <p>The operating <em>moral</em> premise of information design should be that our readers are alert and caring; they maybe be busy, eager to get on twith it, but they are not stupid.</p>
-      <strong>&mdash;Edward Tufte</strong>
-    </div>
-   
-    <div class="clear"></div>
+<div class="section group">
+  <div class="col span_4_of_12 quote">
+  	<p>People on a design team must be as happy to be wrong as right. If their ideas hold up under strong (but fair) criticism, then great, they can proceed with confidence. If their ideas are rejected with good rationale, then they have learned something.</p>
+   <strong>&mdash;Bill Buxton</strong>
+	</div>
+  <div class="col span_4_of_12 quote">
+    <p>The "micro" in "microinteractions" implies it is about the small things. Small? Yes. Unimportant? Absolutely not! Microinteractions is about those critical details that make the difference between a friendly experience and traumatic anxiety.</p>
+   <strong>&mdash;Don Norman</strong>
+  </div>
+  <div class="col span_4_of_12 quote">
+    <p>The operating <em>moral</em> premise of information design should be that our readers are alert and caring; they maybe be busy, eager to get on twith it, but they are not stupid.</p>
+   <strong>&mdash;Edward Tufte</strong>
+ </div>
+ </div>
+ <div class="section group">
+  <div class="col span_4_of_12 quote">
+    <p>Obstinacy, not talent, saved my life. It was also my good luck that happiness didn't matter to me and I had no compassion for myself.</p>
+   <strong>&mdash;Philip Roth</strong>
+  </div>
+  <div class="col span_4_of_12 quote">
+    <p>You've got to get out and walk. Walk, and you will see that many of the assumptions on which the projects depend are visibly wrong.</p>
+    <strong>&mdash;Jane Jacobs</strong>
+  </div>
+  <div class="col span_4_of_12 quote">
+    <p>The only way to communicate is to understand what it is like not to understand.</p>
+    <strong>&mdash;Richard Saul Wurman</strong>
   </div>
 </div>
-<div class="section border-bottom">
-  <div class="steps quote" >
-    <div class="step">
-      <strong></strong>
-      <p>Credibility vanishes in clouds of chartjunk; who would trust a chart that looks like a video game?</p>
-      <strong>&mdash;Edward Tufte</strong>
-    </div>
-     <div class="step">
-      <strong></strong>
-      <p>Obstinacy, not talent, saved my life. It was also my good luck that happiness didn't matter to me and I had no compassion for myself.</p>
-      <strong>&mdash;Philip Roth</strong>
-    </div>
-    
-   
-   
-    <div class="clear"></div>
-  </div>
-</div>
-
 
 <div class="resume">
   <div class="col-l">
@@ -62,43 +60,48 @@
       <div class="entry">
         <h3>MDes in Interaction Design</h3>
         <p class="institution">Carnegie Mellon University. 2015.</p>
-        <p class="details">Relevant courses: Basic Interaction Design; Graduate Design Studio; Gadgets, Sensors, and Human Activity; Introduction to Computer Science. Given Design Merit Award—awarded to one student per class for exemplary design work.</p>    
+        <p class="details">Relevant courses: Basic Interaction Design; Graduate Design Studio; Gadgets, Sensors, and Human Activity; Introduction to Computer Science. Given Design Merit Award—awarded to one student per class for exemplary design work.</p>
       </div>
       <div class="entry">
         <h3>Web Design and Development</h3>
         <p class="institution">School of Visual Arts. 2013.</p>
-        <p class="details">Took continuing education classes in web developement technologies and practices.</p>  
+        <p class="details">Took continuing education classes in web developement technologies and practices.</p>
       </div>
       <div class="entry">
         <h3>BA in International Relations</h3>
         <p class="institution">Carleton College. 2009.</p>
-        <p class="details">Graduated with honors and took extensive coursework in the the political economy of the European Union.</p>  
+        <p class="details">Graduated with honors and took extensive coursework in the the political economy of the European Union.</p>
       </div>
     </div>
     <div class="section">
       <h2>Work Experience</h2>
       <div class="entry">
+        <h3>User Experience Intern</h3>
+        <p class="institution">Google Commerce UX | Pittsburgh</p>
+        <p class="details">I designed new commerce interfaces as well did motion studies for Google's material design.</p>
+      </div>
+      <div class="entry">
         <h3>Course Instructor</h3>
         <p class="institution">Carnegie Mellon University | Pittsburgh</p>
-        <p class="details">I'll be teaching Introduction to Web Design for communication designers in the Spring 2014. I'm really excited!</p>  
+        <p class="details">I teach Introduction to Web Design and help teach Interaction Prototyping for communication designers and graduate design students.</p>
       </div>
       <div class="entry">
         <h3>Senior Digital Designer</h3>
         <p class="institution">Finn Partners | NY</p>
         <p class="details">Translated clients' functional and visual needs into pixel-perfect designs using Fireworks, Illustrator, and Photoshop. Created site maps, functionality documents, final designs and other deliverables for our team's developer. Coded unique interactive visualizations for the web using Javascript and JQuery and RaphaelJS libraries.
-        </p>  
+        </p>
       </div>
       <div class="entry">
         <h3>Freelance Data Developer</h3>
         <p class="institution">Huffington Post | NY</p>
-        <p class="details">Collaborated on a data project envisioning how interactive news graphics could best be translated onto mobile devices.</p>  
+        <p class="details">Collaborated on a data project envisioning how interactive news graphics could best be translated onto mobile devices.</p>
       </div>
       <div class="entry">
         <h3>Research and Design Intern</h3>
         <p class="institution">Talking Points Memo | NY</p>
-        <p class="details">Maintained web articles, edited photography, and worked with web developer on interactive features.</p>  
+        <p class="details">Maintained web articles, edited photography, and worked with web developer on interactive features.</p>
       </div>
-      
+
     </div>
   </div>
   <div class="col-r">
@@ -164,11 +167,10 @@
         </ul>
       </div>
     </div>
-    
+
   </div>
 </div>
 
 
 <?php page_about();?>
 <?php page_bottom();?>
-
