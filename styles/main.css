@@ -599,10 +599,6 @@ h6 {
 
 }
 
-.border-bottom {
-    border-bottom:1px solid #aaa;
-}
-
 .zoom {
   position:relative;
   border:1px solid #aaa;
@@ -896,6 +892,12 @@ color:#979797;
 
 .span_1_of_12 {
   	width: 6.866%;
+}
+
+.border-bottom {
+    border-bottom:1px solid #aaa;
+    margin-bottom:50px;
+    paddin-bottom:50px;
 }
 
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
