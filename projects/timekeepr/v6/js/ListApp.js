@@ -55,10 +55,11 @@ ListApp.init = function() {
   }
 
   $('#add-list').click(function() {
+    var date = new Date();
     new ListApp.List({
       "totalHours": 0,
       "name": "Untitled List",
-      "timestamp": String(new Date().getTime()),
+      "timestamp": date.toString(),
       "data": {}
     });
   });
@@ -85,21 +86,23 @@ ListApp.init = function() {
     }, 500);
     $('#category-show-button').fadeIn();
   });
-     
+
      $('#toolbar .content').css("width",$(window).width());
-     
+
      $(document).resize(function() {
       $('#list-area').css('min-height', $(window).height()-$('#toolbar').height());
      $('#category-area').css('min-height', $(window).height());
-   
+
      });
      $(document).trigger('resize');
-     
+
      $('#icon').click(function() {
+     var date = new Date().toString();
+
      new ListApp.List({
       "totalHours": 0,
       "name": "Untitled List",
-      "timestamp": String(new Date().getTime()),
+      "timestamp": 'sdf',
       "data": {}
     });
      });

@@ -370,7 +370,7 @@ label {
 
 .steps .step {
   float:left;
-  width:30.5%;
+  width:28.5%;
   margin-right:4%;
 }
 
@@ -898,6 +898,10 @@ color:#979797;
     border-bottom:1px solid #aaa;
     margin-bottom:50px;
     padding-bottom:50px;
+}
+
+.margin-bottom {
+  margin-bottom:75px;
 }
 
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */

@@ -178,6 +178,26 @@
         "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
         "date": "March 2014",
         "url": "clients/pa-school-map/map-test-googlespreadsheet.html"
+    },
+    "tmc": {
+      "onImage": "img/tmcon.jpg",
+      "offImage": "img/tmcoff.jpg",
+      "title": "Time, Motion, and Communication",
+      "category": "communication design",
+      "medium": "video animation",
+      "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+      "date": "September 2014<br/>Carnegie Mellon University",
+      "url": "cmu/portfolio/tmc"
+    },
+    "pruitt-igoe": {
+      "onImage": "img/pion.jpg",
+      "offImage": "img/pioff.jpg",
+      "title": "Pruitt-Igoe Data Visualization",
+      "category": "data visualization",
+      "medium": "maps and graphs",
+      "description": "I got the chance to illustrate two science books for young grade-school students introducing them to new science concepts. Pretty darn cool.",
+      "date": "November 2014<br/>Carnegie Mellon University",
+      "url": "cmu/portfolio/pruitt-igoe"
     }
 
 }

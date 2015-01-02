@@ -1,9 +1,9 @@
 ListApp.Entry = function(obj, parent) {
 
 /*
-              obj = { 
-              v:"sdf", 
-              c:"#cdd", 
+              obj = {
+              v:"sdf",
+              c:"#cdd",
               t:parseFloat(time, 10),
               d:String(new Date().getTime()),
               ls:$this.find('#time-id').val(),
@@ -32,12 +32,12 @@ ListApp.Entry = function(obj, parent) {
     borderColor: this.color,
     backgroundColor: this.color,
     height: this.entryTime * 100
-  }).appendTo(this.container.find('.list'));
+  }).appendTo($(this.container).find('.list'));
 
   this.entryContainer.find('.ex').click($.proxy(this.removeEntry, this));
 
   ListApp.Save();
-  
+
   ListApp.$doc.on('change', '.colorpicker', $.proxy(this.recolor, this));
 }
 

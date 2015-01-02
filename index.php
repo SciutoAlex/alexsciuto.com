@@ -37,9 +37,9 @@
       "afganistan",
       "scienceBooks",
       "timeKeepr",
-      "stateSize",
+      "pruitt-igoe",
       "voyager",
-      "hexPlay",
+      "tmc",
       "historicalSentate",
       "personal-movement",
 

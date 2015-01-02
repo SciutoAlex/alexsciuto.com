@@ -1,64 +1,88 @@
-ListApp.Entry = function(obj, parent) {
+ListApp.List = function(obj) {
+  /* obj = {
+  "totalHours" : 0,
+  "name": "sdf",
+  "timestamp" : String(new Date().getTime()),
+  "data": {} */
+  var listobj = this;
+  this.listtimestamp = obj.timestamp;
+  this.name = obj.name;
+  this.data = obj.data;
+  this.totalhours = obj.totalHours;
+  this.listContainer = $(ListApp.listTemplate({})).prependTo("#list-area");
+  ListApp.data.lists[this.listtimestamp] = obj;
+  this.categoriesdropdown = this.listContainer.find('.categories-dropdown');
 
-/*
-              obj = { 
-              v:"sdf", 
-              c:"#cdd", 
-              t:parseFloat(time, 10),
-              d:String(new Date().getTime()),
-              ls:$this.find('#time-id').val(),
-  selected:false
-            }
-              */
-  this.parent = parent;
-  this.container = parent.listContainer;
-  this.entryText = obj.v;
-  if(!ListApp.data.categories[obj.c]) {
-    this.cat = "";
-    this.color = "gray";
-  } else {
-  this.cat = ListApp.data.categories[obj.c].cat
-  this.color = ListApp.data.categories[obj.c].color;
+  ListApp.$info.hide();
+
+  for (var i in this.data) {
+
+    new ListApp.Entry(this.data[i], this.listContainer);
   }
-  this.entryTime = obj.t;
-  this.entryTimestamp = obj.d;
-  this.listTimestamp = obj.ls;
-  ListApp.data.lists[this.listTimestamp].data[this.entryTimestamp] = obj;
-  this.entryContainer = $(ListApp.entryTemplate({
-    text: this.entryText,
-    time: this.entryTime,
-    cat: this.cat
-  })).css({
-    borderColor: this.color,
-    backgroundColor: this.color,
-    height: this.entryTime * 100
-  }).appendTo(this.container.find('.list'));
+  var titlearea = this.listContainer.find('.title').html(this.name);
 
-  this.entryContainer.find('.ex').click($.proxy(this.removeEntry, this));
 
+  titlearea.dblclick(function() {
+    $(this).attr('contentEditable', 'true');
+
+  });
+
+  titlearea.blur(function() {
+    $(this).attr('contentEditable', 'false');
+    ListApp.data.lists[listobj.listtimestamp].name = $(this).html();
+    ListApp.Save();
+  });
+
+  this.listContainer.find(".removelist").click(function(e) {
+    e.preventDefault();
+    $.proxy(listobj.removeList(), listobj);
+  });
+
+  this.listContainer.find('.addentry').submit($.proxy(this.addEntry, this));
+
+  for (var i in ListApp.data.categories) {
+    $('<option>' + ListApp.data.categories[i].cat + '</option>').appendTo(this.categoriesdropdown);
+  }
   ListApp.Save();
-  
-  ListApp.$doc.on('change', '.colorpicker', $.proxy(this.recolor, this));
+
 }
 
-ListApp.Entry.prototype.removeEntry = function() {
-  var container = this.entryContainer;
-  container.slideUp(function() {
+ListApp.List.prototype.addEntry = function(e) {
+  e.preventDefault();
+  var txt = this.listContainer.find("#entry-text");
+  var cat = this.listContainer.find(".categories-dropdown").val();
+  var time = this.listContainer.find("#entry-time");
+  var listtime = this.listtimestamp;
+
+  var newNote = {
+    v: $.trim(txt.val()),
+    c: cat,
+    t: parseFloat(time.val(), 10),
+    d: String(new Date().getTime()),
+    ls: listtime,
+    selected: false
+  };
+
+  if (newNote.v.length > 0 && newNote.t >= .25) {
+    var note = new ListApp.Entry(newNote, this.listContainer);
+    txt.val("");
+    time.val("");
+  }
+
+
+
+}
+
+ListApp.List.prototype.removeList = function() {
+
+  var container = this.listContainer;
+  container.fadeOut(function() {
     container.remove();
   });
-  delete ListApp.data.lists[this.listTimestamp].data[this.entryTimestamp];
+  delete ListApp.data.lists[this.listtimestamp];
   ListApp.Save();
-  this.parent.refreshTotalHours();
-}
-
-ListApp.Entry.prototype.recolor = function() {
-  if(!ListApp.data.categories[this.cat]) {
-    this.color = "light gray";
-  } else {
-    this.color = ListApp.data.categories[this.cat].color;
+  console.log($('#list-area').children().length);
+  if ($('#list-area').children().length < 2) {
+    ListApp.$info.show();
   }
-    this.entryContainer.css({
-      borderColor: this.color,
-      backgroundColor: this.color
-    });
 }
