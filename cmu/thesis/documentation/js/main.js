@@ -14,7 +14,7 @@ litReviewApp.init = function() {
     scrollToAnchor($(this).attr('href'));
   })
 
-  $('p').attr('contenteditable', 'true');
+  // $('p').attr('contenteditable', 'true');
   $('.citation').each(function() {
     var height = $(this).height()+30;
     $(this).css('margin-top', height*-1);

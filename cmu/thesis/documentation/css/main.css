@@ -2,6 +2,8 @@
   position: relative;
   max-width: 850px;
   margin: 0px auto; }
+  #thesis .italic {
+    font-style: italic; }
   #thesis img {
     max-width: 100%; }
   #thesis figcaption {
