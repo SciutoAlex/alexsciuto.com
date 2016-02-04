@@ -2,15 +2,12 @@
   position: relative;
   max-width: 850px;
   margin: 0px auto; }
-  #thesis label {
-    color: #999;
-    font-size: 1rem; }
   #thesis .italic {
     font-style: italic; }
   #thesis img {
     max-width: 100%; }
-  #thesis figcaption, #thesis figure label {
-    font-size: 1.2rem;
+  #thesis figcaption {
+    font-size: 1rem;
     margin-top: 1rem; }
   #thesis .img {
     width: 50%;
@@ -39,8 +36,7 @@
     margin-bottom: 0px;
     padding-left: 25%;
     padding-right: 10%;
-    font-size: 14px;
-    text-transform: lowercase; }
+    font-size: 14px; }
   #thesis p {
     color: #555555;
     font-size: 1.4rem;
@@ -66,8 +62,6 @@
         color: #aaa; }
   #thesis .references {
     padding-left: 25%; }
-    #thesis .references li {
-      margin-bottom: 30px; }
   #thesis .intro {
     font-size: 1.9rem;
     line-height: 2.3rem; }
@@ -80,10 +74,9 @@
     font-size: 1rem;
     border-left: 1px solid gray;
     padding-left: 1%; }
-    #thesis aside.citation label {
-      display: block;
+    #thesis aside.citation div {
       margin-bottom: 10px; }
-    #thesis aside.citation label:last-child {
+    #thesis aside.citation div:last-child {
       margin: 0; }
   #thesis #exampleTable {
     border-collapse: separate;
@@ -135,29 +128,5 @@
       color: #737373;
       padding-bottom: 0px;
       text-decoration: none; }
-
-@media print {
-  #thesis ul, #thesis p, #thesis li, #thesis figure {
-    page-break-inside: auto; }
-  #thesis > ul {
-    padding-left: 20%;
-    padding-right: 20%; }
-  #thesis > p, #thesis > h3, #thesis > h2, #thesis > h4, #thesis > h5 {
-    padding-left: 15%;
-    padding-right: 20%;
-    margin-bottom: 10px;
-    page-break-after: avoid; }
-  #thesis > h6 {
-    padding-left: 15%;
-    padding-right: 20%;
-    margin-bottom: 0;
-    page-break-after: avoid; }
-  #thesis aside.citation {
-    left: 81%; }
-  #thesis blockquote {
-    margin-left: 20%;
-    margin-right: 25%; }
-  #thesis .figure {
-    margin: 20px 15% 20px 10%; } }
 
 /*# sourceMappingURL=main.css.map */
